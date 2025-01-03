@@ -39,8 +39,8 @@
 .section-wrapper .link-action .link-action-btn.active { background: #FFF; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15); }
 
 .section-wrapper .form-container { margin: 0 auto; }
-.section-wrapper .form-field { margin-bottom: 20px; display: none; }
-.section-wrapper .form-field.active { display: block; }
+.section-wrapper #common-form .form-field { margin-bottom: 20px; display: none; }
+.section-wrapper #common-form .form-field.active { display: block; }
 .section-wrapper .form-field .input-field { width: 100%; padding: 12px; border: 1px solid #CCC; border-radius: 6px; box-sizing: border-box; }
 .section-wrapper .form-field .checkbox-input { display: flex; align-items: center; gap: 8px; }
 .section-wrapper .form-field .checkbox-input input { width: 16px; height: 16px; }
