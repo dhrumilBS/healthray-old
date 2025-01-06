@@ -45,13 +45,23 @@
 .section-wrapper .form-field .checkbox-input { display: flex; align-items: center; gap: 8px; }
 .section-wrapper .form-field .checkbox-input input { width: 16px; height: 16px; }
 
-.section-wrapper .form-submit { text-align: center; }
-.section-wrapper .form-submit .submit-btn { padding: 12px 24px; background: #F0F2FF; border: none; border-radius: 38px; cursor: pointer; transition: background-color 0.2s ease; }
-.section-wrapper .form-submit .submit-btn:hover { background: #E0E2FF; }
+.section-wrapper .form-submit { text-align: center; margin-top: 20px; }
+.section-wrapper .form-submit:not(.resend-btn) .submit-btn { padding: 12px 36px; background: var(--hr-secondary-color, #F0F2FF); border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.2s ease; color: #F0F2FF; }
+.section-wrapper .form-submit:not(.resend-btn) .submit-btn:hover { background: #5669ec; }
 
-#otp-section { display: none; margin-top: 20px; }
 
-#response-message { color: #F22; text-align: center; margin-top: 12px; }
+#otp-section { display: sdf; }
+#otp-form .second-mobile-number {  margin-top: 20px;  }
+#otp-form .second-mobile-number .info-circle{ margin-top: 12px; gap: 12px; padding: 8px; border: 1px solid #b8bde1; background-color: #F0F2FF;  border-radius: 4px;}
+#otp-form .second-mobile-number .info-circle svg{ width: 20px; height: 20px; }
+#otp-form .resend-btn {  margin:0; flex-shrink: 0; display: flex; align-items: center; gap:16px;  margin-left: 16px; }
+#otp-form .resend-btn .submit-link{  font-weight: 600; color: var(--hr-secondary-color) }
+
+
+#response-message { text-align: center; margin-top: 12px; }
+#response-message.error { color: #F22;}
+
+#loading-spinner .spinner{ display: flex; align-items: center; justify-content: center; }
 
 @media (max-width: 768px) {
     .section-wrapper .link-action { flex-direction: column; gap: 10px; }
