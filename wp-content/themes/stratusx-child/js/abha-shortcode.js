@@ -1,169 +1,186 @@
 jQuery(document).ready(($) => {
-    function handleActionButtonClick(event) {
-        const $button = $(event.target); // Get the clicked button
-        $('.link-action-btn').removeClass('active'); // Remove active class from all buttons
-        $button.addClass('active'); // Add active class to the clicked button
+	const $commonSection = $('#common-section');
+	const $otpSection = $('#otp-section');
+	const $responseMessage = $('#response-message');
+	const $loadingSpinner = $('#loading-spinner');
+	const $otpForm = $('#otp-form');
+	const $resendButton = $('#resend-otp');
+	const $changeMobileBtn = $('#change-mobile');
+	const $transactionIdField = $('#transaction-id');
+	let transaction_id = null;
+	let resendTimer;
+	let loadingInterval;
 
-        const view = $button.data('view'); // Get the view type from the data attribute
-        $('#common-section .form-field').removeClass('active').find('input').prop('disabled', true);
-        $(`#common-section .${view}-field`).addClass('active').find('input').prop('disabled', false);
+	// Helper Functions
+	function toggleLoading(show, $element = $loadingSpinner) {
+		if (show) {
+			startLoadingAnimation($element);
+		} else {
+			stopLoadingAnimation($element);
+		}
+	}
 
-        $('#submit-button').text(`Submit ${view.charAt(0).toUpperCase() + view.slice(1)}`);
-    }
-    $('.link-action-btn').on('click', handleActionButtonClick);
+	function startLoadingAnimation($element) {
+		let dots = '';
+		stopLoadingAnimation($element); // Clear existing intervals
+		loadingInterval = setInterval(() => {
+			dots = dots.length < 3 ? dots + '.' : '';
+			$element.text(`Loading${dots}`).show();
+		}, 500);
+	}
 
-    const $section = $('#common-section');
-    const $form = $('#common-form');
-    const $otpSection = $('#otp-section');
-    const $responseMessage = $('#response-message');
-    const $loadingSpinner = $('#loading-spinner');
-    const $otpForm = $('#otp-form');
-    const $resendButton = $('#resend-otp');
-    const $changeMobileBtn = $("#change-mobile");
+	function stopLoadingAnimation($element) {
+		clearInterval(loadingInterval);
+		$element.text('').hide();
+	}
 
-    let transaction_id = null;
-    let resendTimer;
+	function showError(message, $element = $responseMessage) {
+		$element.text(message).removeClass('success').addClass('error').show();
+	}
 
-    // Form submission for Aadhaar
-    $form.on('submit', async (e) => {
-        e.preventDefault();
-        $responseMessage.html('');
-        toggleLoading(true);
+	function showSuccess(message, $element = $responseMessage) {
+		$element.text(message).removeClass('error').addClass('success').show();
+	}
 
-        const aadhaar = $('#aadhaar-input').val().trim();
-        if (aadhaar.length !== 12) {
-            toggleLoading(false);
-            return showError('Enter 12-Digit Aadhaar number.');
-        }
+	function startResendTimer() {
+		let countdown = 30;
+		$resendButton.prop('disabled', true).text(`Resend OTP in ${countdown}s`);
 
-        try {
-            const response = await $.post(ajax_obj, {
-                action: 'adhar_auth_form_submit',
-                aadhaar
-            });
-            console.log(response);
+		resendTimer = setInterval(() => {
+			countdown--;
+			$resendButton.text(`Resend OTP in ${countdown}s`);
 
-            const APIResponse = response.data.message;
-            if (APIResponse.status === 200) {
-                transaction_id = APIResponse.data.transaction_id;
-                showSuccess(APIResponse.message);
-                console.log('response', response);
-                console.log('transaction_id', transaction_id);
+			if (countdown <= 0) {
+				clearInterval(resendTimer);
+				$resendButton.prop('disabled', false).text('Resend OTP');
+			}
+		}, 1000);
+	}
 
-                $otpSection.show();
-                $section.hide();
-                startResendTimer();
-            } else {
-                console.log('APIResponse.status', APIResponse);
+	// Action Button Click Handler
+	function handleActionButtonClick(event) {
+		const $button = $(event.target);
+		$('.link-action-btn').removeClass('active');
+		$button.addClass('active');
 
-                const errorMessage = APIResponse.message || 'Unknown error occurred.';
-                showError(errorMessage);
-            }
-        } catch (err) {
-            showError(`Error: ${err.message || 'An unexpected error occurred.'}`);
-        } finally {
-            toggleLoading(false);
-        }
-    });
+		const view = $button.data('view');
+		$('.auth-form').hide();
+		$(`.auth-form[data-type="${view}"]`).show();
+	}
+	$('.link-action-btn').on('click', handleActionButtonClick);
 
-    // Handle OTP submission
-    $otpForm.on('submit', async (e) => {
-        e.preventDefault();
-        toggleLoading(true);
+	// Form Submit Handler
+	async function handleAuthFormSubmit(e) {
+		e.preventDefault();
+		const $form = $(e.target);
+		const type = $form.data('type');
+		const inputField = $form.find('.auth-input').val().trim();
 
-        const otp = $('#otp-input').val().trim();
-        const otpMobileno = $('#otp-mobile-input').val().trim();
+		$responseMessage.html('');
+		toggleLoading(true);
 
-        if (otp.length !== 6) {
-            toggleLoading(false);
-            return showError('Invalid OTP.');
-        }
+		if ((type === 'aadhaar' && !/^\d{12}$/.test(inputField)) ||
+			(type === 'mobile' && !/^\d{10}$/.test(inputField))) {
+			toggleLoading(false);
+			return showError(`Please enter a valid ${type === 'aadhaar' ? 'Aadhaar' : 'Mobile'} Number.`);
+		}
 
-        try {
-            const response = await $.post(ajax_obj, {
-                action: 'verify_otp',
-                otp,
-                otpMobileno,
-                transaction_id
-            });
-            const APIResponse = response.data.message;
-        
-            console.log(response);
-            
-            if (APIResponse.status === 200) {
-                showSuccess('OTP verified successfully.');
-                $otpSection.hide();
-            } else {
-                showError(response.data.message || 'Verification failed.');
-            }
-        } catch (err) {
-            showError(`Error: ${err.message || 'An unexpected error occurred.'}`);
-        } finally {
-            toggleLoading(false);
-        }
-    });
+		const payload = type === 'aadhaar' ? { value: inputField } : { number: inputField, is_health_number: false };
+		const actionType = type === 'aadhaar' ? 'aadhaar_auth_form_submit' : 'mobile_auth_form_submit';
 
-    // Resend OTP functionality
-    $resendButton.on('click', async () => {
-        if (!transaction_id) return showError('Cannot resend OTP. Transaction ID is missing.');
+		console.log('Payload:', payload);
+		try {
+			const response = await $.post(ajax_obj, {
+				action: actionType,
+				...payload
+			});
 
-        try {
-            toggleLoading(true);
+			console.log('Response:', response);
+			const APIResponse = response.data;
+			if (APIResponse.status === 200) {
+				transaction_id = APIResponse.transaction_id;
+				$transactionIdField.val(transaction_id);
+				showSuccess(APIResponse.message);
+				$otpSection.show();
+				$form.hide();
+				startResendTimer();
+			} else {
+				showError(APIResponse.message);
+			}
+		} catch (err) {
+			console.error('Error:', err);
+			showError(`Error: ${err.message}`);
+		} finally {
+			toggleLoading(false);
+		}
+	}
+	$('.auth-form').on('submit', handleAuthFormSubmit);
 
-            const response = await $.post(ajax_obj, {
-                action: 'resend_otp',
-                transaction_id
-            });
+	// OTP Form Submit Handler
+	$otpForm.on('submit', async (e) => {
+		e.preventDefault();
+		toggleLoading(true);
+		$responseMessage.html('');
 
-            if (response.success) {
-                showSuccess('OTP resent successfully.');
-                startResendTimer();
-            } else {
-                showError(response.data.message || 'Failed to resend OTP.');
-            }
-        } catch (err) {
-            showError(`Error: ${err.message || 'An unexpected error occurred.'}`);
-        } finally {
-            toggleLoading(false);
-        }
-    });
+		const otp = $('#otp-input').val().trim();
+		const otpMobileno = $('#otp-mobile-input').val().trim();
+		const transactionID = $transactionIdField.val().trim();
 
-    // Handle Change Mobile button click
-    $changeMobileBtn.on("click", function () {
-        if (!$changeMobileBtn.prop("disabled")) {
-            console.log("Changing to the common form section...");
-            // Hide OTP section and show common form section
-            $otpSection.hide();
-            $commonSection.show();
-        }
-    });
+		if (otp.length !== 6 || !/^\d{10}$/.test(otpMobileno)) {
+			toggleLoading(false);
+			return showError('Invalid OTP or mobile number.');
+		}
 
-    // Start the resend timer
-    function startResendTimer() {
-        let countdown = 30;
-        $resendButton.prop('disabled', true).text(`Resend OTP in ${countdown}s`);
+		console.log('OTP Payload:', { otp, otpMobileno, transaction_id: transactionID });
+		try {
+			const response = await $.post(ajax_obj, {
+				action: 'verify_otp',
+				otp,
+				otpMobileno,
+				transaction_id: transactionID
+			});
 
-        resendTimer = setInterval(() => {
-            countdown--;
-            $resendButton.text(`Resend OTP in ${countdown}s`);
+			console.log('OTP Response:', response);
+			const APIResponse = response.data;
+			if (APIResponse && APIResponse.success) {
+				showSuccess(APIResponse.message);
+				$otpSection.hide();
+			} else {
+				showError(APIResponse.message);
+			}
+		} catch (err) {
+			console.error('OTP Error:', err);
+			showError(`Error: ${err.message || 'An unexpected error occurred.'}`);
+		} finally {
+			toggleLoading(false);
+		}
+	});
 
-            if (countdown <= 0) {
-                clearInterval(resendTimer);
-                $resendButton.prop('disabled', false).text('Resend OTP');
-            }
-        }, 1000);
-    }
+	// Resend OTP Handler
+	$resendButton.on('click', async () => {
+		if (!transaction_id) return showError('Cannot resend OTP. Transaction ID is missing.');
 
-    // Helper functions
-    function toggleLoading(show) {
-        $loadingSpinner.toggle(show);
-    }
+		console.log('Resending OTP for Transaction ID:', transaction_id);
+		try {
+			toggleLoading(true);
 
-    function showError(message) {
-        $responseMessage.removeClass('success').addClass('error').text(message).show();
-    }
+			const response = await $.post(ajax_obj, {
+				action: 'resend_otp',
+				transaction_id
+			});
 
-    function showSuccess(message) {
-        $responseMessage.removeClass('error').addClass('success').text(message).show();
-    }
+			console.log('Resend OTP Response:', response);
+			if (response.success) {
+				showSuccess('OTP resent successfully.');
+				startResendTimer();
+			} else {
+				showError(response.data.message || 'Failed to resend OTP.');
+			}
+		} catch (err) {
+			console.error('Resend OTP Error:', err);
+			showError(`Error: ${err.message || 'An error occurred.'}`);
+		} finally {
+			toggleLoading(false);
+		}
+	});
 });

@@ -1,36 +1,3 @@
-/* .section-wrapper { padding: 16px; border-radius: 12px; background: #FFF; box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.10); }
-        
-.section-wrapper .content-sec { margin-bottom: 20px; text-align: center; }
-
-.section-wrapper .link-action { display: flex; width: 100%; padding: 4px 10px; align-items: center; gap: 24px; border-radius: 6px; background: #F0F2FF; margin-bottom: 20px; }
-.section-wrapper .link-action .link-action-btn { display: flex; padding: 8px 32px; width: 100%; justify-content: center; align-items: center; gap: 10px; flex-shrink: 1; flex-grow: 0; border-radius: 5px; background-color: transparent; transition: 200ms ease-in all; cursor: pointer; }
-.section-wrapper .link-action .link-action-btn.active { background: #FFF; }
-
-.section-wrapper .aadhaar-container-wrapper .form-field { margin-bottom: 20px; }
-
-.section-wrapper .aadhaar-container-wrapper .field-wrapper { display: none; }
-.section-wrapper .aadhaar-container-wrapper .field-wrapper.active { display: block; }
-
-.section-wrapper .aadhaar-container-wrapper .form-field .adhaar-input { display: flex; gap: 12px; }
-.section-wrapper .aadhaar-container-wrapper .form-field .adhaar-input .adhar-field { width: 100%; text-align: center; letter-spacing: 4px; }
-
-.section-wrapper .aadhaar-container-wrapper .form-field .mobile-input-container {display: flex;align-items: center; padding-left:10px; overflow: hidden; }
-.section-wrapper .aadhaar-container-wrapper .form-field .country-code {white-space: nowrap;}
-.section-wrapper .aadhaar-container-wrapper .form-field .mobile-input-container input[type="tel"] {flex-grow: 1; border: 0; box-shadow: unset;}
-
-.section-wrapper .aadhaar-container-wrapper .form-field .checkbox-input { display: flex; }
-.section-wrapper .aadhaar-container-wrapper .form-field .checkbox-input input {height: 16px; width: 16px; margin-right: 6px; margin-top: 2px; }        
-
-.section-wrapper .aadhaar-container-wrapper .form-submit { text-align: center;}
-.section-wrapper .aadhaar-container-wrapper .form-submit .submit-btn { max-width: 300px; width: 100%; padding: 12px 24px; justify-content: center; align-items: center;border-radius: 38px; background: #F0F2FF;}
-
-#response-message { color: #F22; margin-top: 12px;}
-
-@media (max-width: 768px) {
-    .mobile-input-container input[type="tel"] { width: 100%; }
-}  */
-
-
 .section-wrapper { padding: 16px; border-radius: 12px; background: #FFF; box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.10); }
 .section-wrapper .content-sec { margin-bottom: 20px; text-align: center; }
 
@@ -39,8 +6,9 @@
 .section-wrapper .link-action .link-action-btn.active { background: #FFF; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15); }
 
 .section-wrapper .form-container { margin: 0 auto; }
-.section-wrapper #common-form .form-field { margin-bottom: 20px; display: none; }
-.section-wrapper #common-form .form-field.active { display: block; }
+.section-wrapper .auth-form { display: none;  }
+.section-wrapper .auth-form.active { display: block;  }
+.section-wrapper .auth-form .form-field { margin-bottom: 20px;  }
 .section-wrapper .form-field .input-field { width: 100%; padding: 12px; border: 1px solid #CCC; border-radius: 6px; box-sizing: border-box; }
 .section-wrapper .form-field .checkbox-input { display: flex; align-items: center; gap: 8px; }
 .section-wrapper .form-field .checkbox-input input { width: 16px; height: 16px; }
@@ -50,7 +18,7 @@
 .section-wrapper .form-submit:not(.resend-btn) .submit-btn:hover { background: #5669ec; }
 
 
-#otp-section { display: sdf; }
+#otp-section { display: none; }
 #otp-form .second-mobile-number {  margin-top: 20px;  }
 #otp-form .second-mobile-number .info-circle{ margin-top: 12px; gap: 12px; padding: 8px; border: 1px solid #b8bde1; background-color: #F0F2FF;  border-radius: 4px;}
 #otp-form .second-mobile-number .info-circle svg{ width: 20px; height: 20px; }
