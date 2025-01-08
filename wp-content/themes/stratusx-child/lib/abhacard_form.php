@@ -1,0 +1,95 @@
+<div class="section-wrapper">
+    <div class="content-sec">
+        <h2>Create Ayushman Bharat Health Account ABHA (Health ID) Card</h2>
+    </div>
+
+    <div class="form-container">
+        <div id="common-section">
+            <div class="link-action">
+                <button class="link-action-btn active" data-view="aadhaar">Aadhaar Number</button>
+                <button class="link-action-btn" data-view="mobile">Mobile Number</button>
+            </div>
+
+            <form class="auth-form active" data-type="aadhaar">
+                <?php wp_nonce_field('ajax_nonce_action', '_wpnonce'); ?>
+                <input type="hidden" name="action" value="aadhaar_auth_form_submit">
+                <div class="form-field">
+                    <input type="text" class="input-field auth-input" id="aadhaar-input" pattern="[0-9]{12}" placeholder="Enter Aadhaar Number" required>
+                </div>
+                <div class="checkbox-input">
+                    <input type="checkbox" id="Aadhaar-permissions" required>
+                    <label for="Aadhaar-permissions">I agree to the necessary permissions for Healthray to set up my ABHA Health Locker. <a href="#">Learn More</a></label>
+                </div>
+                <div class="form-submit">
+                    <button type="submit" class="submit-btn">Submit Aadhaar</button>
+                </div>
+            </form>
+
+            <form class="auth-form" data-type="mobile">
+                <?php wp_nonce_field('ajax_nonce_action', '_wpnonce'); ?>
+                <input type="hidden" name="action" value="mobile_auth_form_submit">
+                <div class="form-field">
+                    <input type="text" class="input-field auth-input" id="mobile-input" pattern="[0-9]{10}" placeholder="Enter Mobile Number" required>
+                </div>
+                <div class="checkbox-input">
+                    <input type="checkbox" id="mobile-permissions" required>
+                    <label for="mobile-permissions">I agree to the necessary permissions for Healthray to set up my ABHA Health Locker. <a href="#">Learn More</a></label>
+                </div>
+                <div class="form-submit">
+                    <button type="submit" class="submit-btn">Submit Mobile</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="adhar-otp-section" class="otp-section">
+            <form id="adhar-otp-form" class="otp-form">
+                <?php wp_nonce_field('aadhaar_otp_nonce', '_wpnonce'); ?>
+                <input type="hidden" name="action" value="verify_otp">
+                <input type="hidden" name="transaction_id" id="transaction-id">
+                <div class="form-field d-flex ">
+                    <input type="text" id="otp-input" class="input-field" placeholder="Enter OTP" maxlength="6" required>
+                    <div class="form-submit resend-btn">
+                        <a id="resend-otp" class="submit-link" href="javascript:void(0)" disabled><span> Resend OTP</span></a>
+                        <a id="change-mobile" class="submit-link" href="javascript:void(0)">Change Mobile</a>
+                    </div>
+                </div>
+
+                <div class="second-mobile-number">
+                    <div class="form-field">
+                        <input type="tel" id="otp-mobile-input" name="otp-mobile" class="input-field" pattern="[0-9]{10}" placeholder="Enter your mobile number" required>
+                    </div>
+                    <div class="d-flex info-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 512 512">
+                            <path fill="currentColor" d="M256 40c118.621 0 216 96.075 216 216 0 119.291-96.61 216-216 216-119.244 0-216-96.562-216-216 0-119.203 96.602-216 216-216m0-32C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm-36 344h12V232h-12c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h48c6.627 0 12 5.373 12 12v140h12c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12h-72c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12zm36-240c-17.673 0-32 14.327-32 32s14.327 32 32 32 32-14.327 32-32-14.327-32-32-32z"></path>
+                        </svg>
+                        <div class="">This mobile number will be used for all the communications</div>
+                    </div>
+                </div>
+
+                <div class="form-submit">
+                    <button type="submit" class="submit-btn">Verify OTP</button>
+                </div>
+            </form>
+        </div>
+        <div id="mobile-otp-section" class="otp-section">
+            <form id="mobile-otp-form" class="otp-form">
+            <?php wp_nonce_field('aadhaar_otp_nonce', '_wpnonce'); ?>
+                <input type="hidden" name="action" value="verify_otp">
+                <input type="hidden" name="transaction_id" id="transaction-id">
+                <div class="form-field d-flex ">
+                    <input type="text" id="otp-input" class="input-field" placeholder="Enter OTP" maxlength="6" required>
+                    <div class="form-submit resend-btn">
+                        <a id="resend-otp" class="submit-link" href="javascript:void(0)" disabled><span> Resend OTP</span></a>
+                        <a id="change-mobile" class="submit-link" href="javascript:void(0)">Change Mobile</a>
+                    </div>
+                </div>
+                <div class="form-submit">
+                    <button type="submit" class="submit-btn">Verify OTP</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="response-message"></div>
+    <div id="loading-spinner" style="display: none;">Loading...</div>
+</div>
