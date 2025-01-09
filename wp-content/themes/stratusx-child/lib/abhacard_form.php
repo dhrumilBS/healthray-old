@@ -100,7 +100,7 @@
             </div>
             <div class="abha-phr-address">
                 <div class="abha-list">
-                    <div class="abha-item">
+                    <!-- <div class="abha-item">
                         <div class="abha-icon">
                             <svg viewBox="0 0 50 39" xmlns="http://www.w3.org/2000/svg" height="38" width="48">
                                 <rect x="1" y="6" width="48" height="32" rx="3" fill="#fff" stroke="#152ce1" stroke-width="2"></rect>
@@ -114,7 +114,7 @@
                             <div>Mangukiya Dhrumil Alkeshbhai</div>
                             <div>26yrs ● Male</div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="form-submit">
                     <button id="select-phr-btn" class="submit-btn" style="display: none;">Continue</button>

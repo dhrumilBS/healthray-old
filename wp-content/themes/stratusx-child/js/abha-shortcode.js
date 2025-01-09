@@ -182,8 +182,9 @@ jQuery(document).ready(($) => {
 
 				// PHR - Mobile
 				if (type != 'aadhaar') {
-					if (APIResponse.data.mappedPhrAddress && APIResponse.data.transactionId) {
-						populatePhrDropdown(APIResponse.data.mappedPhrAddress, APIResponse.data.transactionId);
+					console.log(type, 'API Response:', APIResponse);
+					if (APIResponse.mappedPhrAddress && APIResponse.transactionId) {
+						populatePhrDropdown(APIResponse.mappedPhrAddress, APIResponse.transactionId);
 					}
 					$('.choose-abha-section').show();
 					console.log(type, 'OTP Response:', response);
@@ -217,6 +218,7 @@ jQuery(document).ready(($) => {
 
 		$abhaList.append($dropdown);
 		$abhaList.append('<button id="select-phr-btn" class="submit-btn">Continue</button>');
+		$("#select-phr-btn").show();
 
 		// Handle PHR selection
 		$('#select-phr-btn').off('click').on('click', async function () {

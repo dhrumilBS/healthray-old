@@ -200,3 +200,49 @@ function handle_mobile_PHR_otp()
 }
 add_action('wp_ajax_verify_PHR_otp', 'handle_mobile_PHR_otp');
 add_action('wp_ajax_nopriv_verify_PHR_otp', 'handle_mobile_PHR_otp');
+
+function handle_login_phr_address()
+{
+	$transaction_id = sanitize_text_field($_POST['transaction_id']);
+	$phrAddress = sanitize_text_field($_POST['phr_address']);
+
+	if (empty($transaction_id) || empty($phrAddress)) {
+		wp_send_json_error(["post" => $_POST, 'message' => 'Transaction ID and phrAddress are required.']);
+	}
+
+	$payloadBody = [
+		"transaction_id" => $transaction_id,
+		"phr_address" => $phrAddress,
+		"is_health_number" => false,
+		"already_registered" => true
+	];
+	$response = wp_remote_post('https://node-stage.healthray.com/api/v1/abha/m1-external/phr/verify_otp', [
+		'headers' => ['Content-Type' => 'application/json'],
+		'body' => json_encode($payloadBody),
+	]);
+
+	if (is_wp_error($response)) {
+		wp_send_json_error(['message' => 'Failed to Logi using PHR address.']);
+	} else {
+		$headers = wp_remote_retrieve_headers($response);
+		$body = json_decode(wp_remote_retrieve_body($response), true);
+
+		$content_type = isset($headers['content-type']) ? $headers['content-type'] : '';
+
+		if (strpos($content_type, 'image/') !== false) {
+			$image_url = 'data:' . $content_type . ';base64,' . base64_encode($body);
+			wp_send_json_success([
+				'message' => 'Image received.',
+				'image_url' => $image_url,
+				'downloadable' => true
+			]);
+		} else {
+			wp_send_json_error(['message' => $body['status'].' : '.$body['message'] ?? 'Unknown error occurred.']);
+		}
+	}
+
+	wp_send_json_error(["post" => $_POST]);
+}
+
+add_action('wp_ajax_login_phr_address', 'handle_login_phr_address');
+add_action('wp_ajax_nopriv_login_phr_address', 'handle_login_phr_address');
