@@ -51,8 +51,8 @@
                 <div class="form-field d-flex">
                     <input type="text" id="otp-input" class="input-field auth-input" placeholder="Enter OTP" maxlength="6" required>
                     <div class="form-submit resend-btn">
-                        <a id="resend-otp" class="submit-link" href="javascript:void(0)" disabled><span> Resend OTP</span></a>
-                        <a id="change-mobile" class="submit-link" href="javascript:void(0)">Change Mobile</a>
+                        <a id="resend-otp" class="submit-link" href="" disabled><span> Resend OTP</span></a>
+                        <a id="change-mobile" class="submit-link" href="">Change Mobile</a>
                     </div>
                 </div>
 
@@ -82,7 +82,7 @@
                 <div class="form-field d-flex">
                     <input type="text" id="otp-input" class="input-field" placeholder="Enter OTP" maxlength="6" required>
                     <div class="form-submit resend-btn">
-                        <a id="resend-otp" class="submit-link" href="javascript:void(0)" disabled><span> Resend OTP</span></a>
+                        <a id="resend-otp" class="submit-link" href="" disabled><span> Resend OTP</span></a>
                         <a id="change-mobile" class="submit-link" href="javascript:void(0)">Change Mobile</a>
                     </div>
                 </div>
@@ -96,29 +96,10 @@
         <div class="choose-abha-section">
             <div class="text-center header">
                 <h3 class="title">Select ABHA to continue</h3>
-                <p>We have found ABHA 1 address linked with your mobile number.</p>
+                <p class="founded-address">We have found ABHA 1 address linked with your mobile number.</p>
             </div>
             <div class="abha-phr-address">
-                <div class="abha-list">
-                    <!-- <div class="abha-item">
-                        <div class="abha-icon">
-                            <svg viewBox="0 0 50 39" xmlns="http://www.w3.org/2000/svg" height="38" width="48">
-                                <rect x="1" y="6" width="48" height="32" rx="3" fill="#fff" stroke="#152ce1" stroke-width="2"></rect>
-                                <path stroke="#152ce1" stroke-width="2" stroke-linecap="round" d="M8 20h10M8 25h6M8 30h8"></path>
-                                <path d="M34.5 19.5h-3v3h3v-3zm-3-1.5h3c.813 0 1.5.688 1.5 1.5v3a1.5 1.5 0 01-1.5 1.5h-3a1.48 1.48 0 01-1.5-1.5v-3a1.5 1.5 0 011.5-1.5zm3 9.5h-3v3h3v-3zm-3-1.5h3c.813 0 1.5.688 1.5 1.5v3a1.5 1.5 0 01-1.5 1.5h-3a1.48 1.48 0 01-1.5-1.5v-3a1.5 1.5 0 011.5-1.5zm8-6.5v3h3v-3h-3zm-1.5 0a1.5 1.5 0 011.5-1.5h3c.813 0 1.5.688 1.5 1.5v3a1.5 1.5 0 01-1.5 1.5h-3a1.48 1.48 0 01-1.5-1.5v-3zm-5.75 1.25c0-.25.219-.5.5-.5h.5c.25 0 .5.25.5.5v.5c0 .281-.25.5-.5.5h-.5a.494.494 0 01-.5-.5v-.5zm.5 7.5h.5c.25 0 .5.25.5.5v.5c0 .281-.25.5-.5.5h-.5a.494.494 0 01-.5-.5v-.5c0-.25.219-.5.5-.5zm7.5-7.5c0-.25.219-.5.5-.5h.5c.25 0 .5.25.5.5v.5c0 .281-.25.5-.5.5h-.5a.494.494 0 01-.5-.5v-.5zM38 26.5c0-.25.219-.5.5-.5h2c.25 0 .5.25.5.5 0 .281.219.5.5.5h1c.25 0 .5-.219.5-.5 0-.25.219-.5.5-.5.25 0 .5.25.5.5v3c0 .281-.25.5-.5.5h-2a.494.494 0 01-.5-.5c0-.25-.25-.5-.5-.5-.281 0-.5.25-.5.5v2c0 .281-.25.5-.5.5h-1a.494.494 0 01-.5-.5v-5zm3.5 4.5c.25 0 .5.25.5.5 0 .281-.25.5-.5.5a.494.494 0 01-.5-.5c0-.25.219-.5.5-.5zm2 0c.25 0 .5.25.5.5 0 .281-.25.5-.5.5a.494.494 0 01-.5-.5c0-.25.219-.5.5-.5zM1 9a3 3 0 013-3h42a3 3 0 013 3v5H1V9z" fill="#152ce1"></path>
-                                <rect x="23" width="4" height="8" rx="1" fill="#5669ec"></rect>
-                            </svg>
-                        </div>
-                        <div class="abha-details">
-                            <strong title="mangukiyadhrumil@abdm">mangukiyadh...mil@abdm</strong>
-                            <div>Mangukiya Dhrumil Alkeshbhai</div>
-                            <div>26yrs ● Male</div>
-                        </div>
-                    </div> -->
-                </div>
-                <div class="form-submit">
-                    <button id="select-phr-btn" class="submit-btn" style="display: none;">Continue</button>
-                </div>
+                <div class="abha-list"> </div>
             </div>
             <div class="separator">
                 <span>or</span>
@@ -133,30 +114,39 @@
                     </div>
                 </button>
             </div>
-
         </div>
 
         <!-- CREATE NEW ABHA ADDRESS -->
         <div class="create-abha-section">
-            <form id="create-abha-form" class="create-abha-form" data-type="aadhaar">
-                <div class="text-center">
+            <form id="create-abha-form" class="create-abha-form">
+                <div class="heading text-center">
                     <h3>Enter ABHA Information</h3>
                 </div>
                 <div class="form-content">
                     <div class="form-field">
-                        <input type="text" id="name" placeholder="Name" class="input-field">
+                        <div class="form-group full-name">
+                            <div>
+                                <input type="text" id="fname" placeholder="First Name" class="input-field">
+                            </div>
+                            <div>
+                                <input type="text" id="mname" placeholder="middle Name" class="input-field">
+                            </div>
+                            <div>
+                                <input type="text" id="lname" placeholder="Last Name" class="input-field">
+                            </div>
+                        </div>
                     </div>
                     <div class="form-field">
                         <p>Date of Birth<span class="required">*</span></p>
                         <div class="form-group date-of-birth">
                             <div>
-                                <input type="number" min="1" max="31" id="day" placeholder="DD" class="input-field" value="1">
+                                <select id="day" class="input-field"><option value="">Day</option></select>
                             </div>
                             <div>
-                                <input type="number" min="1" max="12" id="month" placeholder="MM" class="input-field" value="1">
+                                <select id="month" class="input-field"><option value="">Month</option></select>
                             </div>
                             <div>
-                                <input type="number" min="1900" id="year" placeholder="YYYY" class="input-field" value="1990">
+                                <select id="year" class="input-field"><option value="">Year</option></select>
                             </div>
                         </div>
                     </div>
@@ -181,17 +171,17 @@
                         <div class="form-group state-city">
                             <div>
                                 <label for="state">State<span class="required">*</span></label>
-                                <input type="text" id="state" placeholder="State" class="input-field">
+                                <select name="state" id="state" class="input-field"><option value="">Select a State</option></select>
                             </div>
                             <div>
-                                <label for="city">City<span class="required">*</span></label>
-                                <input type="text" id="city" placeholder="city" class="input-field">
+                                <label for="district">District<span class="required">*</span></label>
+                                <select name="district" id="district" class="input-field"><option value="">Select a District</option></select>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-submit">
-                    <button type="submit" class="submit-btn">Verify OTP</button>
+                    <button type="submit" class="submit-btn">Create New Address</button>
                 </div>
             </form>
         </div>

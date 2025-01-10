@@ -37,6 +37,7 @@ jQuery(document).ready(($) => {
 	}
 
 	function showError(message, $element = $responseMessage) {
+		console.log(" $element", $element);
 		$element.text(message).removeClass('success').addClass('error').show();
 	}
 
@@ -184,6 +185,7 @@ jQuery(document).ready(($) => {
 				if (type != 'aadhaar') {
 					console.log(type, 'API Response:', APIResponse);
 					if (APIResponse.mappedPhrAddress && APIResponse.transactionId) {
+						$responseMessage.html('');
 						populatePhrDropdown(APIResponse.mappedPhrAddress, APIResponse.transactionId);
 					}
 					$('.choose-abha-section').show();
@@ -207,6 +209,8 @@ jQuery(document).ready(($) => {
 	function populatePhrDropdown(mappedPhrAddresses, transactionId) {
 		const $abhaList = $(".abha-list");
 		$abhaList.empty();
+		const $foundedAddress = $(".founded-address");
+		const $foundedAddresstext = `We have found ABHA ${$foundedAddress} address linked with your mobile number.`;
 
 		const $dropdown = $("<select>")
 			.addClass("phr-dropdown")
@@ -216,8 +220,9 @@ jQuery(document).ready(($) => {
 			$dropdown.append(`<option value="${address}">${address}</option>`);
 		});
 
+		$foundedAddress.text($foundedAddresstext);
 		$abhaList.append($dropdown);
-		$abhaList.append('<button id="select-phr-btn" class="submit-btn">Continue</button>');
+		$abhaList.append('<div class="form-submit"> <button id="select-phr-btn" class="submit-btn" style="display: none;">Continue</button> </div>');
 		$("#select-phr-btn").show();
 
 		// Handle PHR selection
@@ -243,9 +248,13 @@ jQuery(document).ready(($) => {
 					...loginPayload,
 				});
 
-				if (loginResponse.success) {
-					showSuccess(loginResponse.data.message || 'Successfully logged in!');
-					// Handle additional actions post-login if needed
+				if (loginResponse.image_url) {
+					const imageHtml = `
+						<div class="image-preview">
+							<img src="${APIResponse.image_url}" alt="API Image" />
+							<a href="${APIResponse.image_url}" download="image" class="download-btn">Download Image</a>
+						</div>`;
+					$responseMessage.html(imageHtml);
 				} else {
 					showError(loginResponse.data.message || 'Login failed.');
 				}
@@ -287,137 +296,202 @@ jQuery(document).ready(($) => {
 	});
 
 
-	$("#create-abha-btn").on("click", function () {
-		// Hide the choose ABHA section
-		$(".choose-abha-section").hide();
-
-		// Show the create ABHA section
-		$(".create-abha-section").show();
-	});
-
 
 	const $form = $("#create-abha-form");
-	const $name = $("#name");
+	const $fname = $("#fname");
+	const $mname = $("#mname");
+	const $lname = $("#lname");
 	const $day = $("#day");
 	const $month = $("#month");
 	const $year = $("#year");
 	const $gender = $("input[name='gender']");
-	const $genderParent = $(".gender-options");
 	const $state = $("#state");
-	const $city = $("#city");
+	const $district = $("#district");
 	const $continueButton = $form.find(".form-submit button");
-
-	function ABHAshowError($element, message) {
-		$element.addClass("error");
-		const $errorMessage = $("<div>")
-			.addClass("error-message")
-			.text(message);
-		$responseMessage.append($errorMessage);
-	}
+	// Toggle ABHA Sections
+	$("#create-abha-btn").on("click", function () {
+		$(".choose-abha-section").hide();
+		$form.show();
+	});
 
 	function clearError($element) {
-		$element.removeClass("error");
+		$element.removeClass("error").next(".error-message").remove();
 	}
 
 	function clearAllErrors() {
-		$responseMessage.empty();
-		$(".input-field, .gender-options").removeClass("error");
+		$form.find(".error-message").remove();
+		$form.find(".error").removeClass("error");
 	}
 
-	function validateField($element, isEmpty, isInvalid, emptyErrorMessage, validationErrorMessage) {
-		if (isEmpty) {
-			// Show "required" error if the field is empty
-			ABHAshowError($element, emptyErrorMessage);
-			$element.addClass("error");
-			return false;
-		} else if (isInvalid) {
-			// Show validation error only if the field is not empty
-			ABHAshowError($element, validationErrorMessage);
-			$element.addClass("error");
+	// Fetch States
+	async function fetchStates() {
+		try {
+			const response = await $.get(ajax_obj, { action: "get_states" });
+
+			if (response.success) {
+				const states = response.data.data;
+				$state.empty().append('<option value="">Select a State</option>');
+
+				states.forEach(({ code, name }) => {
+					$state.append(`<option value="${code}">${name}</option>`);
+				});
+			} else {
+				console.log(`Error fetching states: ${response.data.message}`);
+			}
+		} catch (error) {
+			console.log("Unexpected error while fetching states:", error);
+		}
+	}
+
+	// Fetch Districts
+
+	async function fetchDistricts(stateID) {
+		try {
+			const response = await $.get(ajax_obj, {
+				action: "get_districts",
+				state_ID: stateID,
+			});
+
+			if (response.success) {
+				const districts = response.data.data;
+				$district.empty().append('<option value="">Select a District</option>');
+
+				districts.forEach(({ code, name }) => {
+					$district.append(`<option value="${code}">${name}</option>`);
+				});
+
+				$district.prop("disabled", false);
+			} else {
+				console.error(`Error fetching districts: ${response.data.message}`);
+				$district.empty().append('<option value="">No Districts Found</option>').prop("disabled", true);
+			}
+		} catch (error) {
+			console.error("Unexpected error while fetching districts:", error);
+		}
+	}
+
+	// Update Districts on State Change
+	$state.on("change", function () {
+		const stateID = $(this).val();
+		$district.empty().append('<option value="">Loading...</option>').prop("disabled", true);
+
+		if (stateID) {
+			fetchDistricts(stateID);
+		} else {
+			$district.empty().append('<option value="">Select a State First</option>').prop("disabled", true);
+		}
+	});
+
+	// Form Validation
+	function validateField($element, isValid, errorMessage) {
+		clearError($element);
+		if (!isValid) {
+			showError(errorMessage, $element);
 			return false;
 		}
 		return true;
 	}
 
 	function validateForm() {
-		let isValid = true;
 		clearAllErrors();
+		let isValid = true;
 
-		// Validate Name
-		const nameValue = $name.val().trim();
-		isValid &= validateField($name, nameValue === "", false, "Name is required.", "");
+		isValid &= validateField($fname, $fname.val().trim() !== "", "First name is required.");
+		isValid &= validateField($mname, $mname.val().trim() !== "", "Middle name is required.");
+		isValid &= validateField($lname, $lname.val().trim() !== "", "Last name is required.");
 
-		// Validate Date of Birth
-		const dayValue = $day.val().trim();
-		const monthValue = $month.val().trim();
-		const yearValue = $year.val().trim();
-		const day = parseInt(dayValue, 10);
-		const month = parseInt(monthValue, 10);
-		const year = parseInt(yearValue, 10);
+		const day = parseInt($day.val(), 10);
+		const month = parseInt($month.val(), 10);
+		const year = parseInt($year.val(), 10);
 		const currentYear = new Date().getFullYear();
 		const daysInMonth = new Date(year, month, 0).getDate();
 
-		isValid &= validateField(
-			$day,
-			dayValue === "",
-			!isNaN(day) && (day < 1 || day > daysInMonth),
-			"Day is required.",
-			`Day must be between 1 and ${daysInMonth}.`
-		);
+		isValid &= validateField($day, day >= 1 && day <= daysInMonth, `Day must be between 1 and ${daysInMonth}.`);
+		isValid &= validateField($month, month >= 1 && month <= 12, "Month must be between 1 and 12.");
+		isValid &= validateField($year, year >= 1900 && year <= currentYear, `Year must be between 1900 and ${currentYear}.`);
 
-		isValid &= validateField(
-			$month,
-			monthValue === "",
-			!isNaN(month) && (month < 1 || month > 12),
-			"Month is required.",
-			"Month must be between 1 and 12."
-		);
-
-		isValid &= validateField(
-			$year,
-			yearValue === "",
-			!isNaN(year) && (year < 1900 || year > currentYear),
-			"Year is required.",
-			`Year must be between 1900 and ${currentYear}.`
-		);
-
-		// Validate Gender
-		if (!$gender.is(":checked")) {
-			ABHAshowError($gender, "Gender is required.");
-			$gender.addClass("error");
-			isValid = false;
-		}
-
-		// Validate State
-		const stateValue = $state.val().trim();
-		isValid &= validateField($state, stateValue === "", false, "State is required.", "");
-
-		// Validate City
-		const cityValue = $city.val().trim();
-		isValid &= validateField($city, cityValue === "", false, "City is required.", "");
-
-		// Enable or disable the "Continue" button based on form validity
-		$continueButton.prop("disabled", !isValid);
+		isValid &= validateField($gender, $gender.is(":checked"), "Gender is required.");
+		isValid &= validateField($state, $state.val().trim() !== "", "State is required.");
+		isValid &= validateField($district, $district.val().trim() !== "", "District is required.");
 
 		return isValid;
 	}
 
-	// Add event listeners for validation on input change
-	$name.on("input", () => validateForm());
-	$day.on("input", () => validateForm());
-	$month.on("input", () => validateForm());
-	$year.on("input", () => validateForm());
-	$gender.on("change", () => validateForm());
-	$state.on("input", () => validateForm());
-	$city.on("input", () => validateForm());
+	// Populate dropdowns for day, month, and year
+	function populateDateDropdowns() {
+		const $dayDropdown = $("#day");
+		const $monthDropdown = $("#month");
+		const $yearDropdown = $("#year");
 
-	// Handle form submission
-	$continueButton.on("click", function () {
+		// Populate days
+		for (let i = 1; i <= 31; i++) {
+			const dayValue = i.toString().padStart(2, '0');
+			$dayDropdown.append(`<option value="${dayValue}">${dayValue}</option>`);
+		}
+
+		// Populate months with names
+		const monthNames = [
+			"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+		];
+		monthNames.forEach((month, index) => {
+			const monthValue = (index + 1).toString().padStart(2, '0');
+			$monthDropdown.append(`<option value="${monthValue}">${month}</option>`);
+		});
+
+		// Populate years
+		const currentYear = new Date().getFullYear();
+		for (let i = currentYear; i >= 1900; i--) {
+			$yearDropdown.append(`<option value="${i}">${i}</option>`);
+		}
+	}
+
+	// Initialize
+	fetchStates();
+	populateDateDropdowns();
+
+	// Form Submission
+	$continueButton.on("click", async function (e) {
+		e.preventDefault();
 		if (validateForm()) {
-			$form.submit();
+			toggleLoading(true);
+			const payload = {
+				transaction_id: $transactionIdField.val().trim(),
+				first_name: $name.val().trim(),
+				middle_name: "", // Update this with the actual input field selector for middle name
+				last_name: "", // Update this with the actual input field selector for last name
+				pin_code: $pinCodeField.val().trim(),
+				gender: $gender.filter(":checked").val().trim(),
+				dob: `${$year.val().trim()}-${$month.val().trim()}-${$day.val().trim()}`,
+				mobile_no: $mobileNumberField.val().trim(),
+				state_code: $state.val().trim(),
+				district_code: $district.val().trim(),
+				address: $addressField.val().trim(),
+			};
+			console.log(payload);
+
+			try {
+				const response = await $.post(ajax_obj.ajax_url, {
+					action: "PHR_demographics_submit",
+					...payload
+				});
+
+				if (response.success) {
+					const message = response.data?.message || "Demographics submitted successfully.";
+					showSuccess(message);
+				} else {
+					const errorMessage = response.data?.message || "Failed to submit demographics.";
+					showError(errorMessage);
+				}
+			} catch (err) {
+				console.error("Error:", err);
+				showError(`Error: ${err.message}`);
+			} finally {
+				toggleLoading(false);
+			}
 		} else {
-			$responseMessage.addClass("error-container").show();
+			console.log("Error Find");
 		}
 	});
-});
 
+
+});
