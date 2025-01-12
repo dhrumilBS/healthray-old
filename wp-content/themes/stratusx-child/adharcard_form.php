@@ -259,7 +259,7 @@ function handle_PHR_demographics_submit_ajax()
 	$mobile_no = sanitize_text_field($_POST['mobile_no']);
 	$state_code = sanitize_text_field($_POST['state_code']);
 	$district_code = sanitize_text_field($_POST['district_code']);
-	$address = sanitize_textarea_field($_POST['address']);
+	$address = sanitize_textarea_field($_POST['address'] ?? "Katargam, Surat");
 
 	// Validate required fields
 	if (empty($transaction_id) || empty($first_name) || empty($mobile_no)) {
@@ -295,7 +295,7 @@ function handle_PHR_demographics_submit_ajax()
 		if (!empty($body['status']) && $body['status'] === 200) {
 			wp_send_json_success(['message' => $body['message'] ?? 'Demographics submitted successfully.']);
 		} else {
-			wp_send_json_error(['message' => $body['message'] ?? 'Unknown error occurred.']);
+			wp_send_json_error(['message' => $body['message'] ?? 'Unknown error occurred.','payload' => $payload]);
 		}
 	}
 

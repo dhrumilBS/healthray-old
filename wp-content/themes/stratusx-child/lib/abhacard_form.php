@@ -99,7 +99,7 @@
                 <p class="founded-address">We have found ABHA 1 address linked with your mobile number.</p>
             </div>
             <div class="abha-phr-address">
-                <div class="abha-list"> </div>
+                <div class="abha-list form-field"> </div>
             </div>
             <div class="separator">
                 <span>or</span>
@@ -129,7 +129,7 @@
                                 <input type="text" id="fname" placeholder="First Name" class="input-field">
                             </div>
                             <div>
-                                <input type="text" id="mname" placeholder="middle Name" class="input-field">
+                                <input type="text" id="mname" placeholder="Middle Name" class="input-field">
                             </div>
                             <div>
                                 <input type="text" id="lname" placeholder="Last Name" class="input-field">
@@ -178,6 +178,14 @@
                                 <select name="district" id="district" class="input-field"><option value="">Select a District</option></select>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-field">
+                        <p>Pincode<span class="required">*</span></p>
+                        <input type="number" id="pincode" pattern="{0-9}[6]" placeholder="Pin code" class="input-field">
+                    </div>
+                    <div class="form-field">
+                        <p>address<span class="required">*</span></p>
+                        <textarea id="address" placeholder="Pin code" class="input-field"></textarea>
                     </div>
                 </div>
                 <div class="form-submit">

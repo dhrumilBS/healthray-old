@@ -146,6 +146,7 @@ jQuery(document).ready(($) => {
 			if (!/^\d{10}$/.test(otpMobileno)) {
 				return showError('Invalid mobile number.');
 			}
+			console.log("Mobile Noe.",ADHARNUMBER);	
 		}
 
 		const payload = type === 'aadhaar' ? { otp: otp, number: otpMobileno, transactionID: transactionID } : { otp: otp, transactionID: transactionID };
@@ -212,7 +213,7 @@ jQuery(document).ready(($) => {
 		const $foundedAddress = $(".founded-address");
 		const $foundedAddresstext = `We have found ABHA ${$foundedAddress} address linked with your mobile number.`;
 
-		const $dropdown = $("<select>")
+		const $dropdown = $("<select class='input-field'>")
 			.addClass("phr-dropdown")
 			.append('<option value="" disabled selected>Select PHR Address</option>');
 
@@ -307,18 +308,18 @@ jQuery(document).ready(($) => {
 	const $gender = $("input[name='gender']");
 	const $state = $("#state");
 	const $district = $("#district");
+	const $pincode = $("#pincode");
+	const $address = $("#address");
 	const $continueButton = $form.find(".form-submit button");
 	// Toggle ABHA Sections
 	$("#create-abha-btn").on("click", function () {
+		console.log(ADHARNUMBER);
 		$(".choose-abha-section").hide();
-		$form.show();
+		$('.create-abha-section').show();
 	});
 
-	function clearError($element) {
-		$element.removeClass("error").next(".error-message").remove();
-	}
-
 	function clearAllErrors() {
+		$responseMessage.text('');
 		$form.find(".error-message").remove();
 		$form.find(".error").removeClass("error");
 	}
@@ -384,9 +385,10 @@ jQuery(document).ready(($) => {
 
 	// Form Validation
 	function validateField($element, isValid, errorMessage) {
-		clearError($element);
+
 		if (!isValid) {
-			showError(errorMessage, $element);
+			$element.addClass('error');
+			$responseMessage.append(`<p><em>${errorMessage}</em></p>`).removeClass('success').addClass('error').show();
 			return false;
 		}
 		return true;
@@ -413,6 +415,7 @@ jQuery(document).ready(($) => {
 		isValid &= validateField($gender, $gender.is(":checked"), "Gender is required.");
 		isValid &= validateField($state, $state.val().trim() !== "", "State is required.");
 		isValid &= validateField($district, $district.val().trim() !== "", "District is required.");
+		isValid &= validateField($pincode, $pincode.val().trim() !== "", "Pincode is required.");
 
 		return isValid;
 	}
@@ -450,27 +453,27 @@ jQuery(document).ready(($) => {
 	populateDateDropdowns();
 
 	// Form Submission
-	$continueButton.on("click", async function (e) {
+	$continueButton.on("click", async function (e) {	
 		e.preventDefault();
 		if (validateForm()) {
 			toggleLoading(true);
 			const payload = {
 				transaction_id: $transactionIdField.val().trim(),
-				first_name: $name.val().trim(),
-				middle_name: "", // Update this with the actual input field selector for middle name
-				last_name: "", // Update this with the actual input field selector for last name
-				pin_code: $pinCodeField.val().trim(),
+				first_name: $fname.val().trim(),
+				middle_name: $mname.val().trim(),
+				last_name: $lname.val().trim(),
+				pin_code: $pincode.val().trim(),
 				gender: $gender.filter(":checked").val().trim(),
 				dob: `${$year.val().trim()}-${$month.val().trim()}-${$day.val().trim()}`,
-				mobile_no: $mobileNumberField.val().trim(),
+				mobile_no: ADHARNUMBER,
 				state_code: $state.val().trim(),
 				district_code: $district.val().trim(),
-				address: $addressField.val().trim(),
+				address: $address.val().trim(),
 			};
 			console.log(payload);
 
 			try {
-				const response = await $.post(ajax_obj.ajax_url, {
+				const response = await $.post(ajax_obj, {
 					action: "PHR_demographics_submit",
 					...payload
 				});
@@ -479,7 +482,7 @@ jQuery(document).ready(($) => {
 					const message = response.data?.message || "Demographics submitted successfully.";
 					showSuccess(message);
 				} else {
-					const errorMessage = response.data?.message || "Failed to submit demographics.";
+					const errorMessage = response.data?.data || "Failed to submit demographics.";
 					showError(errorMessage);
 				}
 			} catch (err) {
