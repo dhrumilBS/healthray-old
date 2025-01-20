@@ -66,7 +66,6 @@ jQuery(document).ready(($) => {
 		const $button = $(event.target);
 		$('.link-action-btn').removeClass('active');
 		$button.addClass('active');
-
 		const view = $button.data('view');
 		$('.auth-form').hide();
 		$(`.auth-form[data-type="${view}"]`).show();
