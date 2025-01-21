@@ -27,7 +27,7 @@
             </form>
 
             <!-- auth-form - mobile -->
-            <form class="auth-form  " data-type="mobile">
+            <form class="auth-form" data-type="mobile">
                 <?php wp_nonce_field('ajax_nonce_action', '_wpnonce'); ?>
                 <input type="hidden" name="action" value="mobile_auth_form_submit">
                 <div class="form-field">
@@ -41,26 +41,28 @@
                     <button type="submit" class="submit-btn">Submit Mobile</button>
                 </div>
             </form>
+
+            <input type="hidden" name="transaction_id" id="transaction-id">
         </div>
 
         <!-- adhar-otp -->
         <div id="adhar-otp-section" class="otp-section">
             <form id="adhar-otp-form" class="otp-form" data-type="aadhaar">
                 <input type="hidden" name="action" value="verify_otp">
-                <input type="hidden" name="transaction_id" class="transaction-id">
+
                 <div class="form-field d-flex">
-                    <input type="text" id="otp-input" class="input-field auth-input" placeholder="Enter OTP" maxlength="6" required>
+                    <input type="text" id="adhar-otp-input" class="input-field auth-input otp-input" placeholder="Enter OTP" maxlength="6" required>
                     <div class="form-submit resend-btn">
-                        <a id="resend-otp" class="submit-link" href="" disabled><span> Resend OTP</span></a>
-                        <a id="change-mobile" class="submit-link" href="">Change Mobile</a>
+                        <button class="otp-resend-btn submit-link" disabled><span> Resend OTP</span></button>
+                        <button class="change-mobile submit-link" >Change Mobile</button>
                     </div>
                 </div>
 
                 <div class="second-mobile-number">
                     <div class="form-field">
-                        <input type="tel" id="otp-mobile-input" name="otp-mobile" class="input-field auth-input" pattern="[0-9]{10}" placeholder="Enter your mobile number" required>
+                        <input type="tel" id="adhar-otp-mobile-input" name="otp-mobile" class="input-field auth-input" pattern="[0-9]{10}" placeholder="Enter your mobile number" required>
                     </div>
-                    <div class="d- info-circle">
+                    <div class="d-flex info-circle">
                         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 512 512">
                             <path fill="currentColor" d="M256 40c118.621 0 216 96.075 216 216 0 119.291-96.61 216-216 216-119.244 0-216-96.562-216-216 0-119.203 96.602-216 216-216m0-32C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm-36 344h12V232h-12c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h48c6.627 0 12 5.373 12 12v140h12c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12h-72c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12zm36-240c-17.673 0-32 14.327-32 32s14.327 32 32 32 32-14.327 32-32-14.327-32-32-32z"></path>
                         </svg>
@@ -78,14 +80,32 @@
         <div id="mobile-otp-section" class="otp-section">
             <form id="mobile-otp-form" class="otp-form" data-type="mobile">
                 <input type="hidden" name="action" value="verify_otp">
-                <input type="hidden" name="transaction_id" class="transaction-id">
                 <div class="form-field d-flex">
-                    <input type="text" id="otp-input" class="input-field" placeholder="Enter OTP" maxlength="6" required>
+                    <input type="text" id="mobile-otp-input" name="otp-input" class="input-field auth-input otp-input" placeholder="Enter OTP" maxlength="6" required>
                     <div class="form-submit resend-btn">
-                        <a id="resend-otp" class="submit-link" href="" disabled><span> Resend OTP</span></a>
-                        <a id="change-mobile" class="submit-link" href="javascript:void(0)">Change Mobile</a>
+                        <button class="otp-resend-btn submit-link" disabled><span> Resend OTP</span></button>
+                        <button class="change-mobile submit-link" >Change Mobile</button>
                     </div>
                 </div>
+
+                <div class="form-submit">
+                    <button type="submit" class="submit-btn">Verify OTP</button>
+                </div>
+            </form>
+        </div>
+
+         <!-- mobile-otp -->
+         <div id="adhar-mobile-otp-section" class="otp-section">
+            <form id="adhar-mobile-otp-form" class="otp-form" data-type="aadhaar-mobile">
+                <input type="hidden" name="action" value="verify_otp">
+                <div class="form-field d-flex">
+                    <input type="text" id="adhar-mobile-otp-input" name="otp-input" class="input-field auth-input otp-input" placeholder="Enter OTP" maxlength="6" required>
+                    <div class="form-submit resend-btn">
+                        <button class="otp-resend-btn submit-link" disabled><span> Resend OTP</span></button>
+                        <button class="change-mobile submit-link" >Change Mobile</button>
+                    </div>
+                </div>
+
                 <div class="form-submit">
                     <button type="submit" class="submit-btn">Verify OTP</button>
                 </div>
@@ -105,7 +125,7 @@
                 <span>or</span>
             </div>
             <div class="create-abha text-center">
-                <button class="create-abha-btn" id="create-abha-btn">
+                <button class="btn" id="create-abha-btn">
                     <div class="d-flex">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
                             <path d="M18.5 12c0 .563-.469 1.031-1 1.031H13v4.5c0 .532-.469.969-1 .969a.98.98 0 01-1-.969v-4.5H6.5c-.563 0-1-.469-1-1.031a.98.98 0 011-.969H11v-4.5c0-.562.438-1.031 1-1.031.531 0 1 .469 1 1.031v4.5h4.5c.531-.031 1 .438 1 .969z" fill="currentColor"></path>
@@ -140,13 +160,19 @@
                         <p>Date of Birth<span class="required">*</span></p>
                         <div class="form-group date-of-birth">
                             <div>
-                                <select id="day" class="input-field"><option value="">Day</option></select>
+                                <select id="day" class="input-field">
+                                    <option value="">Day</option>
+                                </select>
                             </div>
                             <div>
-                                <select id="month" class="input-field"><option value="">Month</option></select>
+                                <select id="month" class="input-field">
+                                    <option value="">Month</option>
+                                </select>
                             </div>
                             <div>
-                                <select id="year" class="input-field"><option value="">Year</option></select>
+                                <select id="year" class="input-field">
+                                    <option value="">Year</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -171,11 +197,15 @@
                         <div class="form-group state-city">
                             <div>
                                 <label for="state">State<span class="required">*</span></label>
-                                <select name="state" id="state" class="input-field"><option value="">Select a State</option></select>
+                                <select name="state" id="state" class="input-field">
+                                    <option value="">Select a State</option>
+                                </select>
                             </div>
                             <div>
                                 <label for="district">District<span class="required">*</span></label>
-                                <select name="district" id="district" class="input-field"><option value="">Select a District</option></select>
+                                <select name="district" id="district" class="input-field">
+                                    <option value="">Select a District</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -192,6 +222,19 @@
                     <button type="submit" class="submit-btn">Create New Address</button>
                 </div>
             </form>
+        </div>
+
+        <!-- Suggestion Form -->
+        <div class="suggestion-section">
+            <div class="text-center header">
+                <h3 class="title">Suggested Addresses</h3>
+
+            </div>
+
+            <div class="suggestion-list-wrap">
+                <div class="suggestion-list"></div>
+                <button id="submitSuggestion">Submit Suggestion</button>
+            </div>
         </div>
     </div>
 

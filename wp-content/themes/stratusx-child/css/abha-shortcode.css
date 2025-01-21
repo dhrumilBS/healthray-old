@@ -1,5 +1,5 @@
-.section-wrapper :is( button, .btn) {  padding: 12px 36px; background: var(--hr-secondary-color, #152ce1); border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.2s ease; color: #F0F2FF;}
-.section-wrapper :is( button, .btn):hover {  background: #5669ec; }
+.section-wrapper .btn {  padding: 12px 36px; background: var(--hr-secondary-color, #152ce1); border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.2s ease; color: #F0F2FF;}
+.section-wrapper .btn:hover {  background: #5669ec; }
 .section-wrapper { padding: 16px; border-radius: 12px; background: #FFF; box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.10); }
 .section-wrapper .content-sec { margin-bottom: 20px; text-align: center; }
 
@@ -12,7 +12,7 @@
 .section-wrapper .form-field { margin-bottom: 20px;  }
 .section-wrapper .form-field p { font-size: 16px; color: var(--hr-primary-color, rgb(27, 60, 116)); margin-bottom: 10px; font-weight: bold; }
 .section-wrapper .form-field .input-field { width: 100%; padding: 12px; border: 1px solid #CCC; border-radius: 6px; height: auto;}
-.section-wrapper .form-field :is(button, .btn, .input-field):focus { box-shadow: 0 0 0 2px  rgba(27, 60, 116, 0.25); }
+.section-wrapper .form-field :is(.btn, .input-field):focus { box-shadow: 0 0 0 2px  rgba(27, 60, 116, 0.25); }
 .section-wrapper .form-field .error {border: 1px solid red !important;}
 .section-wrapper .form-field .checkbox-input { display: flex; align-items: center; gap: 8px; }
 .section-wrapper .form-field .checkbox-input input { width: 16px; height: 16px; }
@@ -20,17 +20,17 @@
 .section-wrapper .form-submit { text-align: center; margin-top: 20px; }
 .section-wrapper .form-submit:not(.resend-btn) .submit-btn { padding: 12px 36px; background: var(--hr-secondary-color, #152ce1); border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.2s ease; color: #F0F2FF; }
 .section-wrapper .form-submit:not(.resend-btn) .submit-btn:hover { background: #5669ec; }
-.section-wrapper .form-submit button:disabled { background-color: #ccc; cursor: not-allowed; }
+.section-wrapper .form-submit button:disabled { cursor: not-allowed; }
 
 .section-wrapper .auth-form { display: none;  }
 .section-wrapper .auth-form.active { display: block;  }
 
-.otp-section { display: none; }
+.otp-section {display: none;}
 .otp-form .second-mobile-number {  margin-top: 20px;  }
 .otp-form .second-mobile-number .info-circle{ margin-top: 12px; gap: 12px; padding: 8px; border: 1px solid #b8bde1; background-color: #F0F2FF;  border-radius: 4px;}
 .otp-form .second-mobile-number .info-circle svg{ width: 20px; height: 20px; }
 .otp-form .resend-btn {  margin:0; flex-shrink: 0; display: flex; align-items: center; gap:16px;  margin-left: 16px; }
-.otp-form .resend-btn .submit-link{  font-weight: 600; color: var(--hr-secondary-color) }
+.otp-form .resend-btn .submit-link{ cursor: pointer; font-weight: 600; color: var(--hr-secondary-color); background-color: transparent; padding: 0; }
 
 
 #response-message { text-align: center; margin-top: 12px; }
@@ -46,7 +46,7 @@
 }
 
 
-.choose-abha-section {display: none; }
+.choose-abha-section {display: none;}
 .choose-abha-section .header{ margin-bottom: 20px;}
 .choose-abha-section .header .title{ margin-bottom: 8px;}
 
@@ -79,3 +79,10 @@
 
 .create-abha-form .form-group.full-name>*,
 .create-abha-form .form-group.state-city>* { width: 100%;}
+
+.suggestion-section{ display: none; }
+.suggestion-section .suggestion-list-wrap{ margin-top: 20px; }
+.suggestion-section .suggestion-list-wrap .suggestion-list{ padding: 12px; border-radius: 8px; border: 1px solid #5E6084; }
+.suggestion-section .suggestion-list-wrap .suggestion-list .suggestion-item{margin-bottom: 4px;border-radius: 8px;background-color: #F0F2FF;cursor: pointer;padding: 8px;}
+.suggestion-section .suggestion-list-wrap .suggestion-list .selected-address{ background-color: var(--hr-secondary-color); color: #FFF; }
+.suggestion-section .suggestion-list-wrap .suggestion-list .suggestion-item:last-child{ margin-bottom: 0; }
