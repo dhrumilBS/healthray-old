@@ -26,12 +26,17 @@
 .section-wrapper .auth-form.active { display: block;  }
 
 .otp-section {display: none;}
-.otp-form .second-mobile-number {  margin-top: 20px;  }
-.otp-form .second-mobile-number .info-circle{ margin-top: 12px; gap: 12px; padding: 8px; border: 1px solid #b8bde1; background-color: #F0F2FF;  border-radius: 4px;}
-.otp-form .second-mobile-number .info-circle svg{ width: 20px; height: 20px; }
-.otp-form .resend-btn {  margin:0; flex-shrink: 0; display: flex; align-items: center; gap:16px;  margin-left: 16px; }
-.otp-form .resend-btn .submit-link{ cursor: pointer; font-weight: 600; color: var(--hr-secondary-color); background-color: transparent; padding: 0; }
 
+#adhar-otp-section {
+    display: block;
+}
+:is(.adhar-mobile-otp-form,.otp-form) .second-mobile-number {  margin-top: 20px;  }
+:is(.adhar-mobile-otp-form,.otp-form) .second-mobile-number .info-circle{ margin-top: 12px; gap: 12px; padding: 8px; border: 1px solid #b8bde1; background-color: #F0F2FF;  border-radius: 4px;}
+:is(.adhar-mobile-otp-form,.otp-form) .second-mobile-number .info-circle svg{ width: 20px; height: 20px; }
+:is(.adhar-mobile-otp-form,.otp-form) .resend-btn {  margin:0; flex-shrink: 0; display: flex; align-items: center; gap:16px;  margin-left: 16px; }
+:is(.adhar-mobile-otp-form,.otp-form) .resend-btn .submit-link{ cursor: pointer; font-weight: 600; color: var(--hr-secondary-color); background-color: transparent; padding: 0; }
+
+.adhar-mobile-otp-section{ display: none;}
 
 #response-message { text-align: center; margin-top: 12px; }
 #response-message.error,.error-message { color: #F22;}

@@ -54,7 +54,7 @@
                     <input type="text" id="adhar-otp-input" class="input-field auth-input otp-input" placeholder="Enter OTP" maxlength="6" required>
                     <div class="form-submit resend-btn">
                         <button class="otp-resend-btn submit-link" disabled><span> Resend OTP</span></button>
-                        <button class="change-mobile submit-link" >Change Mobile</button>
+                        <button class="change-mobile submit-link">Change Mobile</button>
                     </div>
                 </div>
 
@@ -84,7 +84,7 @@
                     <input type="text" id="mobile-otp-input" name="otp-input" class="input-field auth-input otp-input" placeholder="Enter OTP" maxlength="6" required>
                     <div class="form-submit resend-btn">
                         <button class="otp-resend-btn submit-link" disabled><span> Resend OTP</span></button>
-                        <button class="change-mobile submit-link" >Change Mobile</button>
+                        <button class="change-mobile submit-link">Change Mobile</button>
                     </div>
                 </div>
 
@@ -94,15 +94,15 @@
             </form>
         </div>
 
-         <!-- mobile-otp -->
-         <div id="adhar-mobile-otp-section" class="otp-section">
-            <form id="adhar-mobile-otp-form" class="otp-form" data-type="aadhaar-mobile">
+        <!-- adhar-mobile-otp -->
+        <div id="adhar-mobile-otp-section" class="adhar-mobile-otp-section otp-section">
+            <form id="adhar-mobile-otp-form" class="adhar-mobile-otp-form otp-form" data-type="aadhaar-mobile">
                 <input type="hidden" name="action" value="verify_otp">
                 <div class="form-field d-flex">
                     <input type="text" id="adhar-mobile-otp-input" name="otp-input" class="input-field auth-input otp-input" placeholder="Enter OTP" maxlength="6" required>
                     <div class="form-submit resend-btn">
                         <button class="otp-resend-btn submit-link" disabled><span> Resend OTP</span></button>
-                        <button class="change-mobile submit-link" >Change Mobile</button>
+                        <button class="change-mobile submit-link">Change Mobile</button>
                     </div>
                 </div>
 
@@ -234,6 +234,8 @@
             <div class="suggestion-list-wrap">
                 <div class="suggestion-list"></div>
                 <button id="submitSuggestion">Submit Suggestion</button>
+                <button id="getaadharmobilesuggestion"></button>
+                <button id="getsuggestion"> </button>
             </div>
         </div>
     </div>

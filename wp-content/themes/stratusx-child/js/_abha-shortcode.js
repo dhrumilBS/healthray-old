@@ -131,7 +131,75 @@ jQuery(document).ready(($) => {
 		$commonSection.show();
 	});
 
-	
+	// Verify OTP Form Submit Handler
+	async function handleOtpFormSubmit(e) {
+		e.preventDefault();
+		$responseMessage.html('');
+		const $form = $(e.target);
+		type = $form.data('type');
+		const otp = $form.find('.otp-input').val().trim();
+		const transactionID = $transactionIdField.val().trim();
+		let otpMobileno = '';
+
+		if (type !== 'mobile') {
+			otpMobileno = $form.find('#otp-mobile-input').val().trim();
+			if (!/^\d{10}$/.test(otpMobileno)) {
+				return showError('Invalid mobile number.');
+			}
+			console.log("Mobile Noe.", ADHARNUMBER);
+		}
+
+		const payload = type === 'aadhaar' ? { otp: otp, number: otpMobileno, transactionID: transactionID } : { otp: otp, transactionID: transactionID };
+		const actionType = type === 'aadhaar' ? 'verify_aadhaar_otp' : 'verify_PHR_otp';
+
+
+		if (otp.length !== 6) {
+			return showError('Invalid OTP.');
+		}
+
+		console.log('OTP Payload:', { ...payload });
+
+		try {
+			toggleLoading(true);
+			const response = await $.post(ajax_obj, { action: actionType, ...payload });
+			const APIResponse = response.data;
+			if (APIResponse && response.success) {
+				showSuccess(APIResponse.message);
+				$form.closest('.otp-section').hide();
+
+				// ADHAR
+				if (APIResponse.image_url) {
+					const imageHtml = `
+						<div class="image-preview">
+							<img src="${APIResponse.image_url}" alt="API Image" />
+							<a href="${APIResponse.image_url}" download="image" class="download-btn">Download Image</a>
+						</div>`;
+					$responseMessage.html(imageHtml);
+				}
+
+				// PHR - Mobile
+				if (type != 'aadhaar') {
+					console.log(type, 'API Response:', APIResponse);
+					if (APIResponse.mappedPhrAddress && APIResponse.transactionId) {
+						$responseMessage.html('');
+						populatePhrDropdown(APIResponse.mappedPhrAddress, APIResponse.transactionId);
+					}
+					$('.choose-abha-section').show();
+					console.log(type, 'OTP Response:', response);
+
+				}
+
+
+			} else {
+				showError(APIResponse.message);
+			}
+		} catch (err) {
+			console.error('OTP Error:', err);
+			showError(`Error: ${err.message || 'An unexpected error occurred.'}`);
+		} finally {
+			toggleLoading(false);
+		}
+	}
 
 	// Populate PHR Address Dropdown
 	function populatePhrDropdown(mappedPhrAddresses, transactionId) {

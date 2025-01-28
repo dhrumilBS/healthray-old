@@ -1,5 +1,7 @@
 <?php
 // Aadhaar Authentication Shortcode
+define("STAGE_API_PATH", "https://node-stage.healthray.com/api/");
+define("LOCAL_API_PATH", "http://192.168.0.162:4004/api/");
 function adhar_auth_form_shortcode()
 {
 	// Start output buffering
@@ -24,21 +26,20 @@ function handle_aadhaar_form_submit_ajax()
 	if (empty($aadhaar_number)) {
 		wp_send_json_error(['message' => 'Aadhaar number is required.']);
 	}
-
-	$response = wp_remote_post('http://192.168.0.162:4004/api/v2/abha/m1-external/aadhaar/generate_otp', [
+	$url = LOCAL_API_PATH . 'v2/abha/m1-external/aadhaar/generate_otp';
+	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body'    => json_encode(['aadhaar' => $aadhaar_number]),
 	]);
 
 	if (is_wp_error($response)) {
-		wp_send_json_error(['message' => 'Error generating OTP. Please try again.']);
+		wp_send_json_error(['message' => 'Error generating OTP. Please try again.', $response]);
 	} else {
 		$body = json_decode(wp_remote_retrieve_body($response), true);
 
 		if (!empty($body['status']) && $body['status'] === 200) {
 			wp_send_json_success([
 				'message'       => $body['message'] ?? 'OTP sent successfully.',
-				'data'          => $body['data'],
 				'transactionId' => $body['data']['transaction_id'],
 			]);
 		} else {
@@ -56,14 +57,14 @@ add_action('wp_ajax_nopriv_aadhaar_auth_form_submit', 'handle_aadhaar_form_submi
 function verify_aadhaar_otp_ajax()
 {
 	$otp = sanitize_text_field($_POST['otp']);
-	$transactionId = sanitize_text_field($_POST['transactionID']);
+	$transactionId = sanitize_text_field($_POST['transactionId']);
 	$otpMobileno = sanitize_text_field($_POST['number']);
 
 	if (empty($otp) || empty($transactionId)) {
 		wp_send_json_error(['message' => 'OTP and Transaction ID are required.']);
 	}
-
-	$response = wp_remote_post('http://192.168.0.162:4004/api/v2/abha/m1-external/aadhaar/verify_otp', [
+	$url = LOCAL_API_PATH . 'v2/abha/m1-external/aadhaar/verify_otp';
+	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body'	  => json_encode(['otp' => $otp, 'transaction_id' => $transactionId, 'number' => $otpMobileno]),
 	]);
@@ -95,6 +96,7 @@ function verify_aadhaar_otp_ajax()
 				wp_send_json_success([
 					'message' => $data['message'],
 					'data' => $data['data'],
+					'userData' => true
 				]);
 			} else {
 				wp_send_json_error(['message' => $data['message'] ?? 'Verification failed.', 'data' => $body['data'][0]]);
@@ -118,7 +120,7 @@ function handle_aadhaar_mobile_submit_ajax()
 		wp_send_json_error(['message' => 'Mobile number is required.']);
 	}
 
-	$response = wp_remote_post('http://192.168.0.162:4004/api/v2/abha/m1-external/mobile/generate_otp', [
+	$response = wp_remote_post(LOCAL_API_PATH . 'v2/abha/m1-external/mobile/generate_otp', [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body'    => json_encode(['number' => $number, 'transaction_id' => $transaction_id]),
 	]);
@@ -146,9 +148,116 @@ add_action('wp_ajax_nopriv_handle_aadhaar_mobile_submit', 'handle_aadhaar_mobile
 
 
 //! -- 1.4 - m1-external/mobile/verify_otp -----------
-function verify_adhar_mobile_otp_ajax() {}
+function verify_adhar_mobile_otp_ajax()
+{
+	$number = sanitize_text_field($_POST['number']);
+	$otp = sanitize_text_field($_POST['otp']);
+	$transaction_id = sanitize_text_field($_POST['transaction_id']);
+
+	if (empty($otp)) {
+		wp_send_json_error(['message' => 'OTP cant be Blank.', $_POST]);
+	}
+
+	$response = wp_remote_post(LOCAL_API_PATH . 'v2/abha/m1-external/mobile/verify_otp', [
+		'headers' => ['Content-Type' => 'application/json'],
+		'body'    => json_encode(['number' => $number, 'transaction_id' => $transaction_id, "otp" => $otp]),
+	]);
+
+	if (is_wp_error($response)) {
+		wp_send_json_error(['message' => 'Error. Please try again.']);
+	} else {
+		$body = json_decode(wp_remote_retrieve_body($response), true);
+
+		if (!empty($body['status']) && $body['status'] === 200) {
+			wp_send_json_success([
+				'message'       => $body['message'] ?? 'OTP Virified successfully.',
+				'data'          => $body['data'],
+				'transactionId' => $body['data']['transaction_id'],
+			]);
+		} else {
+			wp_send_json_error(['message' => $body['message'] ?? 'Unknown error occurred.', 'data' => $body['data'][0], $_POST]);
+		}
+	}
+}
 add_action('wp_ajax_verify_adhar_mobile_otp', 'verify_adhar_mobile_otp_ajax');
 add_action('wp_ajax_nopriv_verify_adhar_mobile_otp', 'verify_adhar_mobile_otp_ajax');
+
+//! -- 1.5 - m1-external/suggestion --- Completed
+function get_aadhaar_suggestion_ajax()
+{
+	$transaction_id = sanitize_text_field($_GET['transaction_id']);
+
+	if (empty($transaction_id)) {
+		wp_send_json_error(['message' => 'Transaction ID is required.']);
+	}
+
+	$response = wp_remote_get(LOCAL_API_PATH . "v2/abha/m1-external/suggestion?transaction_id=$transaction_id", [
+		'headers' => ['Content-Type' => 'application/json']
+	]);
+
+	if (is_wp_error($response)) {
+		wp_send_json_error(['message' => 'Error retrieving suggestions.', 'response' => $response]);
+	} else {
+		$body = json_decode(wp_remote_retrieve_body($response), true);
+		if (!empty($body['status']) && $body['status'] === 200 && !empty($body['data'])) {
+			wp_send_json_success([
+				'message' => $body['message'] ?? 'Suggestions fetched successfully.',
+				'data' => $body['data'],
+				'suggestions' => $body['data']['suggestions']
+			]);
+		} else {
+			wp_send_json_error([
+				'message' => $body['message'] ?? 'No suggestions found.',
+				'data' => $body['data'][0]
+
+			]);
+		}
+	}
+
+	wp_die();
+}
+add_action('wp_ajax_get_aadhaar_suggestion', 'get_aadhaar_suggestion_ajax');
+add_action('wp_ajax_nopriv_get_aadhaar_suggestion', 'get_aadhaar_suggestion_ajax');
+
+
+//! -- 1.6 - m1-external/link -----------
+function handle_link_abha_ajax()
+{
+	$payload = sanitize_text_field($_POST['payload']);
+
+	if (empty($payload)) {
+		wp_send_json_error(['message' => 'Payload is required.']);
+	}
+	$url = LOCAL_API_PATH . 'v2/abha/m1-external/aadhaar/generate_otp';
+	$response = wp_remote_post($url, [
+		'headers' => ['Content-Type' => 'application/json'],
+		'body'    => json_encode([$payload]),
+	]);
+
+	if (is_wp_error($response)) {
+		wp_send_json_error(['message' => 'Error linking ABHA number. Please try again.']);
+	} else {
+		$headers = wp_remote_retrieve_headers($response);
+		$body = wp_remote_retrieve_body($response);
+
+		$content_type = isset($headers['content-type']) ? $headers['content-type'] : '';
+
+		if (strpos($content_type, 'image/') !== false) {
+			$image_url = 'data:' . $content_type . ';base64,' . base64_encode($body);
+			wp_send_json_success([
+				'message' => 'Image received.',
+				'image_url' => $image_url,
+				'downloadable' => true
+			]);
+		} else {
+			wp_send_json_error(['message' => $data['message'] ?? 'Link failed.', 'data' => $body['data'][0]]);
+		}
+	}
+
+	wp_die();
+}
+add_action('wp_ajax_handle_link_abha', 'handle_link_abha_ajax');
+add_action('wp_ajax_nopriv_handle_link_abha', 'handle_link_abha_ajax');
 
 
 // -----------------------------------------------------------------------------------------------------
@@ -157,13 +266,13 @@ add_action('wp_ajax_nopriv_verify_adhar_mobile_otp', 'verify_adhar_mobile_otp_aj
 //^ 2. (phr/generate_otp) Handle PHR Mobile Form Submission (PHR_mobile_auth_form_submit)
 function handle_PHR_mobile_form_submit_ajax()
 {
-	$mobile_number = sanitize_text_field($_POST['number']);
+	$mobile_number = sanitize_text_field($_POST['value']);
 
 	if (empty($mobile_number)) {
 		wp_send_json_error(['message' => 'Mobile number is required.']);
 	}
-
-	$response = wp_remote_post('https://node-stage.healthray.com/api/v1/abha/m1-external/phr/generate_otp', [
+	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/generate_otp";
+	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body'    => json_encode(['number' => $mobile_number, 'is_health_number' => false]),
 	]);
@@ -194,14 +303,14 @@ add_action('wp_ajax_nopriv_PHR_mobile_auth_form_submit', 'handle_PHR_mobile_form
 //^ (phr/verify_otp) Handle Mobile OTP Verification --- Completed
 function handle_mobile_PHR_otp()
 {
-	$transaction_id = sanitize_text_field($_POST['transactionID']);
+	$transaction_id = sanitize_text_field($_POST['transactionId']);
 	$otp = sanitize_text_field($_POST['otp']);
 
 	if (empty($transaction_id) || empty($otp)) {
 		wp_send_json_error(["post" => $_POST, 'message' => 'Transaction ID and OTP are required.']);
 	}
-
-	$response = wp_remote_post('https://node-stage.healthray.com/api/v1/abha/m1-external/phr/verify_otp', [
+	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/verify_otp";
+	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body' => json_encode(['transaction_id' => $transaction_id, 'otp' => $otp,  "is_health_number" => false,]),
 	]);
@@ -236,7 +345,8 @@ add_action('wp_ajax_nopriv_verify_PHR_otp', 'handle_mobile_PHR_otp');
 //^ (phr/state) Get District and State 
 function handle_get_states()
 {
-	$response = wp_remote_get('https://node-stage.healthray.com/api/v1/abha/m1-external/phr/state');
+	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/state";
+	$response = wp_remote_get($url);
 
 	if (is_wp_error($response)) {
 		wp_send_json_error(['message' => 'Failed to fetch states.']);
@@ -260,8 +370,8 @@ function handle_get_districts()
 	if (empty($state_id)) {
 		wp_send_json_error(['message' => 'State ID is required.']);
 	}
-
-	$response = wp_remote_get("https://node-stage.healthray.com/api/v1/abha/m1-external/phr/district?state_id=$state_id");
+	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/district?state_id=$state_id";
+	$response = wp_remote_get($url);
 
 	if (is_wp_error($response)) {
 		wp_send_json_error(['message' => 'Failed to fetch districts.']);
@@ -314,7 +424,8 @@ function handle_PHR_demographics_submit_ajax()
 	];
 
 	// Call the API
-	$response = wp_remote_post('https://node-stage.healthray.com/api/v1/abha/m1-external/phr/add_demographic_details', [
+	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/add_demographic_details";
+	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body' => json_encode($payload),
 	]);
@@ -336,16 +447,16 @@ function handle_PHR_demographics_submit_ajax()
 add_action('wp_ajax_PHR_demographics_submit', 'handle_PHR_demographics_submit_ajax');
 add_action('wp_ajax_nopriv_PHR_demographics_submit', 'handle_PHR_demographics_submit_ajax');
 
-//^ (phr/suggession) get Suggession For Abha Address --- Completed
-function get_PHR_suggession_ajax()
+//^ (phr/suggession) get Suggestion For Abha Address --- Completed
+function get_PHR_suggestion_ajax()
 {
 	$transaction_id = sanitize_text_field($_GET['transaction_id']);
 
 	if (empty($transaction_id)) {
 		wp_send_json_error(['message' => 'Transaction ID is required.']);
 	}
-
-	$response = wp_remote_get("https://node-stage.healthray.com/api/v1/abha/m1-external/phr/suggession?transaction_id=$transaction_id", [
+	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/suggession?transaction_id=$transaction_id";
+	$response = wp_remote_get($url, [
 		'headers' => ['Content-Type' => 'application/json']
 	]);
 
@@ -369,8 +480,8 @@ function get_PHR_suggession_ajax()
 
 	wp_die();
 }
-add_action('wp_ajax_get_PHR_suggestion', 'get_PHR_suggession_ajax');
-add_action('wp_ajax_nopriv_get_PHR_suggestion', 'get_PHR_suggession_ajax');
+add_action('wp_ajax_get_PHR_suggestion', 'get_PHR_suggestion_ajax');
+add_action('wp_ajax_nopriv_get_PHR_suggestion', 'get_PHR_suggestion_ajax');
 
 //^ phr/login --- Completed
 function handle_login_phr_address()
@@ -389,7 +500,8 @@ function handle_login_phr_address()
 		"is_health_number" => false,
 		"already_registered" => $alreadyRegistered
 	];
-	$response = wp_remote_post('https://node-stage.healthray.com/api/v1/abha/m1-external/phr/login', [
+	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/login";
+	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body' => json_encode($payloadBody),
 	]);

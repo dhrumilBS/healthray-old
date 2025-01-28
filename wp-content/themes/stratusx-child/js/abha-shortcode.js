@@ -4,15 +4,20 @@ jQuery(document).ready(($) => {
 	const $mobileOtpSection = $('#mobile-otp-section');
 	const $responseMessage = $('#response-message');
 	const $loadingSpinner = $('#loading-spinner');
-	const $otpForm = $('.otp-form');
 	const $resendButton = $('.otp-resend-btn');
 	const $changeMobileBtn = $('.change-mobile');
 	const $transactionIdField = $('#transaction-id');
 	const $state = $("#state");
 	const $district = $("#district");
+	const typeToAction = {
+		aadhaar: 'verify_aadhaar_otp',
+		mobile: 'verify_PHR_otp',
+		'aadhaar-mobile': 'verify_adhar_mobile_otp'
+	};
 
 	let type = null;
 	let ADHARNUMBER = null;
+	let mobileNumber = null;
 	let loadingInterval, resendTimer;
 
 	// Helper Functions
@@ -30,7 +35,7 @@ jQuery(document).ready(($) => {
 		loadingInterval = setInterval(() => {
 			dots = dots.length < 3 ? dots + '.' : '';
 			$element.text(`Loading${dots}`).show();
-		}, 500);
+		}, 250);
 	}
 
 	function stopLoadingAnimation($element) {
@@ -43,7 +48,7 @@ jQuery(document).ready(($) => {
 	}
 
 	function startResendTimer() {
-		let countdown = 3;
+		let countdown = 30;
 		$resendButton.css('opacity', 0.75).prop('disabled', true).text(`Resend OTP in ${countdown}s`);
 		resendTimer = setInterval(() => {
 			$resendButton.text(`Resend OTP in ${--countdown}s`);
@@ -79,29 +84,28 @@ jQuery(document).ready(($) => {
 		const $form = $(e.target);
 		type = $form.data('type');
 		const inputField = $form.find('.auth-input').val().trim();
-
 		$responseMessage.html('');
 		toggleLoading(true);
-
-		// Construct Payload and Determine ActionType
-		const payload = type === 'aadhaar' ? { value: inputField } : { number: inputField };
-		const actionType = type === 'aadhaar' ? 'aadhaar_auth_form_submit' : 'PHR_mobile_auth_form_submit';
-
+		const payload = { value: inputField };
+		const action = type === 'aadhaar' ? 'aadhaar_auth_form_submit' : 'PHR_mobile_auth_form_submit';
+		console.log(action, "Field: ", inputField);
 		console.log('Submitting payload:', payload);
-		console.log('Action type:', actionType);
 
 		try {
-			const response = await $.post(ajax_obj, { action: actionType, ...payload });
-			console.log('Response received:', response);
+			const response = await $.post(ajax_obj, { action, ...payload });
 			if (response.success) {
+				console.log("response", response);
+				console.log("response.data", response.data);
 				const { transactionId, message } = response.data;
-				ADHARNUMBER = inputField;
+				localStorage.setItem('transactionId', transactionId);
 				$transactionIdField.val(transactionId);
+				type === 'aadhaar' ? ADHARNUMBER = inputField : mobileNumber = inputField;
 				showMessage(message, 'success');
 				type === 'aadhaar' ? $adharOtpSection.show() : $mobileOtpSection.show();
 				$commonSection.hide();
 				startResendTimer();
 			} else {
+				console.log(response);
 				showMessage(response.data?.message || 'Verification failed.', 'error');
 			}
 		} catch (err) {
@@ -113,6 +117,130 @@ jQuery(document).ready(($) => {
 	}
 	$('.auth-form').on('submit', handleAuthFormSubmit);
 
+	// Verify OTP form submit handler
+	async function handleOtpFormSubmit(e) {
+		e.preventDefault();
+		const $form = $(e.target);
+		const otp = $form.find('.otp-input').val().trim();
+		const transactionId = localStorage.getItem('transactionId');
+		const type = $form.data('type');
+		const action = typeToAction[type];
+		// Build payload based on type
+		const payload = { otp, transactionId, action };
+		console.log("1. Inside handleOtpFormSubmit for:", type);
+
+		// Add number for aadhaar type
+		if (type === 'aadhaar') {
+			mobileNumber = $form.find('#adhar-otp-mobile-input').val().trim();
+			payload.number = mobileNumber;
+			console.log("2.", mobileNumber);
+		}
+
+		// Validate OTP and number
+		if (otp.length !== 6 || (type !== 'mobile' && type !== 'aadhaar' && !/^\d{10}$/.test(payload.number))) {
+			return showMessage('Invalid input.', 'error');
+		}
+
+		console.log('3. Submitting OTP Payload:', payload);
+
+		try {
+			toggleLoading(true);
+			const response = await $.post(ajax_obj, { action, ...payload });
+			// const response = {
+			// 	"success": true,
+			// 	"userData": true,
+			// 	"data": {
+			// 		"message": "This account already exist",
+			// 		"data": {
+			// 			"is_new": false,
+			// 			"transaction_id": "8c83ad60-a802-405f-84de-6ce28d076e0e",
+			// 			"otp_required": false,
+			// 			"abha_number": "91562356614684",
+			// 			"first_name": "Mangukiya",
+			// 			"last_name": "Alkeshbhai",
+			// 			"middle_name": "Dhrumil",
+			// 			"dob": "30-06-1999",
+			// 			"gender": "M",
+			// 			"address": "33, Sonal Park Society, Ambatalawadi, Katargam, Surat City, Surat City, Surat, Gujarat",
+			// 			"email": null,
+			// 			"state": "GUJARAT",
+			// 			"district": "SURAT",
+			// 			"abha_address": [
+			// 				"91562356614684@sbx"
+			// 			],
+			// 			"tokens": {
+			// 				"token": "eyJhbGciOiJSUzUxMiJ9.eyJpc0t5Y1ZlcmlmaWVkIjp0cnVlLCJzdWIiOiI5MS01NjIzLTU2NjEtNDY4NCIsImNsaWVudElkIjoiYWJoYS1wcm9maWxlLWFwcC1hcGkiLCJzeXN0ZW0iOiJBQkhBLU4iLCJhY2NvdW50VHlwZSI6InN0YW5kYXJkIiwibW9iaWxlIjoiOTcyNTYxOTYzNCIsImFiaGFOdW1iZXIiOiI5MS01NjIzLTU2NjEtNDY4NCIsInByZWZlcnJlZEFiaGFBZGRyZXNzIjoiOTE1NjIzNTY2MTQ2ODRAc2J4IiwidHlwIjoiVHJhbnNhY3Rpb24iLCJleHAiOjE3MzgwNDE5NjIsImlhdCI6MTczODA0MDE2MiwidHhuSWQiOiI4YzgzYWQ2MC1hODAyLTQwNWYtODRkZS02Y2UyOGQwNzZlMGUifQ.a8CFetp_2r80bValtV7101MHtJhYCCokS1xBQCBt2Cb63xeR0sUe0p0tOK4Ro2o1kjH2egLd_QoZYJW0wmbDNl01nDIhjwq0ATxVYEX0EB_eKz0_gMf5WlvM4k5ajWi1xwlhlg__wN6Op2SUpRE5MSNFmQBLY9DBlwr-h-RtmNkMyD3curTWxI0VQnNuQUQYXAvORPPAGqhlk6kJzCJUAE39S4TH-36ehVfeMGllqcJdk0sF0XuitGRdVBf_OHKPcXYJZ9og8i928kUOhOYMroIlsDgHZWCnwKDjdztzX6DH9C6_3m2bie9eQeXqosjqKyytlgCp-WvyU3negtSlLY65BvTHvjyJBvgEbzB0tMxhmt09F1_x3g4T0k8BmWGNjug24DWI_PbJNkVnyjVN3btvLBwrnzJMG43E5K9kwhnS1T8_u20hsa2mr0B9Sv-ELy4QZPeJRCQ3TfYDuejCPqub7uOQZNndrVSrPFLnwJPg9mxT1-oH42n4jugq9hFtW0XIefTk3j5AiZ0tX3kHITdM3gTQyNm59VEdhZuhheAeuWb_pg1j8osNhW1oYED-Jqxido_ZyVFiA13TZIygl4xN5IF26vW7HWqauoGLki0T-92Drp7f68T_pD1O3Jem1M_V1YbwnITe6srM0MoR77V8WPCgSIxJoOtwBSTKYok",
+			// 				"expiresIn": 1800,
+			// 				"refreshToken": "eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiI5MS01NjIzLTU2NjEtNDY4NCIsImNsaWVudElkIjoiYWJoYS1wcm9maWxlLWFwcC1hcGkiLCJzeXN0ZW0iOiJBQkhBLU4iLCJ0eXAiOiJSZWZyZXNoIiwiZXhwIjoxNzM5MzM2MTYyLCJpYXQiOjE3MzgwNDAxNjJ9.iGCLHNj7J4Db2KqNTJonLqcEeYpxBQJNA1-5H5BLSHXSzcIDqVjqJDOTVxwSICMmgvvtAkL8HQYSn4z6QNgbP2H_yttkAHxLnGRaYv42lp3liVcLJZLLzrFnkppA2Ywr-CqkXZEp0qg9ftB9h29XwaJ7eLzM71yB6ArCsVQwrxslcyUGwZrAJdLx5bwU2JEutGXMg0xoV3rotOOJiolI9VfAi16cY79qxVhH7oie0bpGVE7IFPs0NepfI619Mdu1wziRlkLNgVK-7K_hqZ2c65KwZV5M6nRzeA6OJlc3GCie0f8soP2nZF3kBssMZizoXe_cTy9B8JfbQzH2Ge_UhL4EpTrxWRpQQ_BG5xCtA8KMXVZh4QusEic7xQALt71h1Xlv0vLlYwQt7cwiQ6MkyyiEhME6sqC8xIVhQmjgTrjZYeL5m3UT3k04ohIwSc9b7JJQyoOZZHeY3E0hFQkk3WQGEtsfGs0F1AkE7nUZr5VhBnzNOkeAruOyeqPOgpnOHRs1sogf-EUGuPLzIim7SxdPfjemE303_BsWFuS83UqygdrdgD1PqUEId6ZgogLQTb18jwZfYqajfwSlkNQsACt-cSISrcwV6exskmJe_d-yOYvKWwD9LhhPBpuMuVLniVyMZjJq7hi29MVlTvRtrXTNBOZsA_xDjPyzBgtbD4U",
+			// 				"refreshExpiresIn": 1296000
+			// 			}
+			// 		}
+			// 	}
+			// }
+			console.log('4. Verify OTP Response:', response);
+			const { message, data: { transaction_id, otp_required, first_name, last_name, middle_name, abha_address, abha_number, tokens: { token, refreshToken }, gender } } = response.data;
+
+			if (response.success && response.userData) {
+				if (otp_required) {
+					console.log("OTP is required. Handle OTP process.");
+					showMessage(message, 'success');
+				} else if (otp_required === false) {
+					const payload = {
+						is_new: 1,
+						abha_address: abha_address[0],
+						transaction_id,
+						user_details: {
+							first_name,
+							middle_name,
+							last_name,
+							gender,
+							abha_health_number: abha_number,
+							mobile_no: mobileNumber,
+							tokens: { token, refreshToken }
+						}
+					};
+					console.log("(0) - payload link", payload);
+
+					await processUserData(payload, data);
+				}
+				if (response.data.image_url) {
+					displayImagePreview(image_url);
+					showMessage(message, 'success');
+				}
+				localStorage.setItem('transactionId', transaction_id);
+			} else {
+				console.log("data", response.data);
+				console.log("message", message);
+				showMessage(message, 'error');
+			}
+		} catch (err) {
+			console.error('OTP Error:', err);
+			showMessage(`E r ror: ${err.message || 'An unexpected error occurred.'}`, 'error');
+		} finally {
+			toggleLoading(false);
+		}
+	}
+	$('.otp-form').on('submit', handleOtpFormSubmit);
+
+	async function processUserData(payload) {
+		try {
+			toggleLoading(true);
+			const action = "hadle_link_abha";
+			const response = await $.post(ajax_obj, { action, payload });
+			if (response.data.image_url) {
+				displayImagePreview(image_url);
+				showMessage(message, 'success');
+			}
+		}
+		catch (err) {
+			console.error('User Data Error:', err);
+			showMessage(`E r ror: ${err.message || 'An unexpected error occurred.'}`, 'error');
+
+		}
+		finally { toggleLoading(false); }
+	}
+
+
 	// Change Mobile Button Handler
 	$changeMobileBtn.on('click', () => {
 		$responseMessage.html('');
@@ -120,144 +248,6 @@ jQuery(document).ready(($) => {
 		$mobileOtpSection.hide();
 		$commonSection.show();
 	});
-
-	// Function to handle successful OTP verification
-	async function handlePostOtpSuccess(APIResponse, $form) {
-		console.log('Post OTP API Response:', APIResponse);
-
-		// Show image preview if available
-		if (APIResponse.image_url) {
-			displayImagePreview(APIResponse.image_url);
-		} else if (APIResponse.data.otp_required) {
-			const transactionId = $transactionIdField.val().trim();
-			const mobileNumber = $form.find('#adhar-otp-mobile-input').val().trim();
-			const payload = { transaction_id: transactionId, number: mobileNumber };
-
-			console.log("Sending mobile submission payload:", payload);
-
-			try {
-				toggleLoading(true);
-				const response = await $.post(ajax_obj, { action: 'handle_aadhaar_mobile_submit', ...payload });
-				const APIResponse = response.data;
-
-				console.log(APIResponse);
-				if (response.success) {
-					showMessage(APIResponse.message, 'success');
-				} else {
-					showMessage(APIResponse.message, 'error');
-				}
-
-
-			}
-			catch (err) {
-				console.error('Mobile submission Error:', err);
-				showMessage(`Error: ${err.message || 'An unexpected error occurred.'}`, 'error');
-			}
-			finally { toggleLoading(false); }
-
-
-			$('#adhar-mobile-otp-section').show();
-		} else {
-			// Handle the dropdown population if addresses are available
-			handleAddressPopulation(APIResponse);
-
-			// If no additional addresses are available, show an error message
-			showMessage(APIResponse.message || 'Something went wrong.', 'error');
-		}
-	}
-
-	// Make a mobile submission if required
-	async function handleMobileSubmit(e) {
-		
-		$form = $(e.target);
-		console.log($form);
-
-		const transactionId = $transactionIdField.val().trim();
-		const mobileNumber = $form.find('#adhar-otp-mobile-input').val().trim();
-		const otp = $form.find('#adhar-mobile-otp-input').val().trim();
-		const payload = { transaction_id: transactionId, otp: otp };
-
-		console.log("Verify adhar-mobile payload:", payload);
-
-		try {
-			toggleLoading(true);
-			const response = await $.post(ajax_obj, { action: 'verify_adhar_mobile_otp', ...payload });
-			const APIResponse = response.data;
-
-			if (response.success) {
-				showMessage(APIResponse.message, 'success');
-			} else {
-				showMessage(APIResponse.message, 'error');
-			}
-		} catch (err) {
-			console.error('Mobile submission Error:', err);
-			showMessage(`Error: ${err.message || 'An unexpected error occurred.'}`, 'error');
-		} finally {
-			toggleLoading(false);
-		}
-	}
-
-	$('#adhar-mobile-otp-form').on('submit', handleMobileSubmit);
-
-	// Verify OTP form submit handler
-	async function handleOtpFormSubmit(e) {
-		// e.preventDefault();
-
-		const $form = $(e.target);
-		console.log($form);
-		
-		const otp = $form.find('.otp-input').val().trim();
-		const transactionID = $transactionIdField.val().trim();
-		const type = $form.data('type');
-		const action = type === 'aadhaar' ? 'verify_aadhaar_otp' : 'verify_PHR_otp';
-
-		const payload = (type === 'aadhaar')
-			? { otp, number: $form.find('#adhar-otp-mobile-input').val().trim(), transactionID }
-			: { otp, transactionID };
-
-		// Validate OTP and number
-		if (otp.length !== 6 || (type !== 'mobile' && !/^\d{10}$/.test(payload.number))) {
-			return showMessage('Invalid input.', 'error');
-		}
-
-		console.log('Submitting OTP Payload:', payload);
-
-		try {
-			toggleLoading(true);
-			const response = await $.post(ajax_obj, { action, ...payload });
-			console.log('Verify OTP Response:', response);
-
-			if (response.success) {
-				showMessage(response.data.message, 'success');
-				await handlePostOtpSuccess(response.data, $form);
-			} else {
-				showMessage(response.data.message, 'error');
-			}
-		} catch (err) {
-			console.error('OTP Error:', err);
-			showMessage(`Error: ${err.message || 'An unexpected error occurred.'}`, 'error');
-		} finally {
-			toggleLoading(false);
-		}
-	}
-
-	// Additional function to handle address population in the dropdown
-	function handleAddressPopulation(APIResponse) {
-		if (APIResponse.mappedPhrAddress || APIResponse.data.abha_address) {
-			const addressToUse = APIResponse.mappedPhrAddress ?? APIResponse.data.abha_address;
-			const transactionIdToUse = APIResponse.transactionId ?? APIResponse.transaction_id;
-
-			// Populate the PHR dropdown
-			populatePhrDropdown(addressToUse, transactionIdToUse);
-
-			// Show the section that allows users to choose an address
-			$('.choose-abha-section').show();
-		}
-	}
-
-	// Attach the submit handler to the OTP form
-	$otpForm.on('submit', handleOtpFormSubmit);
-
 
 	// Populate PHR Address Dropdown
 	function populatePhrDropdown(mappedPhrAddresses, transactionId) {
@@ -363,7 +353,7 @@ jQuery(document).ready(($) => {
 
 	// Toggle ABHA Sections
 	$("#create-abha-btn").on("click", function () {
-		console.log(ADHARNUMBER);
+		console.log("mobileInputField: ", ADHARNUMBER);
 		$responseMessage.html('');
 		$(".choose-abha-section").hide();
 		$('.create-abha-section').show();
@@ -449,42 +439,45 @@ jQuery(document).ready(($) => {
 	// Form Submission
 	$continueButton.on("click", async function (e) {
 		e.preventDefault();
-		if (validateForm()) {
-			toggleLoading(true);
-			const payload = {
-				transaction_id: $transactionIdField.val().trim(),
-				first_name: $fname.val().trim(),
-				middle_name: $mname.val().trim(),
-				last_name: $lname.val().trim(),
-				pin_code: $pincode.val().trim(),
-				gender: $gender.filter(":checked").val().trim(),
-				dob: `${$year.val().trim()}-${$month.val().trim()}-${$day.val().trim()}`,
-				mobile_no: ADHARNUMBER,
-				state_code: $state.val().trim(),
-				district_code: $district.val().trim(),
-				address: $address.val().trim()
-			};
+		console.log("mobileInputField: ", ADHARNUMBER);
 
-			console.log('Submitting demographics payload:', payload);
+		// if (validateForm()) {
+		// 	toggleLoading(true);
+		// 	const payload = {
+		// 		transaction_id: $transactionIdField.val().trim(),
+		// 		first_name: $fname.val().trim(),
+		// 		middle_name: $mname.val().trim(),
+		// 		last_name: $lname.val().trim(),
+		// 		pin_code: $pincode.val().trim(),
+		// 		gender: $gender.filter(":checked").val().trim(),
+		// 		dob: `${$year.val().trim()}-${$month.val().trim()}-${$day.val().trim()}`,
+		// 		mobile_no: mobileInputField,
+		// 		state_code: $state.val().trim(),
+		// 		district_code: $district.val().trim(),
+		// 		address: $address.val().trim()
+		// 	};
 
-			try {
-				const response = await $.post(ajax_obj, { action: "PHR_demographics_submit", ...payload });
-				console.log('Demographics submission response:', response);
-				if (response.success) {
-					$('.create-abha-section').hide();
-					fetchSuggestion($transactionIdField.val().trim());
-					$suggestionSection.show();
-					showMessage(response.data?.message || "Demographics submitted successfully.", 'success');
-				} else {
-					showMessage(response.data?.data || "Failed to submit demographics.", 'error');
-				}
-			} catch (err) {
-				console.error("Error:", err);
-				showMessage(`Error: ${err.message}`, 'error');
-			} finally {
-				toggleLoading(false);
-			}
-		}
+		// 	console.log('Submitting demographics payload:', payload);
+
+		// 	try {
+		// 		const response = await $.post(ajax_obj, { action: "PHR_demographics_submit", ...payload });
+		// 		console.log('Demographics submission response:', response);
+		// 		if (response.success) {
+		// 			$('.create-abha-section').hide();
+		// 			var action = "get_PHR_suggestion";
+		// 			fetchSuggestion(action, $transactionIdField.val().trim());
+		// 			$suggestionSection.show();
+		// 			showMessage(response.data?.message || "Demographics submitted successfully.", 'success');
+		// 		} else {
+		// 			showMessage(response.data?.data || "Failed to submit demographics.", 'error');
+		// 		}
+		// 	} catch (err) {
+		// 		console.error("Error:", err);
+		// 		showMessage(`Error: ${err.message}`, 'error');
+		// 	} finally {
+		// 		toggleLoading(false);
+		// 	}
+		// }
 	});
 
 	//  Login PHR address
@@ -504,7 +497,6 @@ jQuery(document).ready(($) => {
 		try {
 			toggleLoading(true);
 			const loginResponse = await $.post(ajax_obj, { action: 'login_phr_address', ...loginPayload });
-			console.log('PHR Login Response:', loginResponse);
 			if (loginResponse.success) {
 				const imageUrl = loginResponse.data?.image_url;
 				if (imageUrl)
@@ -514,6 +506,8 @@ jQuery(document).ready(($) => {
 
 				$suggestionSection.hide();
 			} else {
+				console.log(loginResponse);
+
 				showMessage(loginResponse.data?.message || 'Login failed.', 'error');
 			}
 		} catch (err) {
@@ -525,13 +519,13 @@ jQuery(document).ready(($) => {
 	}
 
 	// Fetch Suggestion
-	async function fetchSuggestion(transaction_id) {
+	async function fetchSuggestion(action, transaction_id) {
 		try {
-			const response = await $.get(ajax_obj, { action: "get_PHR_suggestion", transaction_id });
+			const response = await $.get(ajax_obj, { action: action, transaction_id });
 
-			console.log('Fetch Suggestion Response:', response);
+			console.log('Fetch suggestion Response:', response);
 			if (response.success) {
-				const suggestions = response.data.suggestions;
+				const suggestions = response.data.suggestions.suggestion;
 				$suggestionList.empty();
 				suggestions.forEach(name => {
 					const $suggestionItem = $(`
@@ -552,11 +546,17 @@ jQuery(document).ready(($) => {
 		}
 	}
 
-	$('#getSuggestion').on('click', () => {
-		fetchSuggestion($transactionIdField.val().trim());
+	$('#getaadharmobilesuggestion').on('click', () => {
+		console.log("dsfs");
+		var action = "get_aadhaar_suggestion";
+		fetchSuggestion(action, $transactionIdField.val().trim());
+	});
+	$('#getsuggestion').on('click', () => {
+		var action = "get_PHR_suggestion";
+		fetchSuggestion(action, $transactionIdField.val().trim());
 	});
 
-	$('#submitSuggestion').on('click', async function () {
+	$('#submitSuggession').on('click', async function () {
 		const $transactionId = $transactionIdField.val().trim();
 		console.log('Submitting suggestion for Transaction ID:', $transactionId);
 		const $phrAddress = $('.suggestion-list').find('.selected-address').data('address');
