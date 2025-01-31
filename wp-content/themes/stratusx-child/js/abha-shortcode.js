@@ -127,63 +127,36 @@ jQuery(document).ready(($) => {
 		const action = typeToAction[type];
 		// Build payload based on type
 		const payload = { otp, transactionId, action };
-		console.log("1. Inside handleOtpFormSubmit for:", type);
+		console.log("1. Inside handleOtpFormSubmit for:", action);	
 
 		// Add number for aadhaar type
-		if (type === 'aadhaar') {
-			mobileNumber = $form.find('#adhar-otp-mobile-input').val().trim();
-			payload.number = mobileNumber;
-			console.log("2.", mobileNumber);
+		if (type === 'aadhaar' || type === 'aadhaar-mobile' ) {
+			payload.number = $	('#adhar-otp-mobile-input').val().trim();
 		}
 
 		// Validate OTP and number
-		if (otp.length !== 6 || (type !== 'mobile' && type !== 'aadhaar' && !/^\d{10}$/.test(payload.number))) {
+		if (otp.length !== 6 || (type !== 'mobile' && type !== 'aadhaar' && type !== 'aadhaar-mobile' && !/^\d{10}$/.test(payload.number))) {
 			return showMessage('Invalid input.', 'error');
 		}
 
-		console.log('3. Submitting OTP Payload:', payload);
 
 		try {
+			console.log('2. Submitting OTP Payload:', payload);
 			toggleLoading(true);
 			const response = await $.post(ajax_obj, { action, ...payload });
-			// const response = {
-			// 	"success": true,
-			// 	"userData": true,
-			// 	"data": {
-			// 		"message": "This account already exist",
-			// 		"data": {
-			// 			"is_new": false,
-			// 			"transaction_id": "8c83ad60-a802-405f-84de-6ce28d076e0e",
-			// 			"otp_required": false,
-			// 			"abha_number": "91562356614684",
-			// 			"first_name": "Mangukiya",
-			// 			"last_name": "Alkeshbhai",
-			// 			"middle_name": "Dhrumil",
-			// 			"dob": "30-06-1999",
-			// 			"gender": "M",
-			// 			"address": "33, Sonal Park Society, Ambatalawadi, Katargam, Surat City, Surat City, Surat, Gujarat",
-			// 			"email": null,
-			// 			"state": "GUJARAT",
-			// 			"district": "SURAT",
-			// 			"abha_address": [
-			// 				"91562356614684@sbx"
-			// 			],
-			// 			"tokens": {
-			// 				"token": "eyJhbGciOiJSUzUxMiJ9.eyJpc0t5Y1ZlcmlmaWVkIjp0cnVlLCJzdWIiOiI5MS01NjIzLTU2NjEtNDY4NCIsImNsaWVudElkIjoiYWJoYS1wcm9maWxlLWFwcC1hcGkiLCJzeXN0ZW0iOiJBQkhBLU4iLCJhY2NvdW50VHlwZSI6InN0YW5kYXJkIiwibW9iaWxlIjoiOTcyNTYxOTYzNCIsImFiaGFOdW1iZXIiOiI5MS01NjIzLTU2NjEtNDY4NCIsInByZWZlcnJlZEFiaGFBZGRyZXNzIjoiOTE1NjIzNTY2MTQ2ODRAc2J4IiwidHlwIjoiVHJhbnNhY3Rpb24iLCJleHAiOjE3MzgwNDE5NjIsImlhdCI6MTczODA0MDE2MiwidHhuSWQiOiI4YzgzYWQ2MC1hODAyLTQwNWYtODRkZS02Y2UyOGQwNzZlMGUifQ.a8CFetp_2r80bValtV7101MHtJhYCCokS1xBQCBt2Cb63xeR0sUe0p0tOK4Ro2o1kjH2egLd_QoZYJW0wmbDNl01nDIhjwq0ATxVYEX0EB_eKz0_gMf5WlvM4k5ajWi1xwlhlg__wN6Op2SUpRE5MSNFmQBLY9DBlwr-h-RtmNkMyD3curTWxI0VQnNuQUQYXAvORPPAGqhlk6kJzCJUAE39S4TH-36ehVfeMGllqcJdk0sF0XuitGRdVBf_OHKPcXYJZ9og8i928kUOhOYMroIlsDgHZWCnwKDjdztzX6DH9C6_3m2bie9eQeXqosjqKyytlgCp-WvyU3negtSlLY65BvTHvjyJBvgEbzB0tMxhmt09F1_x3g4T0k8BmWGNjug24DWI_PbJNkVnyjVN3btvLBwrnzJMG43E5K9kwhnS1T8_u20hsa2mr0B9Sv-ELy4QZPeJRCQ3TfYDuejCPqub7uOQZNndrVSrPFLnwJPg9mxT1-oH42n4jugq9hFtW0XIefTk3j5AiZ0tX3kHITdM3gTQyNm59VEdhZuhheAeuWb_pg1j8osNhW1oYED-Jqxido_ZyVFiA13TZIygl4xN5IF26vW7HWqauoGLki0T-92Drp7f68T_pD1O3Jem1M_V1YbwnITe6srM0MoR77V8WPCgSIxJoOtwBSTKYok",
-			// 				"expiresIn": 1800,
-			// 				"refreshToken": "eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiI5MS01NjIzLTU2NjEtNDY4NCIsImNsaWVudElkIjoiYWJoYS1wcm9maWxlLWFwcC1hcGkiLCJzeXN0ZW0iOiJBQkhBLU4iLCJ0eXAiOiJSZWZyZXNoIiwiZXhwIjoxNzM5MzM2MTYyLCJpYXQiOjE3MzgwNDAxNjJ9.iGCLHNj7J4Db2KqNTJonLqcEeYpxBQJNA1-5H5BLSHXSzcIDqVjqJDOTVxwSICMmgvvtAkL8HQYSn4z6QNgbP2H_yttkAHxLnGRaYv42lp3liVcLJZLLzrFnkppA2Ywr-CqkXZEp0qg9ftB9h29XwaJ7eLzM71yB6ArCsVQwrxslcyUGwZrAJdLx5bwU2JEutGXMg0xoV3rotOOJiolI9VfAi16cY79qxVhH7oie0bpGVE7IFPs0NepfI619Mdu1wziRlkLNgVK-7K_hqZ2c65KwZV5M6nRzeA6OJlc3GCie0f8soP2nZF3kBssMZizoXe_cTy9B8JfbQzH2Ge_UhL4EpTrxWRpQQ_BG5xCtA8KMXVZh4QusEic7xQALt71h1Xlv0vLlYwQt7cwiQ6MkyyiEhME6sqC8xIVhQmjgTrjZYeL5m3UT3k04ohIwSc9b7JJQyoOZZHeY3E0hFQkk3WQGEtsfGs0F1AkE7nUZr5VhBnzNOkeAruOyeqPOgpnOHRs1sogf-EUGuPLzIim7SxdPfjemE303_BsWFuS83UqygdrdgD1PqUEId6ZgogLQTb18jwZfYqajfwSlkNQsACt-cSISrcwV6exskmJe_d-yOYvKWwD9LhhPBpuMuVLniVyMZjJq7hi29MVlTvRtrXTNBOZsA_xDjPyzBgtbD4U",
-			// 				"refreshExpiresIn": 1296000
-			// 			}
-			// 		}
-			// 	}
-			// }
 			console.log('4. Verify OTP Response:', response);
-			const { message, data: { transaction_id, otp_required, first_name, last_name, middle_name, abha_address, abha_number, tokens: { token, refreshToken }, gender } } = response.data;
 
+			
 			if (response.success && response.userData) {
-				if (otp_required) {
-					console.log("OTP is required. Handle OTP process.");
-					showMessage(message, 'success');
+				const { image_url, message, data: { transaction_id, otp_required, first_name, last_name, middle_name, abha_address, abha_number, tokens: { token, refreshToken }, gender } } = response.data;
+				return showMessage(message, 'success');
+				localStorage.setItem('transactionId', transaction_id);
+				// if (otp_required) {
+				if (otp_required === false) {
+					const number = $form.find('#adhar-otp-mobile-input').val().trim();
+					const payload = { transaction_id, number }
+					await aadhaar_mobile_submit(payload);
+
 				} else if (otp_required === false) {
 					const payload = {
 						is_new: 1,
@@ -201,14 +174,14 @@ jQuery(document).ready(($) => {
 					};
 					console.log("(0) - payload link", payload);
 
-					await processUserData(payload, data);
+					await processUserData(payload, response.data);
 				}
-				if (response.data.image_url) {
+				if (image_url) {
 					displayImagePreview(image_url);
 					showMessage(message, 'success');
 				}
-				localStorage.setItem('transactionId', transaction_id);
 			} else {
+				console.log("response", response);
 				console.log("data", response.data);
 				console.log("message", message);
 				showMessage(message, 'error');
@@ -222,10 +195,31 @@ jQuery(document).ready(($) => {
 	}
 	$('.otp-form').on('submit', handleOtpFormSubmit);
 
+	async function aadhaar_mobile_submit(payload) {
+		try {
+			toggleLoading(true);
+			const response = await $.post(ajax_obj, { action: 'handle_aadhaar_mobile_submit', ...payload });
+			const APIResponse = response.data;
+
+			console.log(APIResponse);
+			if (response.success) {
+				$form.hide();
+				showMessage(APIResponse.message, 'success');
+				$('#adhar-mobile-otp-section').show();
+			} else {
+				showMessage(APIResponse.message, 'error');
+			}
+		} catch (err) {
+			console.error('Mobile submission Error:', err);
+			showMessage(`Error: ${err.message || 'An unexpected error occurred.'}`, 'error');
+		} finally {
+			toggleLoading(false);
+		}
+	}
 	async function processUserData(payload) {
 		try {
 			toggleLoading(true);
-			const action = "hadle_link_abha";
+			const action = "handle_link_abha";
 			const response = await $.post(ajax_obj, { action, payload });
 			if (response.data.image_url) {
 				displayImagePreview(image_url);
