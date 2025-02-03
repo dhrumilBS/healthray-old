@@ -28,7 +28,7 @@
 .otp-section {display: none;}
 
 #adhar-otp-section {
-    display: block;
+    /* display: block; */
 }
 :is(.adhar-mobile-otp-form,.otp-form) .second-mobile-number {  margin-top: 20px;  }
 :is(.adhar-mobile-otp-form,.otp-form) .second-mobile-number .info-circle{ margin-top: 12px; gap: 12px; padding: 8px; border: 1px solid #b8bde1; background-color: #F0F2FF;  border-radius: 4px;}

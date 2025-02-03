@@ -1,7 +1,8 @@
 <?php
 // Aadhaar Authentication Shortcode
-define("STAGE_API_PATH", "https://node-stage.healthray.com/api/");
+define("STAGE_PATH", "https://node-stage.healthray.com/api/");
 define("LOCAL_API_PATH", "http://192.168.0.162:4004/api/");
+define("API_PATH", LOCAL_API_PATH);
 function adhar_auth_form_shortcode()
 {
 	// Start output buffering
@@ -26,7 +27,7 @@ function handle_aadhaar_form_submit_ajax()
 	if (empty($aadhaar_number)) {
 		wp_send_json_error(['message' => 'Aadhaar number is required.']);
 	}
-	$url = LOCAL_API_PATH . 'v2/abha/m1-external/aadhaar/generate_otp';
+	$url = API_PATH . 'v2/abha/m1-external/aadhaar/generate_otp';
 	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body'    => json_encode(['aadhaar' => $aadhaar_number]),
@@ -63,7 +64,7 @@ function verify_aadhaar_otp_ajax()
 	if (empty($otp) || empty($transactionId)) {
 		wp_send_json_error(['message' => 'OTP and Transaction ID are required.']);
 	}
-	$url = LOCAL_API_PATH . 'v2/abha/m1-external/aadhaar/verify_otp';
+	$url = API_PATH . 'v2/abha/m1-external/aadhaar/verify_otp';
 	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body'	  => json_encode(['otp' => $otp, 'transaction_id' => $transactionId, 'number' => $otpMobileno]),
@@ -81,6 +82,8 @@ function verify_aadhaar_otp_ajax()
 			$image_url = 'data:' . $content_type . ';base64,' . base64_encode($body);
 			wp_send_json_success([
 				'message' => 'Image received.',
+				'imageData' => true,
+				'userData' => false,
 				'image_url' => $image_url,
 				'downloadable' => true
 			]);
@@ -95,8 +98,9 @@ function verify_aadhaar_otp_ajax()
 			if (!empty($data['status']) && $data['status'] === 200) {
 				wp_send_json_success([
 					'message' => $data['message'],
+					'imageData' => false,
+					'userData' => true,
 					'data' => $data['data'],
-					'userData' => true
 				]);
 			} else {
 				wp_send_json_error(['message' => $data['message'] ?? 'Verification failed.', 'data' => $body['data'][0]]);
@@ -120,7 +124,7 @@ function handle_aadhaar_mobile_submit_ajax()
 		wp_send_json_error(['message' => 'Mobile number is required.']);
 	}
 
-	$response = wp_remote_post(LOCAL_API_PATH . 'v2/abha/m1-external/mobile/generate_otp', [
+	$response = wp_remote_post(API_PATH . 'v2/abha/m1-external/mobile/generate_otp', [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body'    => json_encode(['number' => $number, 'transaction_id' => $transaction_id]),
 	]);
@@ -152,13 +156,13 @@ function verify_adhar_mobile_otp_ajax()
 {
 	$number = sanitize_text_field($_POST['number']);
 	$otp = sanitize_text_field($_POST['otp']);
-	$transaction_id = sanitize_text_field($_POST['transaction_id']);
+	$transaction_id = sanitize_text_field($_POST['transactionId']);
 
 	if (empty($otp)) {
 		wp_send_json_error(['message' => 'OTP cant be Blank.', $_POST]);
 	}
 
-	$response = wp_remote_post(LOCAL_API_PATH . 'v2/abha/m1-external/mobile/verify_otp', [
+	$response = wp_remote_post(API_PATH . 'v2/abha/m1-external/mobile/verify_otp', [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body'    => json_encode(['number' => $number, 'transaction_id' => $transaction_id, "otp" => $otp]),
 	]);
@@ -191,7 +195,7 @@ function get_aadhaar_suggestion_ajax()
 		wp_send_json_error(['message' => 'Transaction ID is required.']);
 	}
 
-	$response = wp_remote_get(LOCAL_API_PATH . "v2/abha/m1-external/suggestion?transaction_id=$transaction_id", [
+	$response = wp_remote_get(API_PATH . "v2/abha/m1-external/suggestion?transaction_id=$transaction_id", [
 		'headers' => ['Content-Type' => 'application/json']
 	]);
 
@@ -228,7 +232,7 @@ function handle_link_abha_ajax()
 	if (empty($payload)) {
 		wp_send_json_error(['message' => 'Payload is required.']);
 	}
-	$url = LOCAL_API_PATH . 'v2/abha/m1-external/aadhaar/generate_otp';
+	$url = API_PATH . 'v2/abha/m1-external/aadhaar/generate_otp';
 	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body'    => json_encode([$payload]),
@@ -271,7 +275,7 @@ function handle_PHR_mobile_form_submit_ajax()
 	if (empty($mobile_number)) {
 		wp_send_json_error(['message' => 'Mobile number is required.']);
 	}
-	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/generate_otp";
+	$url = API_PATH . "v1/abha/m1-external/phr/generate_otp";
 	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body'    => json_encode(['number' => $mobile_number, 'is_health_number' => false]),
@@ -309,7 +313,7 @@ function handle_mobile_PHR_otp()
 	if (empty($transaction_id) || empty($otp)) {
 		wp_send_json_error(["post" => $_POST, 'message' => 'Transaction ID and OTP are required.']);
 	}
-	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/verify_otp";
+	$url = API_PATH . "v1/abha/m1-external/phr/verify_otp";
 	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body' => json_encode(['transaction_id' => $transaction_id, 'otp' => $otp,  "is_health_number" => false,]),
@@ -345,7 +349,7 @@ add_action('wp_ajax_nopriv_verify_PHR_otp', 'handle_mobile_PHR_otp');
 //^ (phr/state) Get District and State 
 function handle_get_states()
 {
-	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/state";
+	$url = API_PATH . "v1/abha/m1-external/phr/state";
 	$response = wp_remote_get($url);
 
 	if (is_wp_error($response)) {
@@ -370,7 +374,7 @@ function handle_get_districts()
 	if (empty($state_id)) {
 		wp_send_json_error(['message' => 'State ID is required.']);
 	}
-	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/district?state_id=$state_id";
+	$url = API_PATH . "v1/abha/m1-external/phr/district?state_id=$state_id";
 	$response = wp_remote_get($url);
 
 	if (is_wp_error($response)) {
@@ -424,7 +428,7 @@ function handle_PHR_demographics_submit_ajax()
 	];
 
 	// Call the API
-	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/add_demographic_details";
+	$url = API_PATH . "v1/abha/m1-external/phr/add_demographic_details";
 	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body' => json_encode($payload),
@@ -455,7 +459,7 @@ function get_PHR_suggestion_ajax()
 	if (empty($transaction_id)) {
 		wp_send_json_error(['message' => 'Transaction ID is required.']);
 	}
-	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/suggession?transaction_id=$transaction_id";
+	$url = API_PATH . "v1/abha/m1-external/phr/suggession?transaction_id=$transaction_id";
 	$response = wp_remote_get($url, [
 		'headers' => ['Content-Type' => 'application/json']
 	]);
@@ -500,7 +504,7 @@ function handle_login_phr_address()
 		"is_health_number" => false,
 		"already_registered" => $alreadyRegistered
 	];
-	$url = STAGE_API_PATH . "v1/abha/m1-external/phr/login";
+	$url = API_PATH . "v1/abha/m1-external/phr/login";
 	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body' => json_encode($payloadBody),
