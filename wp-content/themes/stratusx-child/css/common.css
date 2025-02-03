@@ -1,9 +1,4 @@
 *{ margin:0; padding:0; box-sizing: border-box; }
-
-div#adhar-otp-section {
-    display: block;
-}
-
 body { overflow:unset; margin: 0; background-color: #FFF; color: #5c5c5c;  }
 body, a, input, select, textarea { font-family: 'Nunito', sans-serif; }
 p{ margin: 0; }

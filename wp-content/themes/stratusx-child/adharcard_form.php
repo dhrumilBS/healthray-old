@@ -174,9 +174,10 @@ function verify_adhar_mobile_otp_ajax()
 
 		if (!empty($body['status']) && $body['status'] === 200) {
 			wp_send_json_success([
-				'message'       => $body['message'] ?? 'OTP Virified successfully.',
+				'message'       => $body['message'] ?? 'OTP Verified successfully.',
 				'data'          => $body['data'],
 				'transactionId' => $body['data']['transaction_id'],
+				'verify_aadhaar_mobile_otp' => true
 			]);
 		} else {
 			wp_send_json_error(['message' => $body['message'] ?? 'Unknown error occurred.', 'data' => $body['data'][0], $_POST]);
@@ -203,11 +204,13 @@ function get_aadhaar_suggestion_ajax()
 		wp_send_json_error(['message' => 'Error retrieving suggestions.', 'response' => $response]);
 	} else {
 		$body = json_decode(wp_remote_retrieve_body($response), true);
-		if (!empty($body['status']) && $body['status'] === 200 && !empty($body['data'])) {
+		if (!empty($body['status']) && $body['status'] === 200) {
 			wp_send_json_success([
-				'message' => $body['message'] ?? 'Suggestions fetched successfully.',
-				'data' => $body['data'],
-				'suggestions' => $body['data']['suggestions']
+				'message'       => $body['message'] ?? 'Suggestion Fetch Successfully.',
+				'data'          => $body['data'],
+				'transactionId' => $body['data']['transaction_id'],
+				'suggestions' 	=> $body['data']['suggestion'],
+				'fetchSuggestion' => true
 			]);
 		} else {
 			wp_send_json_error([

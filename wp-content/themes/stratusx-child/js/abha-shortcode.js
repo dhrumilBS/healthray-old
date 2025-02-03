@@ -127,67 +127,53 @@ jQuery(document).ready(($) => {
 		const action = typeToAction[type];
 		// Build payload based on type
 		const payload = { otp, transactionId, action };
-		console.log("1. Inside handleOtpFormSubmit for:", action);	
-
 		// Add number for aadhaar type
-		if (type === 'aadhaar' || type === 'aadhaar-mobile' ) {
-			payload.number = $	('#adhar-otp-mobile-input').val().trim();
+		if (type === 'aadhaar' || type === 'aadhaar-mobile') {
+			payload.number = $('#adhar-otp-mobile-input').val().trim();
 		}
-
 		// Validate OTP and number
 		if (otp.length !== 6 || (type !== 'mobile' && type !== 'aadhaar' && type !== 'aadhaar-mobile' && !/^\d{10}$/.test(payload.number))) {
 			return showMessage('Invalid input.', 'error');
 		}
-
-
 		try {
 			console.log('2. Submitting OTP Payload:', payload);
 			toggleLoading(true);
 			const response = await $.post(ajax_obj, { action, ...payload });
 			console.log('4. Verify OTP Response:', response);
 
-			
-			if (response.success && response.userData) {
-				const { image_url, message, data: { transaction_id, otp_required, first_name, last_name, middle_name, abha_address, abha_number, tokens: { token, refreshToken }, gender } } = response.data;
-				return showMessage(message, 'success');
+			if (response.success && response.data.userData) {
+				const { message, data: { transaction_id, otp_required, first_name, last_name, middle_name, abha_address, abha_number, tokens: { token, refreshToken }, gender } } = response.data;
 				localStorage.setItem('transactionId', transaction_id);
-				// if (otp_required) {
-				if (otp_required === false) {
-					const number = $form.find('#adhar-otp-mobile-input').val().trim();
+
+				if (otp_required) {
+					const number = $('#adhar-otp-mobile-input').val().trim();
 					const payload = { transaction_id, number }
-					await aadhaar_mobile_submit(payload);
-
+					console.log(payload);
+					await aadhaar_mobile_submit(payload, $form);
+					return showMessage(message, 'success');
 				} else if (otp_required === false) {
-					const payload = {
-						is_new: 1,
-						abha_address: abha_address[0],
-						transaction_id,
-						user_details: {
-							first_name,
-							middle_name,
-							last_name,
-							gender,
-							abha_health_number: abha_number,
-							mobile_no: mobileNumber,
-							tokens: { token, refreshToken }
-						}
-					};
-					console.log("(0) - payload link", payload);
-
-					await processUserData(payload, response.data);
+					fetchSuggestion("get_aadhaar_suggestion", transaction_id);
+					$suggestionSection.show();
+					// await processUserData(payload, response.data);
+					return showMessage("message", 'success');
 				}
-				if (image_url) {
-					displayImagePreview(image_url);
+
+				console.log(response.data);
+
+				if (response.data.imageData) {
+					(response.data.image_url);
 					showMessage(message, 'success');
 				}
-			} else {
-				console.log("response", response);
-				console.log("data", response.data);
-				console.log("message", message);
-				showMessage(message, 'error');
+			}
+
+			if (response.data.verify_aadhaar_mobile_otp) {
+				localStorage.setItem('transactionId', response.data.transactionId);
+				showMessage(response.data.message, 'success');
+				fetchSuggestion("get_aadhaar_suggestion", response.data.transactionId);
+				$suggestionSection.show();
 			}
 		} catch (err) {
-			console.error('OTP Error:', err);
+			console.error(`'OTP Error:', ${err}`);
 			showMessage(`E r ror: ${err.message || 'An unexpected error occurred.'}`, 'error');
 		} finally {
 			toggleLoading(false);
@@ -195,12 +181,11 @@ jQuery(document).ready(($) => {
 	}
 	$('.otp-form').on('submit', handleOtpFormSubmit);
 
-	async function aadhaar_mobile_submit(payload) {
+	async function aadhaar_mobile_submit(payload, $form) {
 		try {
 			toggleLoading(true);
 			const response = await $.post(ajax_obj, { action: 'handle_aadhaar_mobile_submit', ...payload });
 			const APIResponse = response.data;
-
 			console.log(APIResponse);
 			if (response.success) {
 				$form.hide();
@@ -234,6 +219,58 @@ jQuery(document).ready(($) => {
 		finally { toggleLoading(false); }
 	}
 
+	// Fetch Suggestion
+	async function fetchSuggestion(action, transaction_id) {
+		console.log('fetchSuggestion');
+		try {
+			const response = await $.get(ajax_obj, { action: action, transaction_id });
+
+			console.log('Fetch suggestion Response:', response);
+			if (response.success) {
+				$('.suggestion-list-wrap').removeClass('no-data');
+				$('#abha-address-input').attr('disabled', false);
+				console.log("response.data", response.data);
+
+				const suggestions = response.data.suggestions;
+				$suggestionList.empty();
+				suggestions.forEach(name => {
+					const $suggestionItem = $(`<div class="suggestion-item" data-address=${name}> ${name} </div>`);
+					$suggestionList.append($suggestionItem);
+					$suggestionItem.on('click', function () {
+						$('.suggestion-item').removeClass('selected-address');
+						$('#abha-address-input').val(`${name}`);
+						$(this).addClass('selected-address');
+					});
+				});
+				showMessage(`${response.data.message}`, 'success');
+			} else {
+				console.log(`Error fetching suggestions: ${response.data.message}`);
+				showMessage(`Error fetching suggestions: ${response.data.message}`, 'error');
+			}
+		} catch (error) {
+			console.log(`Unexpected error while fetching suggestions: ${error}`);
+			showMessage(`Unexpected error while fetching suggestions: ${error}`, 'error');
+		}
+	}
+	$('#abha-address-input').on('input', function () {
+		$('.suggestion-item').removeClass('selected-address');
+		const inputValue = $(this).val().trim();
+		const validRegex = /^[a-zA-Z0-9_.]+$/; // Allowed characters
+		const existingValues = $('.suggestion-item').map(function () {
+			return $(this).text().trim();
+		}).get(); // Get all suggestion values
+		$('.error-message').remove(); // Remove previous errors
+		$('.suggestion-item').removeClass('selected-address');
+		// Check if the input contains only valid characters
+		if (inputValue && !validRegex.test(inputValue)) {
+			$(this).after('<div class="error-message" style="color: red;">Invalid input! Only alphabets, numbers, _, and . are allowed.</div>');
+		}
+
+		// Check for duplicates in the suggestion list
+		if (existingValues.includes(inputValue)) {
+			$(this).after('<div class="error-message" style="color: red;">Duplicate entry! This address already exists.</div>');
+		}
+	});
 
 	// Change Mobile Button Handler
 	$changeMobileBtn.on('click', () => {
@@ -435,43 +472,43 @@ jQuery(document).ready(($) => {
 		e.preventDefault();
 		console.log("mobileInputField: ", ADHARNUMBER);
 
-		// if (validateForm()) {
-		// 	toggleLoading(true);
-		// 	const payload = {
-		// 		transaction_id: $transactionIdField.val().trim(),
-		// 		first_name: $fname.val().trim(),
-		// 		middle_name: $mname.val().trim(),
-		// 		last_name: $lname.val().trim(),
-		// 		pin_code: $pincode.val().trim(),
-		// 		gender: $gender.filter(":checked").val().trim(),
-		// 		dob: `${$year.val().trim()}-${$month.val().trim()}-${$day.val().trim()}`,
-		// 		mobile_no: mobileInputField,
-		// 		state_code: $state.val().trim(),
-		// 		district_code: $district.val().trim(),
-		// 		address: $address.val().trim()
-		// 	};
+		if (validateForm()) {
+			toggleLoading(true);
+			const payload = {
+				transaction_id: $transactionIdField.val().trim(),
+				first_name: $fname.val().trim(),
+				middle_name: $mname.val().trim(),
+				last_name: $lname.val().trim(),
+				pin_code: $pincode.val().trim(),
+				gender: $gender.filter(":checked").val().trim(),
+				dob: `${$year.val().trim()}-${$month.val().trim()}-${$day.val().trim()}`,
+				mobile_no: mobileInputField,
+				state_code: $state.val().trim(),
+				district_code: $district.val().trim(),
+				address: $address.val().trim()
+			};
 
-		// 	console.log('Submitting demographics payload:', payload);
+			console.log('Submitting demographics payload:', payload);
 
-		// 	try {
-		// 		const response = await $.post(ajax_obj, { action: "PHR_demographics_submit", ...payload });
-		// 		console.log('Demographics submission response:', response);
-		// 		if (response.success) {
-		// 			$('.create-abha-section').hide();
-		// 			var action = "get_PHR_suggestion";
-		// 			fetchSuggestion(action, $transactionIdField.val().trim());
-		// 			$suggestionSection.show();
-		// 			showMessage(response.data?.message || "Demographics submitted successfully.", 'success');
-		// 		} else {
-		// 			showMessage(response.data?.data || "Failed to submit demographics.", 'error');
-		// 		}
-		// 	} catch (err) {
-		// 		console.error("Error:", err);
-		// 		showMessage(`Error: ${err.message}`, 'error');
-		// 	} finally {
-		// 		toggleLoading(false);
-		// 	}
-		// }
+			try {
+				const response = await $.post(ajax_obj, { action: "PHR_demographics_submit", ...payload });
+				console.log('Demographics submission response:', response);
+				if (response.success) {
+					$('.create-abha-section').hide();
+					var action = "get_PHR_suggestion";
+					fetchSuggestion(action, $transactionIdField.val().trim());
+					$suggestionSection.show();
+					showMessage(response.data?.message || "Demographics submitted successfully.", 'success');
+				} else {
+					showMessage(response.data?.data || "Failed to submit demographics.", 'error');
+				}
+			} catch (err) {
+				console.error("Error:", err);
+				showMessage(`Error: ${err.message}`, 'error');
+			} finally {
+				toggleLoading(false);
+			}
+		}
 	});
 
 	//  Login PHR address
@@ -512,46 +549,18 @@ jQuery(document).ready(($) => {
 		}
 	}
 
-	// Fetch Suggestion
-	async function fetchSuggestion(action, transaction_id) {
-		try {
-			const response = await $.get(ajax_obj, { action: action, transaction_id });
-
-			console.log('Fetch suggestion Response:', response);
-			if (response.success) {
-				const suggestions = response.data.suggestions.suggestion;
-				$suggestionList.empty();
-				suggestions.forEach(name => {
-					const $suggestionItem = $(`
-                        <div class="suggestion-item" data-address=${name}>
-                            ${name}
-                        </div>`);
-					$suggestionList.append($suggestionItem);
-					$suggestionItem.on('click', function () {
-						$('.suggestion-item').removeClass('selected-address');
-						$(this).addClass('selected-address');
-					});
-				});
-			} else {
-				console.log(`Error fetching suggestions: ${response.data.message}`);
-			}
-		} catch (error) {
-			console.log("Unexpected error while fetching suggestions:", error);
-		}
-	}
-
 	$('#getaadharmobilesuggestion').on('click', () => {
-		console.log("dsfs");
+		console.log(localStorage.getItem('transactionId'));
 		var action = "get_aadhaar_suggestion";
-		fetchSuggestion(action, $transactionIdField.val().trim());
+		fetchSuggestion(action, localStorage.getItem('transactionId'));
 	});
 	$('#getsuggestion').on('click', () => {
 		var action = "get_PHR_suggestion";
-		fetchSuggestion(action, $transactionIdField.val().trim());
+		fetchSuggestion(action, localStorage.getItem('transactionId'));
 	});
 
 	$('#submitSuggession').on('click', async function () {
-		const $transactionId = $transactionIdField.val().trim();
+		const $transactionId = localStorage.getItem('transactionId');
 		console.log('Submitting suggestion for Transaction ID:', $transactionId);
 		const $phrAddress = $('.suggestion-list').find('.selected-address').data('address');
 		if (!$phrAddress) {

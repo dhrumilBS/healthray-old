@@ -27,16 +27,11 @@
 
 .otp-section {display: none;}
 
-#adhar-otp-section {
-    /* display: block; */
-}
 :is(.adhar-mobile-otp-form,.otp-form) .second-mobile-number {  margin-top: 20px;  }
 :is(.adhar-mobile-otp-form,.otp-form) .second-mobile-number .info-circle{ margin-top: 12px; gap: 12px; padding: 8px; border: 1px solid #b8bde1; background-color: #F0F2FF;  border-radius: 4px;}
 :is(.adhar-mobile-otp-form,.otp-form) .second-mobile-number .info-circle svg{ width: 20px; height: 20px; }
 :is(.adhar-mobile-otp-form,.otp-form) .resend-btn {  margin:0; flex-shrink: 0; display: flex; align-items: center; gap:16px;  margin-left: 16px; }
 :is(.adhar-mobile-otp-form,.otp-form) .resend-btn .submit-link{ cursor: pointer; font-weight: 600; color: var(--hr-secondary-color); background-color: transparent; padding: 0; }
-
-.adhar-mobile-otp-section{ display: none;}
 
 #response-message { text-align: center; margin-top: 12px; }
 #response-message.error,.error-message { color: #F22;}
@@ -85,9 +80,12 @@
 .create-abha-form .form-group.full-name>*,
 .create-abha-form .form-group.state-city>* { width: 100%;}
 
-.suggestion-section{ display: none; }
+.suggestion-section{/* display: none; */}
 .suggestion-section .suggestion-list-wrap{ margin-top: 20px; }
-.suggestion-section .suggestion-list-wrap .suggestion-list{ padding: 12px; border-radius: 8px; border: 1px solid #5E6084; }
+.suggestion-section .suggestion-list-wrap.no-data {opacity: .25; } 
+.suggestion-section .suggestion-list-wrap.no-data *{ cursor: not-allowed; } 
+
+.suggestion-section .suggestion-list-wrap .suggestion-list{padding: 12px;border-radius: 8px;border: 1px solid #5E6084;margin-bottom: 20px;}
 .suggestion-section .suggestion-list-wrap .suggestion-list .suggestion-item{margin-bottom: 4px;border-radius: 8px;background-color: #F0F2FF;cursor: pointer;padding: 8px;}
 .suggestion-section .suggestion-list-wrap .suggestion-list .selected-address{ background-color: var(--hr-secondary-color); color: #FFF; }
 .suggestion-section .suggestion-list-wrap .suggestion-list .suggestion-item:last-child{ margin-bottom: 0; }

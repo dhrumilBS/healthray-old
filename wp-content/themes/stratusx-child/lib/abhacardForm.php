@@ -231,11 +231,18 @@
 
             </div>
 
-            <div class="suggestion-list-wrap">
-                <div class="suggestion-list"></div>
-                <button id="submitSuggestion">Submit Suggestion</button>
-                <button id="getaadharmobilesuggestion"></button>
-                <button id="getsuggestion"> </button>
+            <div class="suggestion-list-wrap no-data">
+                <div class="suggestion-list"> No Data </div>
+                Or create your Custom ABHA Address
+                <form class="abha-address-form">
+                    <div class="form-field">
+                        <input type="text" id="abha-address-input" name="abha-address" class="input-field abha-address-field" placeholder="Enter custom ABHA Address" required disabled>
+                        <div class="note"><em>Note: Use Alphabets[a-z, A-Z], Numbers[0-9], or special characters (_,.)</em></div>
+                    </div>
+                </form>
+                <button role="button" class="btn " id="submitSuggestion">Submit Suggestion</button>
+                <button role="button" class="btn " id="getaadharmobilesuggestion"> Get Suggestion</button>
+                <button role="button" class="btn " id="getsuggestion"> get suggestion </button>
             </div>
         </div>
     </div>
