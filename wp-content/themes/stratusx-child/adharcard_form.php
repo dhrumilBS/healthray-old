@@ -207,7 +207,6 @@ function get_aadhaar_suggestion_ajax()
 		if (!empty($body['status']) && $body['status'] === 200) {
 			wp_send_json_success([
 				'message'       => $body['message'] ?? 'Suggestion Fetch Successfully.',
-				'data'          => $body['data'],
 				'transactionId' => $body['data']['transaction_id'],
 				'suggestions' 	=> $body['data']['suggestion'],
 				'fetchSuggestion' => true
@@ -230,15 +229,46 @@ add_action('wp_ajax_nopriv_get_aadhaar_suggestion', 'get_aadhaar_suggestion_ajax
 //! -- 1.6 - m1-external/link -----------
 function handle_link_abha_ajax()
 {
-	$payload = sanitize_text_field($_POST['payload']);
+	$payload = sanitize_text_field($_POST['data']);
 
-	if (empty($payload)) {
-		wp_send_json_error(['message' => 'Payload is required.']);
+	$abha_address = $_POST('abha_address');
+	$is_new = $_POST('is_new');
+	$transaction_id = $_POST('transaction_id');
+
+	$first_name = $_POST('first_name');
+	$middle_name = $_POST('middle_name');
+	$last_name = $_POST('last_name');
+	$gender = $_POST('gender');
+	$mobile_no = $_POST('mobile_no');
+
+	$token = $_POST('token');
+	$refresh_token = $_POST('refresh_token');
+
+	$payload = [
+		'abha_address' => $abha_address,
+		'is_new' => $is_new,
+		'transaction_id' => $transaction_id,
+		'user_details' => [
+			'first_name' => $first_name,
+			'middle_name' => $middle_name,
+			'last_name' => $last_name,
+			'gender' => $gender,
+			'mobile_no' => $mobile_no,
+			'tokens' => [
+				'token' => $token,
+				'refresh_token' => $refresh_token,
+			]
+		]
+
+	];
+
+	if (empty($_POST['payload'])) {
+		wp_send_json_error(['message' => 'Payload is required.', 'data' => $_POST]);
 	}
 	$url = API_PATH . 'v2/abha/m1-external/aadhaar/generate_otp';
 	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
-		'body'    => json_encode([$payload]),
+		'body'    => json_encode($payload),
 	]);
 
 	if (is_wp_error($response)) {

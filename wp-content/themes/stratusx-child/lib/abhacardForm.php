@@ -4,6 +4,7 @@
     </div>
 
     <div class="form-container">
+        <button id="processUserData">processUserData</button>
         <div id="common-section">
             <div class="link-action">
                 <button class="link-action-btn active" data-view="aadhaar">Aadhaar Number</button>
@@ -233,9 +234,10 @@
 
             <div class="suggestion-list-wrap no-data">
                 <div class="suggestion-list"> No Data </div>
-                Or create your Custom ABHA Address
+                <div class="separator"> <span>Or create your Custom ABHA Address</span> </div>
                 <form class="abha-address-form">
                     <div class="form-field">
+                        <input type="hidden" id="abha-address-type" name="abha-address-type" class="input-field" required disabled>
                         <input type="text" id="abha-address-input" name="abha-address" class="input-field abha-address-field" placeholder="Enter custom ABHA Address" required disabled>
                         <div class="note"><em>Note: Use Alphabets[a-z, A-Z], Numbers[0-9], or special characters (_,.)</em></div>
                     </div>

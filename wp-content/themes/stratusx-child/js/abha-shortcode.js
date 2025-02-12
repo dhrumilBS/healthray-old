@@ -10,8 +10,8 @@ jQuery(document).ready(($) => {
 	const $state = $("#state");
 	const $district = $("#district");
 	const typeToAction = {
-		aadhaar: 'verify_aadhaar_otp',
-		mobile: 'verify_PHR_otp',
+		'aadhaar': 'verify_aadhaar_otp',
+		'mobile': 'verify_PHR_otp',
 		'aadhaar-mobile': 'verify_adhar_mobile_otp'
 	};
 
@@ -19,6 +19,7 @@ jQuery(document).ready(($) => {
 	let ADHARNUMBER = null;
 	let mobileNumber = null;
 	let loadingInterval, resendTimer;
+	let abha_address = null;
 
 	// Helper Functions
 	function toggleLoading(show, $element = $loadingSpinner) {
@@ -144,7 +145,6 @@ jQuery(document).ready(($) => {
 			if (response.success && response.data.userData) {
 				const { message, data: { transaction_id, otp_required, first_name, last_name, middle_name, abha_address, abha_number, tokens: { token, refreshToken }, gender } } = response.data;
 				localStorage.setItem('transactionId', transaction_id);
-
 				if (otp_required) {
 					const number = $('#adhar-otp-mobile-input').val().trim();
 					const payload = { transaction_id, number }
@@ -152,9 +152,25 @@ jQuery(document).ready(($) => {
 					await aadhaar_mobile_submit(payload, $form);
 					return showMessage(message, 'success');
 				} else if (otp_required === false) {
-					fetchSuggestion("get_aadhaar_suggestion", transaction_id);
+					fetchSuggestion("get_aadhaar_suggestion", transaction_id, abha_address);
 					$suggestionSection.show();
-					// await processUserData(payload, response.data);
+					$('#submitSuggestion').on('click', async function () {
+						const transactionId = localStorage.getItem('transactionId');
+						const phrAddress = $('#abha-address-input').val().trim();
+						const type = $('#abha-address-type').val().trim();
+
+						if (!phrAddress) {
+							return showError('Please Enter a PHR Address before submitting.');
+						}
+						if (type == 'get_aadhaar_suggestion') {
+							const user_details = { first_name, middle_name, last_name, gender, "abha_health_number": abha_number, mobile_no: payload.number, "tokens": { token, refresh_token: refreshToken } };
+							const processDatapayload = { is_new: 0, abha_address: phrAddress, transaction_id: transactionId, ...user_details }
+							console.log(`processDatapayload: ${processDatapayload} `);
+							await processUserData(processDatapayload);
+						}
+
+
+					});
 					return showMessage("message", 'success');
 				}
 
@@ -201,14 +217,22 @@ jQuery(document).ready(($) => {
 			toggleLoading(false);
 		}
 	}
+
+
 	async function processUserData(payload) {
+		const mypayload = payload;
 		try {
 			toggleLoading(true);
 			const action = "handle_link_abha";
-			const response = await $.post(ajax_obj, { action, payload });
+			const response = await $.post(ajax_obj, { action, ...mypayload });
 			if (response.data.image_url) {
 				displayImagePreview(image_url);
 				showMessage(message, 'success');
+			} else {
+				console.log(response.data);
+				return 0;
+
+				showMessage('message Dalse', 'error');
 			}
 		}
 		catch (err) {
@@ -220,16 +244,14 @@ jQuery(document).ready(($) => {
 	}
 
 	// Fetch Suggestion
-	async function fetchSuggestion(action, transaction_id) {
+	async function fetchSuggestion(action, transaction_id, abha_address = '') {
 		console.log('fetchSuggestion');
 		try {
 			const response = await $.get(ajax_obj, { action: action, transaction_id });
-
-			console.log('Fetch suggestion Response:', response);
 			if (response.success) {
 				$('.suggestion-list-wrap').removeClass('no-data');
+				$('#abha-address-type').val(action);
 				$('#abha-address-input').attr('disabled', false);
-				console.log("response.data", response.data);
 
 				const suggestions = response.data.suggestions;
 				$suggestionList.empty();
@@ -244,33 +266,30 @@ jQuery(document).ready(($) => {
 				});
 				showMessage(`${response.data.message}`, 'success');
 			} else {
-				console.log(`Error fetching suggestions: ${response.data.message}`);
 				showMessage(`Error fetching suggestions: ${response.data.message}`, 'error');
 			}
 		} catch (error) {
-			console.log(`Unexpected error while fetching suggestions: ${error}`);
 			showMessage(`Unexpected error while fetching suggestions: ${error}`, 'error');
 		}
 	}
 	$('#abha-address-input').on('input', function () {
 		$('.suggestion-item').removeClass('selected-address');
 		const inputValue = $(this).val().trim();
-		const validRegex = /^[a-zA-Z0-9_.]+$/; // Allowed characters
+		const validRegex = /^[a-zA-Z0-9_.]+$/;
 		const existingValues = $('.suggestion-item').map(function () {
 			return $(this).text().trim();
-		}).get(); // Get all suggestion values
-		$('.error-message').remove(); // Remove previous errors
+		}).get();
+		$('.error-message').remove();
 		$('.suggestion-item').removeClass('selected-address');
-		// Check if the input contains only valid characters
 		if (inputValue && !validRegex.test(inputValue)) {
 			$(this).after('<div class="error-message" style="color: red;">Invalid input! Only alphabets, numbers, _, and . are allowed.</div>');
 		}
-
-		// Check for duplicates in the suggestion list
 		if (existingValues.includes(inputValue)) {
 			$(this).after('<div class="error-message" style="color: red;">Duplicate entry! This address already exists.</div>');
 		}
 	});
+
+
 
 	// Change Mobile Button Handler
 	$changeMobileBtn.on('click', () => {
