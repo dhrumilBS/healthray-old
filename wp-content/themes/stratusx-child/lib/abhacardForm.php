@@ -4,7 +4,6 @@
     </div>
 
     <div class="form-container">
-        <button id="processUserData">processUserData</button>
         <div id="common-section">
             <div class="link-action">
                 <button class="link-action-btn active" data-view="aadhaar">Aadhaar Number</button>
@@ -12,15 +11,14 @@
             </div>
 
             <!-- auth-form - aadhaar -->
-            <form class="auth-form  active" data-type="aadhaar">
-                <?php wp_nonce_field('ajax_nonce_action', '_wpnonce'); ?>
+            <form method="POST" class="auth-form active" data-type="aadhaar" data-url="/v2/abha/m1-external/aadhaar/generate_otp">
                 <input type="hidden" name="action" value="aadhaar_auth_form_submit">
                 <div class="form-field">
                     <input type="text" class="input-field auth-input" id="aadhaar-input" pattern="[0-9]{12}" placeholder="Enter Aadhaar Number" required>
                 </div>
                 <div class="checkbox-input">
                     <input type="checkbox" id="Aadhaar-permissions" required>
-                    <label for="Aadhaar-permissions">I agree to the necessary permissions for Healthray to set up my ABHA Health Locker. <a href="#">Learn More</a></label>
+                    <label for="Aadhaar-permissions">I agree to the necessary permissions for Healthray to set up my ABHA Health Locker.</label>
                 </div>
                 <div class="form-submit">
                     <button type="submit" class="submit-btn">Submit Aadhaar</button>
@@ -28,15 +26,14 @@
             </form>
 
             <!-- auth-form - mobile -->
-            <form class="auth-form" data-type="mobile">
-                <?php wp_nonce_field('ajax_nonce_action', '_wpnonce'); ?>
+            <form method="POST" class="auth-form" data-type="mobile" data-url="/v1/abha/m1-external/phr/generate_otp">
                 <input type="hidden" name="action" value="mobile_auth_form_submit">
                 <div class="form-field">
                     <input type="text" class="input-field auth-input" id="mobile-input" pattern="[0-9]{10}" placeholder="Enter Mobile Number" required>
                 </div>
                 <div class="checkbox-input">
                     <input type="checkbox" id="mobile-permissions" required>
-                    <label for="mobile-permissions">I agree to the necessary permissions for Healthray to set up my ABHA Health Locker. <a href="#">Learn More</a></label>
+                    <label for="mobile-permissions">I agree to the necessary permissions for Healthray to set up my ABHA Health Locker.</label>
                 </div>
                 <div class="form-submit">
                     <button type="submit" class="submit-btn">Submit Mobile</button>
@@ -48,7 +45,7 @@
 
         <!-- adhar-otp -->
         <div id="adhar-otp-section" class="otp-section">
-            <form id="adhar-otp-form" class="otp-form" data-type="aadhaar">
+            <form id="adhar-otp-form" class="otp-form" data-type="aadhaar" data-url="/v2/abha/m1-external/aadhaar/verify_otp">
                 <input type="hidden" name="action" value="verify_otp">
 
                 <div class="form-field d-flex">
@@ -79,7 +76,7 @@
 
         <!-- mobile-otp -->
         <div id="mobile-otp-section" class="otp-section">
-            <form id="mobile-otp-form" class="otp-form" data-type="mobile">
+            <form method="POST" id="mobile-otp-form" class="otp-form" data-type="mobile" data-url="/v1/abha/m1-external/phr/verify_otp">
                 <input type="hidden" name="action" value="verify_otp">
                 <div class="form-field d-flex">
                     <input type="text" id="mobile-otp-input" name="otp-input" class="input-field auth-input otp-input" placeholder="Enter OTP" maxlength="6" required>
@@ -97,7 +94,7 @@
 
         <!-- adhar-mobile-otp -->
         <div id="adhar-mobile-otp-section" class="adhar-mobile-otp-section otp-section">
-            <form id="adhar-mobile-otp-form" class="adhar-mobile-otp-form otp-form" data-type="aadhaar-mobile">
+            <form method="POST" id="adhar-mobile-otp-form" class="adhar-mobile-otp-form otp-form" data-type="aadhaar-mobile" data-url="/v2/abha/m1-external/mobile/verify_otp">
                 <input type="hidden" name="action" value="verify_otp">
                 <div class="form-field d-flex">
                     <input type="text" id="adhar-mobile-otp-input" name="otp-input" class="input-field auth-input otp-input" placeholder="Enter OTP" maxlength="6" required>
@@ -241,8 +238,8 @@
                         <input type="text" id="abha-address-input" name="abha-address" class="input-field abha-address-field" placeholder="Enter custom ABHA Address" required disabled>
                         <div class="note"><em>Note: Use Alphabets[a-z, A-Z], Numbers[0-9], or special characters (_,.)</em></div>
                     </div>
+                    <input role="button" type="submit" class="btn" id="submitSuggestion" value="Submit Suggestion">
                 </form>
-                <button role="button" class="btn " id="submitSuggestion">Submit Suggestion</button>
                 <button role="button" class="btn " id="getaadharmobilesuggestion"> Get Suggestion</button>
                 <button role="button" class="btn " id="getsuggestion"> get suggestion </button>
             </div>

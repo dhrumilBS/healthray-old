@@ -1,8 +1,8 @@
 <?php
 // Aadhaar Authentication Shortcode
-define("STAGE_PATH", "https://node-stage.healthray.com/api/");
+define("STAGE_API_PATH", "https://node-stage.healthray.com/api/");
 define("LOCAL_API_PATH", "http://192.168.0.162:4004/api/");
-define("API_PATH", LOCAL_API_PATH);
+define("API_PATH", STAGE_API_PATH);
 function adhar_auth_form_shortcode()
 {
 	// Start output buffering
@@ -14,40 +14,34 @@ add_shortcode('adharAuthForm', 'adhar_auth_form_shortcode');
 
 
 
-
-
-
 //& 1. aadhaar/generate_otp Handle Aadhaar Form Submission
 
 //! -- 1.1 - m1-external/aadhaar/generate_otp -----------
 function handle_aadhaar_form_submit_ajax()
 {
-	$aadhaar_number = sanitize_text_field($_POST['value']);
-
-	if (empty($aadhaar_number)) {
-		wp_send_json_error(['message' => 'Aadhaar number is required.']);
+	if (empty($_POST['ADHARNUMBER'])) {
+		wp_send_json_error(['message' => 'Aadhaar Number is required.']);
 	}
 	$url = API_PATH . 'v2/abha/m1-external/aadhaar/generate_otp';
 	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
-		'body'    => json_encode(['aadhaar' => $aadhaar_number]),
+		'body'    => json_encode(['aadhaar' => $_POST['ADHARNUMBER']]),
 	]);
-
-	if (is_wp_error($response)) {
-		wp_send_json_error(['message' => 'Error generating OTP. Please try again.', $response]);
+	$body = json_decode(wp_remote_retrieve_body($response), true);
+	if (!empty($body['status']) && $body['status'] === 200) {
+		wp_send_json_success([
+			'status' => $body['status'],
+			'message' => $body['message'] ?? 'OTP sent successfully.',
+			'transactionId' => $body['data']['transaction_id'],
+		]);
+	} elseif ($body['status'] === 422) {
+		wp_send_json_error([
+			'message' => $body['data'][0],
+			'status' => $body['status'],
+		]);
 	} else {
-		$body = json_decode(wp_remote_retrieve_body($response), true);
-
-		if (!empty($body['status']) && $body['status'] === 200) {
-			wp_send_json_success([
-				'message'       => $body['message'] ?? 'OTP sent successfully.',
-				'transactionId' => $body['data']['transaction_id'],
-			]);
-		} else {
-			wp_send_json_error(['message' => $body['message'] ?? 'Unknown error occurred.', 'data' => $body['data'][0]]);
-		}
+		wp_send_json_error(['message' => $body['message'] ?? 'Unknown error occurred.', 'data' => $body]);
 	}
-
 	wp_die();
 }
 add_action('wp_ajax_aadhaar_auth_form_submit', 'handle_aadhaar_form_submit_ajax');
@@ -138,6 +132,7 @@ function handle_aadhaar_mobile_submit_ajax()
 			wp_send_json_success([
 				'message'       => $body['message'] ?? 'OTP sent successfully.',
 				'data'          => $body['data'],
+				'userData' => true,
 				'transactionId' => $body['data']['transaction_id'],
 			]);
 		} else {
@@ -229,30 +224,35 @@ add_action('wp_ajax_nopriv_get_aadhaar_suggestion', 'get_aadhaar_suggestion_ajax
 //! -- 1.6 - m1-external/link -----------
 function handle_link_abha_ajax()
 {
-	$payload = sanitize_text_field($_POST['data']);
+	global $wpdb;
+	$table_name = $wpdb->prefix . "abha_cards";
 
-	$abha_address = $_POST('abha_address');
-	$is_new = $_POST('is_new');
-	$transaction_id = $_POST('transaction_id');
+	$data = $_POST['payload'];
 
-	$first_name = $_POST('first_name');
-	$middle_name = $_POST('middle_name');
-	$last_name = $_POST('last_name');
-	$gender = $_POST('gender');
-	$mobile_no = $_POST('mobile_no');
+	$abha_address = $data['abha_address'];
+	$transaction_id = $data['transaction_id'];
 
-	$token = $_POST('token');
-	$refresh_token = $_POST('refresh_token');
+	$first_name = $data['first_name'];
+	$middle_name = $data['middle_name'];
+	$last_name = $data['last_name'];
+	$gender = $data['gender'];
+	$abha_number = $data['abha_number'];
+	$mobile_no = $data['mobile_no'];
+
+	$token = $data['tokens']['token'];
+	$refresh_token = $data['tokens']['refresh_token'];
 
 	$payload = [
+		'is_new' => 1,
 		'abha_address' => $abha_address,
-		'is_new' => $is_new,
 		'transaction_id' => $transaction_id,
 		'user_details' => [
 			'first_name' => $first_name,
 			'middle_name' => $middle_name,
 			'last_name' => $last_name,
 			'gender' => $gender,
+			'
+			' => $abha_number,
 			'mobile_no' => $mobile_no,
 			'tokens' => [
 				'token' => $token,
@@ -261,11 +261,10 @@ function handle_link_abha_ajax()
 		]
 
 	];
-
+	$url = API_PATH . 'v2/abha/m1-external/link/';
 	if (empty($_POST['payload'])) {
-		wp_send_json_error(['message' => 'Payload is required.', 'data' => $_POST]);
+		wp_send_json_error(['message' => 'Payload is required.', 'payload' => $payload]);
 	}
-	$url = API_PATH . 'v2/abha/m1-external/aadhaar/generate_otp';
 	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body'    => json_encode($payload),
@@ -284,7 +283,18 @@ function handle_link_abha_ajax()
 			wp_send_json_success([
 				'message' => 'Image received.',
 				'image_url' => $image_url,
-				'downloadable' => true
+				'downloadable' => true,
+				'datas' => [
+					'aadhaar_number' => $_POST['aadhaar_number'], // You may get this from a previous step
+					'abha_number' => $abha_number,
+					'transaction_id' => $transaction_id,
+					'mobile_number' => $mobile_no,
+					'first_name' => $first_name,
+					'middle_name' => $middle_name,
+					'last_name' => $last_name,
+					'gender' => $gender,
+					'created_at' => current_time('mysql')
+				]
 			]);
 		} else {
 			wp_send_json_error(['message' => $data['message'] ?? 'Link failed.', 'data' => $body['data'][0]]);
@@ -300,15 +310,15 @@ add_action('wp_ajax_nopriv_handle_link_abha', 'handle_link_abha_ajax');
 // -----------------------------------------------------------------------------------------------------
 
 //& 2. Handle PHR Mobile
-//^ 2. (phr/generate_otp) Handle PHR Mobile Form Submission (PHR_mobile_auth_form_submit)
+//^ 2.1 (phr/generate_otp) Handle PHR Mobile Form Submission (PHR_mobile_auth_form_submit)
 function handle_PHR_mobile_form_submit_ajax()
 {
-	$mobile_number = sanitize_text_field($_POST['value']);
+	$mobile_number = sanitize_text_field($_POST['ADHARNUMBER']);
+	$url = API_PATH . "v1/abha/m1-external/phr/generate_otp";
 
 	if (empty($mobile_number)) {
 		wp_send_json_error(['message' => 'Mobile number is required.']);
 	}
-	$url = API_PATH . "v1/abha/m1-external/phr/generate_otp";
 	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
 		'body'    => json_encode(['number' => $mobile_number, 'is_health_number' => false]),
@@ -318,15 +328,20 @@ function handle_PHR_mobile_form_submit_ajax()
 		wp_send_json_error(['message' => 'Error generating OTP. Please try again.', "response" => $response]);
 	} else {
 		$body = json_decode(wp_remote_retrieve_body($response), true);
-
-
 		if (!empty($body['status']) && $body['status'] === 200) {
 			wp_send_json_success([
+				'status' => $body['status'],
 				'message'       => $body['message'] ?? 'OTP sent successfully.',
 				'transactionId' => $body['data']['transactionId'],
+
+			]);
+		} elseif ($body['status'] === 422) {
+			wp_send_json_error([
+				'message' => $body['data'][0],
+				'status' => $body['status'],
 			]);
 		} else {
-			wp_send_json_error(['message' => $body['message'] ?? 'Unknown error occurred.', 'data' => $body['data'][0]]);
+			wp_send_json_error(['message' => $body['message'] ?? 'Unknown error occurred.', 'data' => $body]);
 		}
 	}
 
@@ -390,7 +405,7 @@ function handle_get_states()
 	} else {
 		$body = json_decode(wp_remote_retrieve_body($response), true);
 		if (!empty($body['status']) && $body['status'] === 200) {
-			wp_send_json_success($body);
+			wp_send_json(['data' => $body['data'], "message" => $body['message'], 'status' => $body['status']]);
 		} else {
 			wp_send_json_error(['message' => 'No states found.', "body" =>  $body, 'data' => $body['data'][0]]);
 		}
@@ -544,7 +559,7 @@ function handle_login_phr_address()
 	]);
 
 	if (is_wp_error($response)) {
-		wp_send_json_error(['message' => 'Failed to Logi using PHR address.']);
+		wp_send_json_error(['message' => 'Failed to Logi using PHR address.', $payloadBody]);
 	} else {
 		$headers = wp_remote_retrieve_headers($response);
 		$body = json_decode(wp_remote_retrieve_body($response), true);

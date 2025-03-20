@@ -33,8 +33,10 @@
 :is(.adhar-mobile-otp-form,.otp-form) .resend-btn {  margin:0; flex-shrink: 0; display: flex; align-items: center; gap:16px;  margin-left: 16px; }
 :is(.adhar-mobile-otp-form,.otp-form) .resend-btn .submit-link{ cursor: pointer; font-weight: 600; color: var(--hr-secondary-color); background-color: transparent; padding: 0; }
 
-#response-message { text-align: center; margin-top: 12px; }
-#response-message.error,.error-message { color: #F22;}
+#response-message {text-align: center;margin-top: 12px;padding: 4px 12px;}
+#response-message.error,.error-message {color: #f22;border-left: 6px solid #F22;background-color: #ffebeb;}
+
+#response-message.success {background: #daffda; border-left: 6px solid #2F2; }
 .error-message {font-size: 12px; }
 
 #loading-spinner .spinner{ display: flex; align-items: center; justify-content: center; }
@@ -60,7 +62,7 @@
 .form-container .separator span { font-size: 14px; color: #555; font-weight: bold; }
 
 
-.create-abha-section { display: none;}
+.create-abha-section {display: none;}
 .create-abha-form .heading {margin-bottom: 20px; }
 
 .create-abha-form .form-group.date-of-birth>* { width: 100%;}
@@ -79,7 +81,7 @@
 .create-abha-form .form-group.full-name>*,
 .create-abha-form .form-group.state-city>* { width: 100%;}
 
-.suggestion-section{/* display: none; */}
+.suggestion-section{display: none;}
 .suggestion-section .suggestion-list-wrap{ margin-top: 20px; }
 .suggestion-section .suggestion-list-wrap.no-data {opacity: .25; } 
 .suggestion-section .suggestion-list-wrap.no-data *{ cursor: not-allowed; } 
@@ -89,3 +91,6 @@
 .suggestion-section .suggestion-list-wrap .suggestion-list .selected-address{ background-color: var(--hr-secondary-color); color: #FFF; }
 .suggestion-section .suggestion-list-wrap .suggestion-list .suggestion-item:last-child{ margin-bottom: 0; }
 .suggestion-section .suggestion-list-wrap .note { margin-top: 4px; }
+
+.image-preview{display: flex;flex-direction: column;justify-content: center;align-items: center;gap: 20px;overflow: hidden;border: 1px solid #dcdcdc;border-radius: 8px;padding-bottom: 20px;}
+.image-preview img{padding: 10px;border-radius: 7px;max-width: 800px;}
