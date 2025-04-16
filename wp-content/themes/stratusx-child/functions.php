@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . '/adharcard_form.php');
 include(get_stylesheet_directory() . '/lib/widgets.php');
+include(get_stylesheet_directory() . '/lib/customField.php');
 
 add_theme_support('automatic-feed-links');
 
@@ -88,7 +89,7 @@ function wp_optimize_file()
 	wp_enqueue_style('common-' . rand(0, 10), get_stylesheet_directory_uri() . '/css/common.css', [],  rand());
 	wp_enqueue_style('roots_app');
 	wp_enqueue_style('roots_child-style', get_stylesheet_uri(), [], rand(), 'all', 9999);
-	
+
 	wp_enqueue_style('abha-css', get_stylesheet_directory_uri() . '/css/abha-shortcode.css', array());
 	wp_enqueue_script('abha-js', get_stylesheet_directory_uri() . '/js/abha-shortcode.js', array('jquery'));
 	wp_localize_script('abha-js', 'ajax_obj', admin_url('admin-ajax.php'));

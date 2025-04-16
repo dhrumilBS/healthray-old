@@ -1,5 +1,6 @@
 <?php
 // Aadhaar Authentication Shortcode
+define("LIVE_API_PATH", "https://node.healthray.com/api/");
 define("STAGE_API_PATH", "https://node-stage.healthray.com/api/");
 define("LOCAL_API_PATH", "http://192.168.0.162:4004/api/");
 define("API_PATH", STAGE_API_PATH);
@@ -49,8 +50,9 @@ add_action('wp_ajax_nopriv_aadhaar_auth_form_submit', 'handle_aadhaar_form_submi
 
 //! -- 1.2 - m1-external/aadhaar/verify_otp -----------
 // Verify OTP via AJAX
-function verify_aadhaar_otp_ajax()
+function _verify_aadhaar_otp_ajax()
 {
+	$adharNo = sanitize_text_field($_POST['adharNo']);
 	$otp = sanitize_text_field($_POST['otp']);
 	$transactionId = sanitize_text_field($_POST['transactionId']);
 	$otpMobileno = sanitize_text_field($_POST['number']);
@@ -59,13 +61,14 @@ function verify_aadhaar_otp_ajax()
 		wp_send_json_error(['message' => 'OTP and Transaction ID are required.']);
 	}
 	$url = API_PATH . 'v2/abha/m1-external/aadhaar/verify_otp';
+	$payload = ['otp' => $otp, 'transaction_id' => $transactionId, 'number' => $otpMobileno];
 	$response = wp_remote_post($url, [
 		'headers' => ['Content-Type' => 'application/json'],
-		'body'	  => json_encode(['otp' => $otp, 'transaction_id' => $transactionId, 'number' => $otpMobileno]),
+		'body'	  => json_encode($payload),
 	]);
 
 	if (is_wp_error($response)) {
-		wp_send_json_error(['message' => 'Error verifying OTP. Please try again.']);
+		wp_send_json_error(['message' => 'Error verifying OTP. Please try again.', 'adharNo' => $adharNo]);
 	} else {
 		$headers = wp_remote_retrieve_headers($response);
 		$body = wp_remote_retrieve_body($response);
@@ -100,6 +103,66 @@ function verify_aadhaar_otp_ajax()
 				wp_send_json_error(['message' => $data['message'] ?? 'Verification failed.', 'data' => $body['data'][0]]);
 			}
 		}
+	}
+
+	wp_die();
+}
+function verify_aadhaar_otp_ajax()
+{
+	$adharNo = sanitize_text_field($_POST['adharNo']);
+	$otp = sanitize_text_field($_POST['otp']);
+	$transactionId = sanitize_text_field($_POST['transactionId']);
+	$otpMobileno = sanitize_text_field($_POST['number']);
+
+	if (empty($otp) || empty($transactionId)) {
+		wp_send_json_error(['message' => 'OTP and Transaction ID are required.']);
+	}
+	$url = API_PATH . 'v2/abha/m1-external/aadhaar/verify_otp';
+	$payload = ['otp' => $otp, 'transaction_id' => $transactionId, 'number' => $otpMobileno];
+
+	$response = wp_remote_post($url, [
+		'headers' => ['Content-Type' => 'application/json'],
+		'body'	  => json_encode($payload),
+	]);
+	$headers = wp_remote_retrieve_headers($response);
+	$body = wp_remote_retrieve_body($response);
+	$content_type = isset($headers['content-type']) ? $headers['content-type'] : '';
+	$exe = explode('/', $content_type)[1];
+	$s =  date('Y_m_d h_i_s ') . bin2hex(random_bytes(3));
+	$upload_dir = wp_upload_dir();
+	$upload_path = $upload_dir['basedir'] . '/abha-cards/';
+	if (!file_exists($upload_path)) {
+		wp_mkdir_p($upload_path);
+	}
+	$file_path = $upload_path . $s . '.' . $exe;
+
+	if (!is_wp_error($response)) {
+		if (strpos($content_type, 'image/') !== false) {
+			$image_url = 'data:' . $content_type . ';base64,' . base64_encode($body);
+
+			file_put_contents($file_path, $body);
+			wp_send_json_success([
+				'message' => 'Image received.',
+				'imageData' => true,
+				'userData' => false,
+				'image_url' => $image_url,
+				'downloadable' => true
+			]);
+		} else {
+			$data = json_decode($body, true);
+			if (!empty($data['status']) && $data['status'] === 200) {
+				wp_send_json_success([
+					'message' => $data['message'],
+					'imageData' => false,
+					'userData' => true,
+					'data' => $data['data'],
+				]);
+			} else {
+				wp_send_json_error(['message' => $data['message'] ?? 'Verification failed.', 'data' => $body['data'][0]]);
+			}
+		}
+	} else {
+		wp_send_json_error(['message' => 'Error verifying OTP. Please try again.', 'adharNo' => $adharNo]);
 	}
 
 	wp_die();
@@ -228,6 +291,7 @@ function handle_link_abha_ajax()
 	$table_name = $wpdb->prefix . "abha_cards";
 
 	$data = $_POST['payload'];
+	print_r($_POST);
 
 	$abha_address = $data['abha_address'];
 	$transaction_id = $data['transaction_id'];
@@ -261,6 +325,18 @@ function handle_link_abha_ajax()
 		]
 
 	];
+
+
+	if ($wpdb->insert_id) {
+		wp_send_json_success([
+			'message' => 'ABHA Card linked and stored successfully.',
+			'data' => $data
+		]);
+	} else {
+		wp_send_json_error(['message' => 'Failed to store ABHA card details.', 'data' => $data]);
+	}
+
+
 	$url = API_PATH . 'v2/abha/m1-external/link/';
 	if (empty($_POST['payload'])) {
 		wp_send_json_error(['message' => 'Payload is required.', 'payload' => $payload]);
