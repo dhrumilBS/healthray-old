@@ -178,10 +178,98 @@ add_action( 'wpcf7_admin_init', 'nbcpf_add_tag_generator_phonetext', 20 );
 function nbcpf_add_tag_generator_phonetext() {
 	$tag_generator = WPCF7_TagGenerator::get_instance();
 	$tag_generator->add( 'phonetext', __( 'phone number', 'nb-cpf' ),
-		'nbcpf_tag_generator_phonetext' );
+		'nbcpf_tag_generator_phonetext', array( 'version' => '2' ) );
 }
 
-function nbcpf_tag_generator_phonetext( $contact_form, $args = '' ) {
+function nbcpf_tag_generator_phonetext( $contact_form, $options ) {
+	$field_types = array(
+		'phonetext' => array(
+			'display_name' => __( 'Phone number field', 'nb-cpf' ),
+			'heading' => __( 'Phone number field form-tag generator', 'nb-cpf' ),
+			'description' => __( 'Generate a form-tag for a phone number with flags icon text input field.', 'nb-cpf' ),
+			'maybe_purpose' => 'author_tel',
+		),
+	);
+	$basetype = $options['id'];
+
+	if ( ! in_array( $basetype, array_keys( $field_types ) ) ) {
+		$basetype = 'phonetext';
+	}
+
+	$tgg = new WPCF7_TagGeneratorGenerator( $options['content'] );
+
+?>
+<header class="description-box">
+	<h3><?php
+		echo esc_html( $field_types[$basetype]['heading'] );
+	?></h3>
+
+	<p><?php
+		$description = wp_kses(
+			$field_types[$basetype]['description'],
+			array(
+				'a' => array( 'href' => true ),
+				'strong' => array(),
+			),
+			array( 'http', 'https' )
+		);
+
+		echo $description;
+	?></p>
+</header>
+
+<div class="control-box">
+	<?php
+		$tgg->print( 'field_type', array(
+			'with_required' => true,
+			'select_options' => array(
+				$basetype => $field_types[$basetype]['display_name'],
+			),
+		) );
+
+		$tgg->print( 'field_name', array(
+			'ask_if' => $field_types[$basetype]['maybe_purpose']
+		) );
+
+		$tgg->print( 'class_attr' );
+
+		$tgg->print( 'min_max', array(
+			'title' => __( 'Length', 'nb-cpf' ),
+			'min_option' => 'minlength:',
+			'max_option' => 'maxlength:',
+		) );
+
+		$tgg->print( 'default_value', array(
+			'with_placeholder' => true,
+		) );
+
+		
+	?>
+	
+	<fieldset>
+		<legend class="screen-reader-text" id="tag-generator-panel-phonetext-numberonly-legend">
+			<?php echo esc_html( __( 'Field Validation', 'nb-cpf' ) ); ?></legend>
+		<label>
+    	<input type="checkbox" data-tag-part="option" data-tag-option="numberonly"/>
+    		<?php echo esc_html( __( 'Number Only Validation', 'nb-cpf' ) ); ?>
+		</label>
+		
+	</fieldset>
+	
+	
+</div>
+
+<footer class="insert-box">
+	<?php
+		$tgg->print( 'insert_box_content' );
+
+		$tgg->print( 'mail_tag_tip' );
+	?>
+</footer>
+<?php
+}
+
+function nbcpf_tag_generator_phonetext_old( $contact_form, $args = '' ) {
 	$args = wp_parse_args( $args, array() );
 	$type = 'phonetext';
 

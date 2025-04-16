@@ -119,10 +119,83 @@ add_action( 'wpcf7_admin_init', 'nbcpf_add_tag_generator_countrytext', 20 );
 function nbcpf_add_tag_generator_countrytext() {
 	$tag_generator = WPCF7_TagGenerator::get_instance();
 	$tag_generator->add( 'countrytext', __( 'country drop-down', 'nb-cpf' ),
-		'nbcpf_tag_generator_countrytext' );
+		'nbcpf_tag_generator_countrytext', array( 'version' => '2' ) );
+}
+function nbcpf_tag_generator_countrytext( $contact_form, $options ) {
+	$field_types = array(
+		'countrytext' => array(
+			'display_name' => __( 'Country dropdown field', 'nb-cpf' ),
+			'heading' => __( 'Country dropdown field form-tag generator', 'nb-cpf' ),
+			'description' => __( 'Generate a form-tag for a country dorp list with flags icon text input field.', 'nb-cpf' ),
+			'maybe_purpose' => 'author_country',
+		),
+	);
+	$basetype = $options['id'];
+
+	if ( ! in_array( $basetype, array_keys( $field_types ) ) ) {
+		$basetype = 'countrytext';
+	}
+
+	$tgg = new WPCF7_TagGeneratorGenerator( $options['content'] );
+
+?>
+<header class="description-box">
+	<h3><?php
+		echo esc_html( $field_types[$basetype]['heading'] );
+	?></h3>
+
+	<p><?php
+		$description = wp_kses(
+			$field_types[$basetype]['description'],
+			array(
+				'a' => array( 'href' => true ),
+				'strong' => array(),
+			),
+			array( 'http', 'https' )
+		);
+
+		echo $description;
+	?></p>
+</header>
+
+<div class="control-box">
+	<?php
+		$tgg->print( 'field_type', array(
+			'with_required' => true,
+			'select_options' => array(
+				$basetype => $field_types[$basetype]['display_name'],
+			),
+		) );
+
+		$tgg->print( 'field_name', array(
+			'ask_if' => $field_types[$basetype]['maybe_purpose']
+		) );
+
+		$tgg->print( 'class_attr' );
+
+		$tgg->print( 'min_max', array(
+			'title' => __( 'Length', 'nb-cpf' ),
+			'min_option' => 'minlength:',
+			'max_option' => 'maxlength:',
+		) );
+
+		$tgg->print( 'default_value', array(
+			'with_placeholder' => true,
+		) );
+	?>
+</div>
+
+<footer class="insert-box">
+	<?php
+		$tgg->print( 'insert_box_content' );
+
+		$tgg->print( 'mail_tag_tip' );
+	?>
+</footer>
+<?php
 }
 
-function nbcpf_tag_generator_countrytext( $contact_form, $args = '' ) {
+function nbcpf_tag_generator_countrytext_old( $contact_form, $args = '' ) {
 	$args = wp_parse_args( $args, array() );
 	$type = 'countrytext';
 

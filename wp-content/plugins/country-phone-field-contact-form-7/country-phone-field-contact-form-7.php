@@ -2,7 +2,7 @@
 /*
 Plugin Name: Country & Phone Field Contact Form 7
 Description: Add country drop down with flags and phone number with country phone extensions field in contact form 7.
-Version: 2.5.7
+Version: 2.6.0
 Author: Narinder Singh Bisht
 Author URI: http://narindersingh.in
 License: GPL3
