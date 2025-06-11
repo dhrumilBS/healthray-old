@@ -194,12 +194,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				'tablet_default' => '2',
 				'mobile_default' => '1',
 				'options' => [
-					'1' => '1',
-					'2' => '2',
-					'3' => '3',
-					'4' => '4',
-					'5' => '5',
-					'6' => '6',
+					'1' => esc_html__( '1', 'elementor-pro' ),
+					'2' => esc_html__( '2', 'elementor-pro' ),
+					'3' => esc_html__( '3', 'elementor-pro' ),
+					'4' => esc_html__( '4', 'elementor-pro' ),
+					'5' => esc_html__( '5', 'elementor-pro' ),
+					'6' => esc_html__( '6', 'elementor-pro' ),
 				],
 				'prefix_class' => 'elementor-grid%s-',
 				'frontend_available' => true,
@@ -925,8 +925,10 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			while ( $query->have_posts() ) {
 				$query->the_post();
 
+				$this->add_render_hooks();
 				$this->current_permalink = get_permalink();
 				$this->render_post();
+				$this->remove_render_hooks();
 			}
 		}
 
@@ -934,6 +936,10 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$this->render_loop_footer();
 	}
+
+	protected function add_render_hooks() {}
+
+	protected function remove_render_hooks() {}
 
 	public function filter_excerpt_length() {
 		return $this->get_instance_value( 'excerpt_length' );
@@ -1228,7 +1234,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		// PHPCS - Seems that `$links` is safe.
 		?>
-		<nav class="elementor-pagination" aria-label="<?php esc_attr_e( 'Pagination', 'elementor-pro' ); ?>">
+		<nav class="elementor-pagination" aria-label="<?php echo esc_attr__( 'Pagination', 'elementor-pro' ); ?>">
 			<?php echo implode( PHP_EOL, $links ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</nav>
 		<?php

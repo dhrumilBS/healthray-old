@@ -10,6 +10,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Stroke;
 use Elementor\Repeater;
 use ElementorPro\Base\Base_Widget;
+use ElementorPro\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -37,6 +38,10 @@ class Price_List extends Base_Widget {
 		return false;
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::elementor()->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	/**
 	 * Get style dependencies.
 	 *
@@ -48,7 +53,7 @@ class Price_List extends Base_Widget {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-pricing' ];
+		return [ 'widget-price-list' ];
 	}
 
 	protected function register_controls() {
@@ -330,11 +335,11 @@ class Price_List extends Base_Widget {
 				'label' => esc_html__( 'Style', 'elementor-pro' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
+					'none' => esc_html__( 'None', 'elementor-pro' ),
 					'solid' => esc_html__( 'Solid', 'elementor-pro' ),
 					'dotted' => esc_html__( 'Dotted', 'elementor-pro' ),
 					'dashed' => esc_html__( 'Dashed', 'elementor-pro' ),
 					'double' => esc_html__( 'Double', 'elementor-pro' ),
-					'none' => esc_html__( 'None', 'elementor-pro' ),
 				],
 				'default' => 'dotted',
 				'render_type' => 'template',

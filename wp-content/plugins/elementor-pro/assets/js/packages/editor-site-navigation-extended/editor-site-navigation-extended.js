@@ -49,6 +49,23 @@ module.exports = window["elementorV2"]["icons"];
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports
@@ -62,28 +79,33 @@ module.exports = window["elementorV2"]["icons"];
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+!function() {
 /*!********************************************************************************!*\
   !*** ./node_modules/@elementor/editor-site-navigation-extended/dist/index.mjs ***!
   \********************************************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _elementor_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
-/* harmony import */ var _elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/editor-site-navigation */ "@elementor/editor-site-navigation");
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   init: function() { return /* binding */ init; }
+/* harmony export */ });
+/* harmony import */ var _elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elementor/editor-site-navigation */ "@elementor/editor-site-navigation");
+/* harmony import */ var _elementor_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elementor/icons */ "@elementor/icons");
 // src/icons-map.ts
 
 
 function extendDocumentsIcons() {
-  if (_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_1__.extendIconsMap) {
-    (0,_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_1__.extendIconsMap)({
-      header: _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.HeaderTemplateIcon,
-      footer: _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.FooterTemplateIcon,
-      "single-post": _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.PostTypeIcon,
-      "single-page": _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.PageTypeIcon,
-      popup: _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.PopupTemplateIcon,
-      archive: _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.ArchiveTemplateIcon,
-      "search-results": _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.SearchResultsTemplateIcon,
-      "loop-item": _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.LoopItemTemplateIcon,
-      "error-404": _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.Error404TemplateIcon,
-      "landing-page": _elementor_icons__WEBPACK_IMPORTED_MODULE_0__.LandingPageTemplateIcon
+  if (_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__.extendIconsMap) {
+    (0,_elementor_editor_site_navigation__WEBPACK_IMPORTED_MODULE_0__.extendIconsMap)({
+      header: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.HeaderTemplateIcon,
+      footer: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.FooterTemplateIcon,
+      "single-post": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.PostTypeIcon,
+      "single-page": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.PageTypeIcon,
+      popup: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.PopupTemplateIcon,
+      archive: _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.ArchiveTemplateIcon,
+      "search-results": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.SearchResultsTemplateIcon,
+      "loop-item": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.LoopItemTemplateIcon,
+      "error-404": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.Error404TemplateIcon,
+      "landing-page": _elementor_icons__WEBPACK_IMPORTED_MODULE_1__.LandingPageTemplateIcon
     });
   }
 }
@@ -93,9 +115,9 @@ function init() {
   extendDocumentsIcons();
 }
 
-// src/index.ts
-init();
 
+}();
 (window.elementorV2 = window.elementorV2 || {}).editorSiteNavigationExtended = __webpack_exports__;
 /******/ })()
 ;
+window.elementorV2.editorSiteNavigationExtended?.init?.();

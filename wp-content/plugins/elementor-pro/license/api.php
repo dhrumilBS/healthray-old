@@ -129,7 +129,7 @@ class API {
 
 	public static function deactivate_license() {
 		$body_args = [
-			'license' => '',
+			'license' => Admin::get_license_key(),
 		];
 
 		$license_data = self::remote_post( 'license/deactivate', $body_args );
@@ -279,6 +279,13 @@ class API {
 				'locales' => wp_json_encode( $locales ),
 				'beta' => 'yes' === get_option( 'elementor_beta', 'no' ),
 			];
+
+			if ( method_exists( '\\Elementor\\Api', 'get_site_key' ) ) {
+				$site_key = \Elementor\Api::get_site_key();
+				if ( ! empty( $site_key ) ) {
+					$body_args['site_key'] = $site_key;
+				}
+			}
 
 			$info_data = self::remote_post( 'pro/info', $body_args );
 

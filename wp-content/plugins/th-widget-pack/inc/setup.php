@@ -1,27 +1,25 @@
 <?php
-
-use Elementor\Controls_Manager;
+use Elementor\Controls_Manager;   
 use Elementor\Core\Settings\Manager as SettingsManager;
 
-function th_get_elementor_theme_mode()
-{
-    $editor_preferences = SettingsManager::get_settings_managers('editorPreferences');
-    return $editor_preferences->get_model()->get_settings('ui_theme');
+function th_get_elementor_theme_mode(){
+    $editor_preferences = SettingsManager::get_settings_managers( 'editorPreferences' );
+    return $editor_preferences->get_model()->get_settings( 'ui_theme' );
 }
 // Adding Custom Icons for Icon Control
-if ('embark' == THEMO_CURRENT_THEME || 'bellevue' == THEMO_CURRENT_THEME) {
-    require_once THEMO_PATH . 'fields/icons.php';
-} elseif ('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME) {
-    require_once THEMO_PATH . 'fields/stratus_icons.php';
-} elseif ('uplands' == THEMO_CURRENT_THEME) {
-    require_once THEMO_PATH . 'fields/golf_icons.php';
-} else {
-    require_once THEMO_PATH . 'fields/icons.php';
+if('embark' == THEMO_CURRENT_THEME || 'bellevue' == THEMO_CURRENT_THEME ){
+    require_once THEMO_PATH . 'fields/icons.php' ;
+}elseif('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME){
+    require_once THEMO_PATH . 'fields/stratus_icons.php' ;
+}elseif('uplands' == THEMO_CURRENT_THEME){
+    require_once THEMO_PATH . 'fields/golf_icons.php' ;
+}else{
+    require_once THEMO_PATH . 'fields/icons.php' ;
 }
 
-require_once THEMO_PATH . 'inc/helper-functions.php';
+require_once THEMO_PATH . 'inc/helper-functions.php' ;
 
-if (!function_exists('themovation_elements')) {
+if ( ! function_exists( 'themovation_elements' ) ) {
     function themovation_elements()
     {
         require_once THEMO_PATH . 'elements/slider.php';
@@ -33,66 +31,66 @@ if (!function_exists('themovation_elements')) {
         require_once THEMO_PATH . 'elements/formidable-form.php';
         require_once THEMO_PATH . 'elements/info-card.php';
 
-        if ('bellevue' == THEMO_CURRENT_THEME) {
+        if('bellevue' == THEMO_CURRENT_THEME ){
             require_once THEMO_PATH . 'elements/team_2.php';
-        } else {
+        }else{
             require_once THEMO_PATH . 'elements/team.php';
         }
 
-        if ('embark' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME || 'uplands' == THEMO_CURRENT_THEME) {
+        if('embark' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME || 'uplands' == THEMO_CURRENT_THEME){
             require_once THEMO_PATH . 'elements/appointments.php';
-        } elseif ('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME) {
+        }elseif('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME){
             require_once THEMO_PATH . 'elements/appointments.php';
         }
 
-        if ('embark' == THEMO_CURRENT_THEME) {
+        if('embark' == THEMO_CURRENT_THEME){
             require_once THEMO_PATH . 'elements/tour-grid.php';
-        } elseif ('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME) {
+        }elseif('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME){
             require_once THEMO_PATH . 'elements/portfolio-grid.php';
-        } elseif ('bellevue' == THEMO_CURRENT_THEME) {
+        }elseif('bellevue' == THEMO_CURRENT_THEME){
             require_once THEMO_PATH . 'elements/room-grid.php';
-        } elseif ('uplands' == THEMO_CURRENT_THEME) {
+        }elseif('uplands' == THEMO_CURRENT_THEME){
             require_once THEMO_PATH . 'elements/course-guide.php';
         }
 
 
-        if ('embark' == THEMO_CURRENT_THEME) {
+        if('embark' == THEMO_CURRENT_THEME){
             require_once THEMO_PATH . 'elements/tour-info.php';
-        } elseif ('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME || 'uplands' == THEMO_CURRENT_THEME) {
+        }elseif('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME || 'uplands' == THEMO_CURRENT_THEME){
             require_once THEMO_PATH . 'elements/info-bar.php';
-        } elseif ('bellevue' == THEMO_CURRENT_THEME) {
+        }elseif('bellevue' == THEMO_CURRENT_THEME){
             require_once THEMO_PATH . 'elements/room-info.php';
         }
 
-        if ('bellevue' == THEMO_CURRENT_THEME) {
+        if('bellevue' == THEMO_CURRENT_THEME ){
             require_once THEMO_PATH . 'elements/package_2.php';
             require_once THEMO_PATH . 'elements/accommodation_listing.php';
             require_once THEMO_PATH . 'elements/accommodation_search.php';
             require_once THEMO_PATH . 'elements/tabs.php';
-        } else {
+        }else{
             require_once THEMO_PATH . 'elements/package.php';
         }
 
 
-        if ('embark' == THEMO_CURRENT_THEME || 'bellevue' == THEMO_CURRENT_THEME) {
+        if('embark' == THEMO_CURRENT_THEME || 'bellevue' == THEMO_CURRENT_THEME ){
             require_once THEMO_PATH . 'elements/itinerary.php';
-        } elseif ('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME || 'uplands' == THEMO_CURRENT_THEME) {
+        }elseif('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME || 'uplands' == THEMO_CURRENT_THEME){
             require_once THEMO_PATH . 'elements/expand-list.php';
         }
 
-        require_once THEMO_PATH . 'elements/image-carousel-timeline.php';
         require_once THEMO_PATH . 'elements/pricing.php';
-        if ('uplands' == THEMO_CURRENT_THEME || 'bellevue' == THEMO_CURRENT_THEME) {
+        if('uplands' == THEMO_CURRENT_THEME || 'bellevue' == THEMO_CURRENT_THEME) {
+            require_once THEMO_PATH . 'elements/pricing-list.php';
+            require_once THEMO_PATH . 'elements/image-carousel-timeline.php';
+        }
+
+        if('entrepreneur' == THEMO_CURRENT_THEME || 'stratus' == THEMO_CURRENT_THEME ) {
             require_once THEMO_PATH . 'elements/pricing-list.php';
         }
 
-        if ('entrepreneur' == THEMO_CURRENT_THEME || 'stratus' == THEMO_CURRENT_THEME) {
-            require_once THEMO_PATH . 'elements/pricing-list.php';
-        }
-
-        if ('bellevue' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME || 'stratus' == THEMO_CURRENT_THEME) {
+        if('bellevue' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME || 'stratus' == THEMO_CURRENT_THEME ){
             require_once THEMO_PATH . 'elements/blog_2.php';
-        } else {
+        }else{
             require_once THEMO_PATH . 'elements/blog.php';
         }
 
@@ -100,7 +98,7 @@ if (!function_exists('themovation_elements')) {
         require_once THEMO_PATH . 'elements/image-gallery.php';
         require_once THEMO_PATH . 'elements/google-maps.php';
 
-        if ('bellevue' == THEMO_CURRENT_THEME) {
+        if('bellevue' == THEMO_CURRENT_THEME){
             // Check if the MotoPress Hotel Booking is active
             if (class_exists('HotelBookingPlugin')) {
                 require_once THEMO_PATH . 'elements/MPHB/mphb_accommodation_grid.php';
@@ -122,63 +120,63 @@ if (!function_exists('themovation_elements')) {
 
 
 // Include Custom Widgets
-add_filter('elementor/widgets/register', 'themovation_elements');
+add_filter( 'elementor/widgets/register', 'themovation_elements' );
 
 //if (!function_exists('is_themovation_template')) {
-function is_themovation_template()
-{
-    $theme = wp_get_theme();
-    $themeToCheck = $theme->parent() ? $theme->parent() : $theme;
-    return strpos(strtolower($themeToCheck->get('AuthorURI')), 'themovation') !== false ? true : false;
-}
+    function is_themovation_template()
+    {
+        $theme = wp_get_theme();
+        $themeToCheck = $theme->parent() ? $theme->parent() : $theme;
+        return strpos(strtolower($themeToCheck->get('AuthorURI')), 'themovation') !== false ? true : false;
+    }
 //}
 
-function th_check_some_other_plugin()
-{
-    include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+function th_check_some_other_plugin() {
+    include_once(ABSPATH.'wp-admin/includes/plugin.php');
 
     if (showLibrary()) {
-        include_once THEMO_PATH . 'library/library-manager.class.php';
-        include_once THEMO_PATH . 'library/library-source.class.php';
-    } else if (is_themovation_template()) {
-        add_action('elementor/editor/footer', function () {
-            include_once THEMO_PATH . 'library/register.php';
-        });
+        include_once THEMO_PATH . 'library/library-manager.class.php' ;
+        include_once THEMO_PATH . 'library/library-source.class.php' ;
     }
+    else if(is_themovation_template ()){
+        add_action( 'elementor/editor/footer', function(){
+            include_once THEMO_PATH . 'library/register.php';
+        } );
+    }
+    
 
-
-    if (!function_exists('is_plugin_active') || !is_plugin_active('wpml-translation-management/plugin.php') || !is_plugin_active('wpml-string-translation/plugin.php')) {
+    if (!function_exists('is_plugin_active') || !is_plugin_active( 'wpml-translation-management/plugin.php') || !is_plugin_active( 'wpml-string-translation/plugin.php')) {
         return;
     }
-    require_once THEMO_PATH . 'languages/wpml-translations.php';
+    require_once THEMO_PATH . 'languages/wpml-translations.php' ;
 }
-add_action('plugins_loaded', 'th_check_some_other_plugin');
+add_action( 'plugins_loaded', 'th_check_some_other_plugin' );
 
 
 // Include scripts, custom post type, shortcodes
 // Older version of Elementor (older than version 2) use the old grouping.
-if (defined('ELEMENTOR_PATH') && intval('2') > intval(ELEMENTOR_VERSION)) {
+if(defined('ELEMENTOR_PATH') && intval('2') > intval(ELEMENTOR_VERSION) ){
     require_once THEMO_PATH . 'inc/elementor-section-old.php';
-} else {
+}else{
     require_once THEMO_PATH . 'inc/elementor-section.php';
 }
 require_once THEMO_PATH . 'inc/enqueue.php';
 
-if ('embark' == THEMO_CURRENT_THEME) {
-    require_once THEMO_PATH . 'inc/cpt_tours.php';
-} elseif ('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME) {
-    require_once THEMO_PATH . 'inc/cpt_portfolio.php';
-} elseif ('bellevue' == THEMO_CURRENT_THEME) {
-    require_once THEMO_PATH . 'inc/cpt_room.php';
-    if (function_exists('is_plugin_active') && is_plugin_active('motopress-hotel-booking/motopress-hotel-booking.php')) {
+if('embark' == THEMO_CURRENT_THEME){
+    require_once THEMO_PATH . 'inc/cpt_tours.php' ;
+}elseif('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME){
+    require_once THEMO_PATH . 'inc/cpt_portfolio.php' ;
+}elseif('bellevue' == THEMO_CURRENT_THEME){
+    require_once THEMO_PATH . 'inc/cpt_room.php' ;
+    if ( function_exists('is_plugin_active') && is_plugin_active( 'motopress-hotel-booking/motopress-hotel-booking.php' ) ) {
         //plugin is activated
         require_once THEMO_PATH . 'inc/MPHB/cpt_mphb_room_type.php';
     }
-} elseif ('uplands' == THEMO_CURRENT_THEME) {
-    require_once THEMO_PATH . 'inc/cpt_hole.php';
+}elseif('uplands' == THEMO_CURRENT_THEME){
+    require_once THEMO_PATH . 'inc/cpt_hole.php' ;
 }
 
-require_once THEMO_PATH . 'inc/shortcodes.php';
+require_once THEMO_PATH . 'inc/shortcodes.php' ;
 
 
 // GLOBAL VARIABLES
@@ -189,7 +187,7 @@ $th_map_id = 0;
 
 
 
-if (!function_exists('themovation_so_widgets_bundle_setup_elementor_settings')) {
+if ( ! function_exists( 'themovation_so_widgets_bundle_setup_elementor_settings' ) ) {
     function themovation_so_widgets_bundle_setup_elementor_settings()
     {
 
@@ -215,84 +213,85 @@ if (!function_exists('themovation_so_widgets_bundle_setup_elementor_settings')) 
         }
 
         if (!in_array("page", $elementor_cpt_support)) {
-            array_push($elementor_cpt_support, "page");
+            array_push($elementor_cpt_support,"page");
             update_option('elementor_cpt_support', $elementor_cpt_support);
         }
 
         if (!in_array("post", $elementor_cpt_support)) {
-            array_push($elementor_cpt_support, "post");
+            array_push($elementor_cpt_support,"post");
             update_option('elementor_cpt_support', $elementor_cpt_support);
         }
 
         if (!in_array("themo_tour", $elementor_cpt_support)) {
-            array_push($elementor_cpt_support, "themo_tour");
+            array_push($elementor_cpt_support,"themo_tour");
             update_option('elementor_cpt_support', $elementor_cpt_support);
         }
 
         if (!in_array("themo_portfolio", $elementor_cpt_support)) {
-            array_push($elementor_cpt_support, "themo_portfolio");
+            array_push($elementor_cpt_support,"themo_portfolio");
             update_option('elementor_cpt_support', $elementor_cpt_support);
         }
 
         if (!in_array("themo_room", $elementor_cpt_support)) {
-            array_push($elementor_cpt_support, "themo_room");
+            array_push($elementor_cpt_support,"themo_room");
             update_option('elementor_cpt_support', $elementor_cpt_support);
         }
 
         if (!in_array("mphb_room_type", $elementor_cpt_support)) {
-            array_push($elementor_cpt_support, "mphb_room_type");
+            array_push($elementor_cpt_support,"mphb_room_type");
             update_option('elementor_cpt_support', $elementor_cpt_support);
         }
 
         if (!in_array("mphb_room_service", $elementor_cpt_support)) {
-            array_push($elementor_cpt_support, "mphb_room_service");
+            array_push($elementor_cpt_support,"mphb_room_service");
             update_option('elementor_cpt_support', $elementor_cpt_support);
         }
 
         if (!in_array("themo_hole", $elementor_cpt_support)) {
-            array_push($elementor_cpt_support, "themo_hole");
+            array_push($elementor_cpt_support,"themo_hole");
             update_option('elementor_cpt_support', $elementor_cpt_support);
         }
 
         if (!in_array("product", $elementor_cpt_support)) {
-            array_push($elementor_cpt_support, "product");
+            array_push($elementor_cpt_support,"product");
             update_option('elementor_cpt_support', $elementor_cpt_support);
         }
         // Enable Elementor Support for HFE
         if (!in_array("elementor-thhf", $elementor_cpt_support)) {
-            array_push($elementor_cpt_support, "elementor-thhf");
+            array_push($elementor_cpt_support,"elementor-thhf");
             update_option('elementor_cpt_support', $elementor_cpt_support);
         }
+
     }
 }
 
 // on plugin Activaton, set Elementor Global Options and register Custom Post Types.
 
-if (!function_exists('themovation_so_widgets_bundle_install')) {
+if ( ! function_exists( 'themovation_so_widgets_bundle_install' ) ) {
     function themovation_so_widgets_bundle_install()
     {
         // trigger our function that sets up Elementor Global Settings
         themovation_so_widgets_bundle_setup_elementor_settings();
 
-        if ('embark' == THEMO_CURRENT_THEME) {
+        if('embark' == THEMO_CURRENT_THEME){
             // Regsiter Custom Post Types
             themo_tour_custom_post_type();
 
             // Register Custom Taxonomy
             themo_tour_type();
-        } elseif ('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME) {
+        }elseif('stratus' == THEMO_CURRENT_THEME || 'pursuit' == THEMO_CURRENT_THEME || 'blockchain' == THEMO_CURRENT_THEME || 'entrepreneur' == THEMO_CURRENT_THEME){
             // Regsiter Custom Post Types
             themo_portfolio_custom_post_type();
 
             // Register Custom Taxonomy
             themo_project_type();
-        } elseif ('bellevue' == THEMO_CURRENT_THEME) {
+        }elseif('bellevue' == THEMO_CURRENT_THEME){
             // Regsiter Custom Post Types
             themo_room_custom_post_type();
 
             // Register Custom Taxonomy
             themo_room_type();
-        } elseif ('uplands' == THEMO_CURRENT_THEME) {
+        }elseif('uplands' == THEMO_CURRENT_THEME){
             // Regsiter Custom Post Types
             themo_hole_custom_post_type();
 
@@ -306,39 +305,37 @@ if (!function_exists('themovation_so_widgets_bundle_install')) {
         flush_rewrite_rules();
     }
 }
-register_activation_hook(THEMO__FILE__, 'themovation_so_widgets_bundle_install');
+register_activation_hook( THEMO__FILE__, 'themovation_so_widgets_bundle_install' );
 
 
 // Add custom controls to the Page Settings inside the Elementor Global Options.
 
 // Top of section
-if (!function_exists('th_add_custom_controls_elem_post_settings_top')) {
+if ( ! function_exists( 'th_add_custom_controls_elem_post_settings_top' ) ) {
 
     function th_add_custom_controls_elem_post_settings_top(Elementor\Core\DocumentTypes\PageBase $page)
     {
         // Is elementor Pro loaded
         $elm_pro_loaded = false;
-        if (function_exists('elementor_pro_load_plugin')) {
+        if( function_exists( 'elementor_pro_load_plugin' ) ) {
             $elm_pro_loaded = true;
         }
 
 
-        if (isset($page) && $page->get_id() > "") {
+        if(isset($page) && $page->get_id() > ""){
             $th_post_type = false;
 
             $th_post_type = get_post_type($page->get_id());
 
-            if (
-                $th_post_type == 'page' || $th_post_type == 'themo_tour' || $th_post_type == 'themo_portfolio' ||
-                $th_post_type == 'themo_room' || $th_post_type == 'themo_hole' || $th_post_type == 'mphb_room_type' ||
-                $th_post_type == 'mphb_room_service' || ($elm_pro_loaded && $th_post_type == 'post')  || ($elm_pro_loaded && $th_post_type == 'revision')
-            ) {
+            if($th_post_type == 'page' || $th_post_type == 'themo_tour' || $th_post_type == 'themo_portfolio' ||
+                $th_post_type == 'themo_room' || $th_post_type == 'themo_hole' || $th_post_type == 'mphb_room_type'||
+                $th_post_type == 'mphb_room_service' || ($elm_pro_loaded && $th_post_type == 'post')  || ($elm_pro_loaded && $th_post_type == 'revision')){
 
                 // Standard Header Options
                 $page->start_controls_section(
                     'thmv_doc_settings_header',
                     [
-                        'label' => __('Standard Header', 'molotov-form'),
+                        'label' => __( 'Standard Header', 'molotov-form' ),
                         'tab' => \Elementor\Controls_Manager::TAB_SETTINGS,
                     ]
                 );
@@ -348,7 +345,7 @@ if (!function_exists('th_add_custom_controls_elem_post_settings_top')) {
                     [
                         //'label' => __( 'Note', 'th-widget-pack' ),
                         'type' => \Elementor\Controls_Manager::RAW_HTML,
-                        'raw' => '<div class="elementor-control-title">' . esc_html__('Applies to Standard Header only.', 'th-widget-pack') . '</div><div class="elementor-control-field-description">' . sprintf(__('<a href="%1$s" target="_blank">Learn more</p>', 'th-widget-pack'), 'https://themovation.helpscoutdocs.com/article/311-custom-header-footer#standard-header-footer') . '</div>',
+                        'raw' => '<div class="elementor-control-title">'.esc_html__('Applies to Standard Header only.', 'th-widget-pack').'</div><div class="elementor-control-field-description">' . sprintf(__('<a href="%1$s" target="_blank">Learn more</p>', 'th-widget-pack'), 'https://themovation.helpscoutdocs.com/article/311-custom-header-footer#standard-header-footer') . '</div>',
                         'content_classes' => 'themo-elem-html-control',
                         'separator' => 'before'
                     ]
@@ -357,11 +354,11 @@ if (!function_exists('th_add_custom_controls_elem_post_settings_top')) {
                 $page->add_control(
                     'themo_transparent_header',
                     [
-                        'label' => __('Transparent Header', 'th-widget-pack'),
+                        'label' => __( 'Transparent Header', 'th-widget-pack' ),
                         'type' => Elementor\Controls_Manager::SWITCHER,
                         'default' => 'Off',
-                        'label_on' => __('On', 'th-widget-pack'),
-                        'label_off' => __('Off', 'th-widget-pack'),
+                        'label_on' => __( 'On', 'th-widget-pack' ),
+                        'label_off' => __( 'Off', 'th-widget-pack' ),
                         'return_value' => 'on',
                     ]
                 );
@@ -369,13 +366,13 @@ if (!function_exists('th_add_custom_controls_elem_post_settings_top')) {
                 $page->add_control(
                     'themo_header_content_style',
                     [
-                        'label' => __('Transparent Header Content Style', 'th-widget-pack'),
+                        'label' => __( 'Transparent Header Content Style', 'th-widget-pack' ),
                         'type' => Elementor\Controls_Manager::SELECT,
                         'label_block' => true,
                         'default' => 'light',
                         'options' => [
-                            'light' => __('Light', 'th-widget-pack'),
-                            'dark' => __('Dark', 'th-widget-pack'),
+                            'light' => __( 'Light', 'th-widget-pack' ),
+                            'dark' => __( 'Dark', 'th-widget-pack' ),
                         ],
                         'condition' => [
                             'themo_transparent_header' => 'on',
@@ -386,12 +383,12 @@ if (!function_exists('th_add_custom_controls_elem_post_settings_top')) {
                 $page->add_control(
                     'themo_alt_logo',
                     [
-                        'label' => __('Use Alternative Logo', 'th-widget-pack'),
-                        'description' => __('You can upload an alternative logo under Appearance / Customize / Theme Options / Logo / ', 'th-widget-pack'),
+                        'label' => __( 'Use Alternative Logo', 'th-widget-pack' ),
+                        'description' => __( 'You can upload an alternative logo under Appearance / Customize / Theme Options / Logo / ', 'th-widget-pack' ),
                         'type' => Elementor\Controls_Manager::SWITCHER,
                         'default' => 'Off',
-                        'label_on' => __('On', 'th-widget-pack'),
-                        'label_off' => __('Off', 'th-widget-pack'),
+                        'label_on' => __( 'On', 'th-widget-pack' ),
+                        'label_off' => __( 'Off', 'th-widget-pack' ),
                         'return_value' => 'on',
                         'condition' => [
                             'themo_transparent_header' => 'on',
@@ -403,10 +400,10 @@ if (!function_exists('th_add_custom_controls_elem_post_settings_top')) {
                 $page->add_control(
                     'themo_header_hide_shadow',
                     [
-                        'label' => __('Hide Header Shadow', 'th-widget-pack'),
+                        'label' => __( 'Hide Header Shadow', 'th-widget-pack' ),
                         'type' => Elementor\Controls_Manager::SWITCHER,
-                        'label_off' => __('No', 'elementor'),
-                        'label_on' => __('Yes', 'elementor'),
+                        'label_off' => __( 'No', 'elementor' ),
+                        'label_on' => __( 'Yes', 'elementor' ),
 
                         'selectors' => [
                             '{{WRAPPER}} .navbar-default' => 'border: none',
@@ -414,8 +411,8 @@ if (!function_exists('th_add_custom_controls_elem_post_settings_top')) {
                     ]
                 );
 
-                $page_title_selector = get_option('elementor_page_title_selector');
-                if (empty($page_title_selector)) {
+                $page_title_selector = get_option( 'elementor_page_title_selector' );
+                if ( empty( $page_title_selector ) ) {
                     $page_title_selector = 'h1.entry-title';
                 }
 
@@ -423,7 +420,7 @@ if (!function_exists('th_add_custom_controls_elem_post_settings_top')) {
                 $page->add_control(
                     'themo_page_title_margin',
                     [
-                        'label' => __('Title  Margin', 'th-widget-pack'),
+                        'label' => __( 'Title  Margin', 'th-widget-pack' ),
                         'type' => Elementor\Controls_Manager::SLIDER,
                         'default' => [
                             'size' => 1,
@@ -439,7 +436,7 @@ if (!function_exists('th_add_custom_controls_elem_post_settings_top')) {
                                 'max' => 100,
                             ],
                         ],
-                        'size_units' => ['px', '%'],
+                        'size_units' => [ 'px', '%' ],
                         'selectors' => [
                             '{{WRAPPER}} ' . $page_title_selector => 'margin-top: {{SIZE}}{{UNIT}};',
                         ],
@@ -451,17 +448,15 @@ if (!function_exists('th_add_custom_controls_elem_post_settings_top')) {
                 $page->end_controls_section();
             }
 
-            if (
-                $th_post_type == 'page' || $th_post_type == 'themo_tour' || $th_post_type == 'themo_portfolio'
+            if ($th_post_type == 'page' || $th_post_type == 'themo_tour' || $th_post_type == 'themo_portfolio'
                 || $th_post_type == 'themo_room' || $th_post_type == 'themo_hole' || $th_post_type == 'mphb_room_type'
-                || $th_post_type == 'mphb_room_service'
-            ) {
+                || $th_post_type == 'mphb_room_service') {
 
                 // Standard Header Options
                 $page->start_controls_section(
                     'thmv_doc_settings_sidebar',
                     [
-                        'label' => __('Sidebar', 'molotov-form'),
+                        'label' => __( 'Sidebar', 'molotov-form' ),
                         'tab' => \Elementor\Controls_Manager::TAB_SETTINGS,
                     ]
                 );
@@ -469,20 +464,20 @@ if (!function_exists('th_add_custom_controls_elem_post_settings_top')) {
                 $page->add_control(
                     'themo_page_layout',
                     [
-                        'label' => __('Sidebar', 'th-widget-pack'),
+                        'label' => __( 'Sidebar', 'th-widget-pack' ),
                         'type' => Elementor\Controls_Manager::CHOOSE,
                         'default' => 'full',
                         'options' => [
                             'left'    => [
-                                'title' => __('Left', 'th-widget-pack'),
+                                'title' => __( 'Left', 'th-widget-pack' ),
                                 'icon' => 'fa fa-long-arrow-left',
                             ],
                             'full' => [
-                                'title' => __('No Sidebar', 'th-widget-pack'),
+                                'title' => __( 'No Sidebar', 'th-widget-pack' ),
                                 'icon' => 'fa fa-times',
                             ],
                             'right' => [
-                                'title' => __('Right', 'th-widget-pack'),
+                                'title' => __( 'Right', 'th-widget-pack' ),
                                 'icon' => 'fa fa-long-arrow-right',
                             ],
 
@@ -494,19 +489,19 @@ if (!function_exists('th_add_custom_controls_elem_post_settings_top')) {
                 $page->end_controls_section();
             }
         }
+
     }
 }
 
 
-add_action('elementor/element/wp-post/document_settings/before_section_start', 'th_add_custom_controls_elem_post_settings_top', 10, 2);
-add_action('elementor/element/wp-page/document_settings/before_section_start', 'th_add_custom_controls_elem_post_settings_top', 10, 2);
+add_action( 'elementor/element/wp-post/document_settings/before_section_start', 'th_add_custom_controls_elem_post_settings_top',10, 2);
+add_action( 'elementor/element/wp-page/document_settings/before_section_start', 'th_add_custom_controls_elem_post_settings_top',10, 2);
 
 // Add Parallax Control (Switch) to Section Element in the Editor.
-function add_elementor_section_background_controls(Elementor\Element_Section $section)
-{
-
-    //    $ui_theme = 'el-ui-theme-'.th_get_elementor_theme_mode();
-
+function add_elementor_section_background_controls( Elementor\Element_Section $section ) {
+    
+//    $ui_theme = 'el-ui-theme-'.th_get_elementor_theme_mode();
+    
     $section->add_control(
         'th_thmv_section_title',
         [
@@ -527,11 +522,11 @@ function add_elementor_section_background_controls(Elementor\Element_Section $se
     $section->add_control(
         'th_section_parallax',
         [
-            'label' => __('Parallax', 'th-widget-pack'),
+            'label' => __( 'Parallax', 'th-widget-pack' ),
             'description' => 'Adds parallax effect to the section background image.',
             'type' => Elementor\Controls_Manager::SWITCHER,
-            'label_off' => __('Off', 'th-widget-pack'),
-            'label_on' => __('On', 'th-widget-pack'),
+            'label_off' => __( 'Off', 'th-widget-pack' ),
+            'label_on' => __( 'On', 'th-widget-pack' ),
             'default' => 'no',
             'conditions' => [
                 'terms' => [
@@ -546,29 +541,29 @@ function add_elementor_section_background_controls(Elementor\Element_Section $se
     );
 }
 
-add_action('elementor/element/section/section_background/before_section_end', 'add_elementor_section_background_controls');
+add_action( 'elementor/element/section/section_background/before_section_end', 'add_elementor_section_background_controls' );
 
 // Render section backgrou]d parallax
-function render_elementor_section_parallax_background(Elementor\Element_Base $element)
-{
+function render_elementor_section_parallax_background( Elementor\Element_Base $element ) {
 
-    if ('section' === $element->get_name()) {
+    if('section' === $element->get_name()){
 
-        if ('yes' === $element->get_settings_for_display('th_section_parallax')) {
+        if ( 'yes' === $element->get_settings_for_display( 'th_section_parallax' ) ) {
 
-            $th_background = $element->get_settings_for_display('background_image');
+            $th_background = $element->get_settings_for_display( 'background_image' );
             $th_background_URL = $th_background['url'];
 
-            $element->add_render_attribute('_wrapper', [
+            $element->add_render_attribute( '_wrapper', [
                 'class' => 'th-parallax',
                 'data-parallax' => 'scroll',
                 'data-image-src' => $th_background_URL,
-            ]);
+            ] ) ;
         }
+
     }
 }
 
-add_action('elementor/frontend/section/before_render', 'render_elementor_section_parallax_background');
+add_action( 'elementor/frontend/section/before_render', 'render_elementor_section_parallax_background' );
 
 
 // Future use - Get parallax working in Live Preview.
@@ -591,23 +586,16 @@ add_action('elementor/frontend/section/before_render', 'render_elementor_section
 
 
 // Adding custom icons to icon control in Elementor
-function th_add_custom_icons_tab($tabs = array())
-{
+function th_add_custom_icons_tab( $tabs = array() ) {
 
-    $trip_icons = array_values(array_filter(themo_icons(), function ($key) {
-        return strpos($key, 'th-trip') === 0;
-    }, ARRAY_FILTER_USE_KEY));
-    $linea_icons = array_values(array_filter(themo_icons(), function ($key) {
-        return strpos($key, 'th-linea') === 0;
-    }, ARRAY_FILTER_USE_KEY));
-    $golf_icons = array_values(array_filter(themo_icons(), function ($key) {
-        return strpos($key, 'th-golf') === 0;
-    }, ARRAY_FILTER_USE_KEY));
+    $trip_icons = array_values(array_filter(themo_icons(), function ($key) {return strpos($key, 'th-trip') === 0;}, ARRAY_FILTER_USE_KEY));
+    $linea_icons = array_values(array_filter(themo_icons(), function ($key) {return strpos($key, 'th-linea') === 0;}, ARRAY_FILTER_USE_KEY));
+    $golf_icons = array_values(array_filter(themo_icons(), function ($key) {return strpos($key, 'th-golf') === 0;}, ARRAY_FILTER_USE_KEY));
 
-    if (!empty($trip_icons)) {
+	if (!empty($trip_icons)) {
         $tabs['th-trip'] = array(
             'name'          => 'th-trip',
-            'label'         => __('Themovation Trip', 'th-widget-pack'),
+            'label'         => __( 'Themovation Trip', 'th-widget-pack' ),
             'labelIcon'     => 'fas fa-icons',
             'prefix'        => 'th-trip travelpack-',
             'displayPrefix' => 'th-trip travelpack',
@@ -620,7 +608,7 @@ function th_add_custom_icons_tab($tabs = array())
     if (!empty($linea_icons)) {
         $tabs['th-linea'] = array(
             'name'          => 'th-linea',
-            'label'         => __('Themovation Linea', 'th-widget-pack'),
+            'label'         => __( 'Themovation Linea', 'th-widget-pack' ),
             'labelIcon'     => 'fas fa-icons',
             'prefix'        => 'th-linea icon-',
             'displayPrefix' => 'th-linea icon',
@@ -629,11 +617,11 @@ function th_add_custom_icons_tab($tabs = array())
             'ver'           => THEMO_VERSION,
         );
     }
-
+    
     if (!empty($golf_icons)) {
         $tabs['th-golf'] = array(
             'name'          => 'th-golf',
-            'label'         => __('Themovation Golf', 'th-widget-pack'),
+            'label'         => __( 'Themovation Golf', 'th-widget-pack' ),
             'labelIcon'     => 'fas fa-icons',
             'prefix'        => 'th-golf golfpack-',
             'displayPrefix' => 'th-golf golfpack',
@@ -645,7 +633,9 @@ function th_add_custom_icons_tab($tabs = array())
 
 
 
-    return $tabs;
+	return $tabs;
 }
 
-add_filter('elementor/icons_manager/additional_tabs', 'th_add_custom_icons_tab');
+add_filter( 'elementor/icons_manager/additional_tabs', 'th_add_custom_icons_tab' );
+
+
