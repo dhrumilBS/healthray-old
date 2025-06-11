@@ -1,0 +1,10 @@
+.table-container { margin: 0 auto; padding: 20px; max-width: 90%; background-color: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px; overflow-x: auto; }
+.table-container table { width: 100%; border-collapse: collapse; font-size: 16px; text-align: left; }
+.table-container th, .table-container td { padding: 12px 15px; border: 1px solid #E7E7F080; }
+.table-container th { background-color: #F8F7FC; font-weight: bold; width: 400px; }
+@media screen and (max-width: 600px) {
+    .table-container{ max-width: 100%; }
+    .table-container table { font-size: 14px; }
+    .table-container th{width: auto;}
+    .table-container th, .table-container td { padding: 10px; }
+}

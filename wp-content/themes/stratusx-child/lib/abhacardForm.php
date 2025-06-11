@@ -240,8 +240,6 @@
                     </div>
                     <input role="button" type="submit" class="btn" id="submitSuggestion" value="Submit Suggestion">
                 </form>
-                <button role="button" class="btn " id="getaadharmobilesuggestion"> Get Suggestion</button>
-                <button role="button" class="btn " id="getsuggestion"> get suggestion </button>
             </div>
         </div>
     </div>

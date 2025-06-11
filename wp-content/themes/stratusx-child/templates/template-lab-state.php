@@ -221,7 +221,7 @@ $toogleArrow = '<span class="elementor-toggle-icon elementor-toggle-icon-left" a
 							$state_id = $state->ID;
 							$title = get_post_field('post_title', $id, 'raw');
 							if ($state_id == $post_id) { ?>
-						<div class="list-widget-text"><a href="<?= get_permalink($item->ID); ?>" target="_blank" rel="nofollow"><?= $title; ?></a></div>
+						<div class="list-widget-text"><a href="<?= get_permalink($item->ID); ?>" target="_blank"><?= $title; ?></a></div>
 						<?php }
 						}
 						?>

@@ -191,22 +191,17 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 			</div>
 
 			<style>
-				.ehr-product-slider .swiper-slide {padding:20px;border-radius:20px;background-color:#E9F8FF;height:auto;}
-				.ehr-product-slider .swiper-slide .icon-title {display:flex;align-items:center;}
-				.ehr-product-slider .swiper-slide .icon-title .slide-img {flex-shrink:0;}
-				.ehr-product-slider .swiper-slide .icon-title h3 {font-size:20px;font-weight:700;margin-left:8px;}
-				.ehr-product-slider .swiper-slide .slide-content {padding:0;}
-				.ehr-product-slider .swiper-slide.swiper-slide-active {background:var(--hr-secondary-color);color:#fff;}
-				.ehr-product-slider .swiper-slide.swiper-slide-active .icon-title .title_text,
-				.ehr-product-slider .swiper-slide.swiper-slide-active .icon-title .slide-content .text_style,
-				.ehr-product-slider .swiper-slide.swiper-slide-active .slide-content ul li { color:#fff; }
+				.ehr-product-slider .slide {padding:20px;border-radius:20px;background-color:#E9F8FF;height:auto;}
+				.ehr-product-slider .slide .icon-title {display:flex;align-items:center;}
+				.ehr-product-slider .slide .icon-title .slide-img {flex-shrink:0;}
+				.ehr-product-slider .slide .icon-title h3 {font-size:20px;font-weight:700;margin-left:8px;}
+				.ehr-product-slider .slide .slide-content {padding:0;}
 			</style>
 
-			<div class="swiper ehr-product-slider">
-				<!-- Additional required wrapper -->
-				<div class="swiper-wrapper">
+			<div class="slider ehr-product-slider">
+				<div class="owl-carousel" data-dots="true" data-nav="false" data-desk_num="3" data-lap_num="2" data-tab_num="2" data-mob_num="1" data-mob_sm="1" data-autoplay="true" data-loop="true" data-margin="30">
 					<!-- Hospital Information Management System -->
-					<div class="swiper-slide">
+					<div class="slide">
 						<div class="icon-title">
 							<div class="slide-img"><img width="80" height="80" src="https://healthray.com/wp-content/uploads/2024/07/Hospital-Information-Management-System-Healthray.svg" class="attachment-300xauto size-300xauto" alt="Hospital Information Management System Healthray" decoding="async"></div>
 							<h3 class="title_text">Hospital Information Management System</h3>
@@ -229,7 +224,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 						</div>
 					</div>
 					<!-- Electronic Health Record -->
-					<div class="swiper-slide">
+					<div class="slide">
 						<div class="icon-title">
 							<div class="slide-img"><img width="81" height="80" src="https://healthray.com/wp-content/uploads/2024/07/Electronic-Health-Record-Healthray.svg" class="attachment-300xauto size-300xauto" alt="Electronic Health Record Healthray" decoding="async"></div>
 							<h3 class="title_text">Electronic Health Record</h3>
@@ -251,7 +246,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 						</div>
 					</div>
 					<!-- Electronic Medical Record -->
-					<div class="swiper-slide">
+					<div class="slide">
 						<div class="icon-title">
 							<div class="slide-img"><img width="80" height="80" src="https://healthray.com/wp-content/uploads/2024/07/Electronic-Medical-Record-Healthray.svg" class="attachment-300xauto size-300xauto" alt="Hospital Information Management System Healthray" decoding="async"></div>
 							<h3 class="title_text">Electronic Medical Record</h3>
@@ -273,7 +268,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 						</div>
 					</div>
 					<!-- Laboratory Information Management System -->
-					<div class="swiper-slide">
+					<div class="slide">
 						<div class="icon-title">
 							<div class="slide-img"><img width="80" height="80" src="https://healthray.com/wp-content/uploads/2024/07/Laboratory-Information-Management-System-Healthray.svg" class="attachment-300xauto size-300xauto" alt="Hospital Information Management System Healthray" decoding="async"></div>
 							<h3 class="title_text">Laboratory Information Management System </h3>
@@ -296,7 +291,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 						</div>
 					</div>
 					<!-- Pharmacy Management System -->
-					<div class="swiper-slide">
+					<div class="slide">
 						<div class="icon-title">
 							<div class="slide-img"><img width="80" height="80" src="https://healthray.com/wp-content/uploads/2024/07/Pharmacy-Management-System-Healthray.svg" class="attachment-300xauto size-300xauto" alt="Hospital Information Management System Healthray" decoding="async"></div>
 							<h3 class="title_text">Pharmacy Management System</h3>

@@ -135,12 +135,12 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img  ) {
 
 
 			<?php if (have_rows('healthray_products')) { ?>
-			<div class="swiper healthray-products-slider">
-				<div class="swiper-wrapper">
+			<div class="healthray-products-slider">
+			<div class="owl-carousel" data-dots="true" data-nav="false" data-desk_num="1" data-lap_num="1" data-tab_num="1" data-mob_num="1" data-mob_sm="1" data-autoplay="true" data-loop="true" data-margin="30">				
 					<?php while (have_rows('healthray_products')) {
 	the_row(); ?>
 
-					<div class="swiper-slide">
+					<div class="slide">
 						<div class="product-slider">
 							<div class="half-width">
 								<div class="product-content">
@@ -209,7 +209,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img  ) {
 					$state_id = $state->ID;
 					if ($state_id == $post_id) { ?>
 				<div class="list-widget-text">
-					<a href="<?= get_permalink($item->ID); ?>" target="_blank" rel="nofollow"> <?= $title; ?> </a>
+					<a href="<?= get_permalink($item->ID); ?>" target="_blank"> <?= $title; ?> </a>
 				</div>
 				<?php }
 				}

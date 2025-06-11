@@ -51,8 +51,8 @@ $author_id = get_the_author_meta('ID');
 		<div class="container-md">
 			<div class="author-section">
 				<div class="author">
-					<div class="author-profile">  
-						<?= get_avatar($author_id, '250'); ?> 
+					<div class="author-profile">
+						<?= "<img src='".get_avatar_url($author_id, ['size' => 250 ])."' alt='".$author->display_name."' height='250' width='250' />"; ?> 
 					</div>
 					<div class="about-author">
 						<h1 class="author-name"><?= $author->display_name; ?></h1>
@@ -108,7 +108,9 @@ $author_id = get_the_author_meta('ID');
 				<div class="mas-blog row" style="--gap: 1px">
 					<?php while ($query->have_posts()) {$query->the_post(); ?>
 					<div <?= post_class('mas-blog-post col-sm-6 col-md-4'); ?>>
+					<div class="mas-blog-post-inner">
 						<?php get_template_part('templates/content'); ?>
+					</div>
 					</div>
 					<?php } ?>
 				</div> 

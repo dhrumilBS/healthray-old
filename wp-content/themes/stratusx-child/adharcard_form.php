@@ -3,7 +3,7 @@
 define("LIVE_API_PATH", "https://node.healthray.com/api/");
 define("STAGE_API_PATH", "https://node-stage.healthray.com/api/");
 define("LOCAL_API_PATH", "http://192.168.0.162:4004/api/");
-define("API_PATH", STAGE_API_PATH);
+define("API_PATH", LIVE_API_PATH);
 function adhar_auth_form_shortcode()
 {
 	// Start output buffering

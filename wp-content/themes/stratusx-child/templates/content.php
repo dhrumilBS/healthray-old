@@ -1,4 +1,5 @@
 <?php
+	$str ='';
 foreach (wp_get_post_terms(get_the_ID(), 'category') as $term) {
 	$temp['title'] =  $term->name;
 	$temp['url'] = get_term_link($term);

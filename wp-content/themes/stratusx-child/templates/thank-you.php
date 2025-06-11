@@ -67,7 +67,7 @@ Template Name: Thank you
         </div>
 
         <div class="home-btn-wrap">
-            <a href="/" target="_blank" class="theme-btn btn w-100 ">
+            <a href="<?= site_url(); ?>" target="_blank" class="theme-btn btn w-100 ">
                 <span>Back To Home</span>
                 <span class="icon icon-24">
                     <svg aria-hidden="true" width="8" height="16" viewBox="0 0 256 512" xmlns="http://www.w3.org/2000/svg" fill="currentcolor">
@@ -78,7 +78,8 @@ Template Name: Thank you
         </div>
     </div>
 </div>
-<script> fbq('track', 'Contact'); </script> 
-
+<?php if(1==2){ ?>
+<script>  fbq('track', 'Contact'); </script>
+<?php } ?>
 
 <?php // the_content(); ?>

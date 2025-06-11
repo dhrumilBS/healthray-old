@@ -168,6 +168,7 @@ if (!empty($results)) {
 					<li class="menu-link"><a href="https://healthray.com/pharmacy-management-system/" target="_blank"> Pharmacy Management System </a></li>
 					<li class="menu-link"><a href="https://healthray.com/laboratory-information-management-system/" target="_blank"> Laboratory Information Management System </a></li>
 					<li class="menu-link"><a href="https://healthray.com/emr-ehr-software/" target="_blank"> EMR/EHR Software </a></li>
+					<li class="menu-link"><a href="https://healthray.com/hospital-management-software/" target="_blank"> Hospital Management Software </a></li>
 				</ul>
 			</div>
 		</div>
@@ -252,8 +253,8 @@ if (!empty($results)) {
 					<li class="menu-link"><a href="https://healthray.com/best-hospital-management-software-andaman-nicobar-islands/" target="_blank">Best Hospital Management Software In Andaman and Nicobar Islands</a></li>
 					<li class="menu-link"><a href="https://healthray.com/best-hospital-management-software-andhra-pradesh/" target="_blank">Best Hospital Management Software In Andhra Pradesh</a></li>
 					<li class="menu-link"><a href="https://healthray.com/best-hospital-management-software-arunachal-pradesh/" target="_blank">Best Hospital Management Software In Arunachal Pradesh</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-hospital-management-software-assam/" target="_blank">Best Hospital Management Software In Assam</a></li> 					<li
-					class="menu-link"><a href="https://healthray.com/best-hospital-management-software-bihar/" target="_blank">Best Hospital Management Software In Bihar</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-hospital-management-software-assam/" target="_blank">Best Hospital Management Software In Assam</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-hospital-management-software-bihar/" target="_blank">Best Hospital Management Software In Bihar</a></li>
 					<li class="menu-link"><a href="https://healthray.com/best-hospital-management-software-chandigarh/" target="_blank">Best Hospital Management Software In Chandigarh</a></li>
 					<li class="menu-link"><a href="https://healthray.com/best-hospital-management-software-chhattisgarh/" target="_blank">Best Hospital Management Software In Chhattisgarh</a></li>
 					<li class="menu-link"><a href="https://healthray.com/best-hospital-management-software-dadra-nagar-haveli-daman-diu/" target="_blank">Best Hospital Management Software In Dadra &amp; Nagar Haveli &amp; Daman &amp; Diu</a></li>
@@ -435,45 +436,45 @@ if (!empty($results)) {
 	<div class="container">
 		<div class="menu-item sub-menu-item">
 			<div>
-				<h2>Best PMS Software In India</h2>
+				<h2>Best Pharmacy Management Software In India</h2>
 				<ul class="sub-menu">
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-india/" target="_blank"> Best PMS Software In India </a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-andaman-nicobar-islands/">Best PMS Software In Andaman and Nicobar Islands</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-andhra-pradesh/">Best PMS Software In Andhra Pradesh</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-arunachal-pradesh/">Best PMS Software In Arunachal Pradesh</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-assam/">Best PMS Software In Assam</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-bihar/">Best PMS Software In Bihar</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-chandigarh/">Best PMS Software In Chandigarh</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-chhattisgarh/">Best PMS Software In Chhattisgarh</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-dadra-nagar-haveli-daman-diu/">Best PMS Software In Dadra and Nagar Haveli and Daman and Diu</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-delhi/">Best PMS Software In Delhi</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-goa/">Best PMS Software In Goa</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-gujarat/">Best PMS Software In Gujarat</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-haryana/">Best PMS Software In Haryana</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-himachal-pradesh/">Best PMS Software In Himachal Pradesh</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-jammu-kashmir/">Best PMS Software In Jammu and Kashmir</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-jharkhand/">Best PMS Software In Jharkhand</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-karnataka/">Best PMS Software In Karnataka</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-kerala/">Best PMS Software In Kerala</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-ladakh/">Best PMS Software In Ladakh</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-lakshadweep/">Best PMS Software In Lakshadweep</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-madhya-pradesh/">Best PMS Software In Madhya Pradesh</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-maharashtra/">Best PMS Software In Maharashtra</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-manipur/">Best PMS Software In Manipur</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-meghalaya/">Best PMS Software In Meghalaya</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-mizoram/">Best PMS Software In Mizoram</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-nagaland/">Best PMS Software In Nagaland</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-odisha/">Best PMS Software In Odisha</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-puducherry/">Best PMS Software In Puducherry</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-punjab/">Best PMS Software In Punjab</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-rajasthan/">Best PMS Software In Rajasthan</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-sikkim/">Best PMS Software In Sikkim</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-tamil-nadu/">Best PMS Software In Tamil Nadu</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-telangana/">Best PMS Software In Telangana</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-tripura/">Best PMS Software In Tripura</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-uttar-pradesh/">Best PMS Software In Uttar Pradesh</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-uttarakhand/">Best PMS Software In Uttarakhand</a></li>
-					<li class="menu-link"><a href="https://healthray.com/best-pms-software-west-bengal/">Best PMS Software In West Bengal</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-india/" target="_blank"> Best Pharmacy Management Software In India </a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-andaman-nicobar-islands/" target="_blank">Best Pharmacy Management Software In Andaman and Nicobar Islands</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-andhra-pradesh/" target="_blank">Best Pharmacy Management Software In Andhra Pradesh</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-arunachal-pradesh/" target="_blank">Best Pharmacy Management Software In Arunachal Pradesh</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-assam/" target="_blank">Best Pharmacy Management Software In Assam</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-bihar/" target="_blank">Best Pharmacy Management Software In Bihar</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-chandigarh/" target="_blank">Best Pharmacy Management Software In Chandigarh</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-chhattisgarh/" target="_blank">Best Pharmacy Management Software In Chhattisgarh</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-dadra-nagar-haveli-daman-diu/" target="_blank">Best Pharmacy Management Software In Dadra and Nagar Haveli and Daman and Diu</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-delhi/" target="_blank">Best Pharmacy Management Software In Delhi</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-goa/" target="_blank">Best Pharmacy Management Software In Goa</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-gujarat/" target="_blank">Best Pharmacy Management Software In Gujarat</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-haryana/" target="_blank">Best Pharmacy Management Software In Haryana</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-himachal-pradesh/" target="_blank">Best Pharmacy Management Software In Himachal Pradesh</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-jammu-kashmir/" target="_blank">Best Pharmacy Management Software In Jammu and Kashmir</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-jharkhand/" target="_blank">Best Pharmacy Management Software In Jharkhand</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-karnataka/" target="_blank">Best Pharmacy Management Software In Karnataka</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-kerala/" target="_blank">Best Pharmacy Management Software In Kerala</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-ladakh/" target="_blank">Best Pharmacy Management Software In Ladakh</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-lakshadweep/" target="_blank">Best Pharmacy Management Software In Lakshadweep</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-madhya-pradesh/" target="_blank">Best Pharmacy Management Software In Madhya Pradesh</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-maharashtra/" target="_blank">Best Pharmacy Management Software In Maharashtra</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-manipur/" target="_blank">Best Pharmacy Management Software In Manipur</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-meghalaya/" target="_blank">Best Pharmacy Management Software In Meghalaya</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-mizoram/" target="_blank">Best Pharmacy Management Software In Mizoram</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-nagaland/" target="_blank">Best Pharmacy Management Software In Nagaland</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-odisha/" target="_blank">Best Pharmacy Management Software In Odisha</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-puducherry/" target="_blank">Best Pharmacy Management Software In Puducherry</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-punjab/" target="_blank">Best Pharmacy Management Software In Punjab</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-rajasthan/" target="_blank">Best Pharmacy Management Software In Rajasthan</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-sikkim/" target="_blank">Best Pharmacy Management Software In Sikkim</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-tamil-nadu/" target="_blank">Best Pharmacy Management Software In Tamil Nadu</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-telangana/" target="_blank">Best Pharmacy Management Software In Telangana</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-tripura/" target="_blank">Best Pharmacy Management Software In Tripura</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-uttar-pradesh/" target="_blank">Best Pharmacy Management Software In Uttar Pradesh</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-uttarakhand/" target="_blank">Best Pharmacy Management Software In Uttarakhand</a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-management-software-west-bengal/" target="_blank">Best Pharmacy Management Software In West Bengal</a></li>
 				</ul>
 			</div>
 		</div>
@@ -494,7 +495,7 @@ if (!empty($results)) {
 					<li class="menu-link"><a href="https://healthray.com/practo-alternative/" target="_blank"> Practo Alternative </a></li>
 					<li class="menu-link"><a href="https://healthray.com/akhil-system-alternative/" target="_blank"> Akhil System Alternative </a></li>
 					<li class="menu-link"><a href="https://healthray.com/ezovion-alternative/" target="_blank"> Ezovion Alternative </a></li>
-
+					<li class="menu-link"><a href="https://healthray.com/epic-emr-alternative/" target="_blank"> Epic EMR Alternative </a></li>
 				</ul>
 			</div>
 		</div>
@@ -517,7 +518,7 @@ if (!empty($results)) {
 	<div class="container">
 		<div class="menu-item sub-menu-item">
 			<div>
-				<h2> PMS Compare With </h2>
+				<h2> Pharmacy Management Compare With </h2>
 				<ul class="sub-menu">
 					<li class="menu-link"><a href="https://healthray.com/marg-erp-9-alternative/" target="_blank"> Marg ERP 9 Alternative </a></li>
 					<li class="menu-link"><a href="https://healthray.com/gofrugal-alternative/" target="_blank"> Gofrugal Alternative </a></li>
@@ -537,9 +538,9 @@ if (!empty($results)) {
 				<h2> <?= $value['post_title']; ?> </h2>
 
 				<ul class="sub-menu">
-					<li class="menu-link"><a href="https://healthray.com/<?= $value['post_name']; ?>"><?= $value['post_title']; ?> </a></li>
+					<li class="menu-link"><a href="https://healthray.com/<?= $value['post_name']; ?>/"><?= $value['post_title']; ?> </a></li>
 					<?php foreach ($value['textdata'] as $key => $val) { ?>
-					<li class="menu-link"><a href="https://healthray.com/<?= $val['post_name']; ?>"><?= $val['post_title']; ?> </a></li>
+					<li class="menu-link"><a href="https://healthray.com/<?= $val['post_name']; ?>/"><?= $val['post_title']; ?> </a></li>
 					<?php } ?>
 				</ul>
 			</div>
@@ -568,7 +569,11 @@ if (!empty($results)) {
 					<li class="menu-link"><a href="https://healthray.com/best-pathology-lab-software/" target="_blank"> Best Pathology Lab Software </a></li>
 					<li class="menu-link"><a href="https://healthray.com/free-pathology-lab-software/" target="_blank"> Free Pathology Lab Software </a></li>
 					<li class="menu-link"><a href="https://healthray.com/best-pharmacy-software/" target="_blank"> Best Pharmacy Software </a></li>
-					<li class="menu-link"><a href="https://healthray.com/free-pharmacy-software/" target="_blank"> free Pharmacy Software </a></li> 
+					<li class="menu-link"><a href="https://healthray.com/free-pharmacy-software/" target="_blank"> Free Pharmacy Software </a></li> 
+					<li class="menu-link"><a href="https://healthray.com/inventory-management-software/" target="_blank"> Inventory Management Software </a></li> 
+					<li class="menu-link"><a href="https://healthray.com/clinic-management-software/" target="_blank"> Clinic Management Software </a></li> 
+					<li class="menu-link"><a href="https://healthray.com/electronic-patient-records/" target="_blank"> Electronic Patient Records </a></li> 
+					<li class="menu-link"><a href="https://healthray.com/medical-college-software/" target="_blank"> Medical College Software </a></li> 
 				</ul>
 			</div>
 

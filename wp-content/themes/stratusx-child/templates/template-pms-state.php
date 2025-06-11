@@ -23,10 +23,10 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 				<div class="half-width">
 					<div class="heading">
 						<div class="headline-color">
-							<h1 class="elementor-heading-title elementor-size-default">Best <span>PMS</span> Software in <span><?= $state_name; ?></span></h1>
+							<h1 class="elementor-heading-title elementor-size-default">Best <span>Pharmacy Management</span> Software in <span><?= $state_name; ?></span></h1>
 						</div>
 						<div class="description">
-							<p>Thriving pharmacy practice and increasing patient experience is just getting easier with the best PMS software in <?= $state_name; ?>. Additionally, heightens  employee satisfaction with upgrading their skill level.</p>
+							<p>Thriving pharmacy practice and increasing patient experience is just getting easier with the best Pharmacy Management software in <?= $state_name; ?>. Additionally, heightens  employee satisfaction with upgrading their skill level.</p>
 						</div>
 					</div>
 
@@ -36,7 +36,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 				</div>
 				<div class="half-width">
 					<div class="image">
-						<img width="500" height="397" src="https://healthray.com/wp-content/uploads/2024/08/Best-Pharmacy-Management-Software-in-india-Healthray.webp" class="attachment-full size-full wp-image-39234" alt="Best PMS Software In India Healthray">
+						<img width="500" height="397" src="https://healthray.com/wp-content/uploads/2024/08/Best-Pharmacy-Management-Software-in-india-Healthray.webp" class="attachment-full size-full wp-image-39234" alt="Best Pharmacy Management Software In India Healthray">
 					</div>
 				</div>
 			</div>
@@ -56,19 +56,19 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 							<h2 class="elementor-heading-title elementor-size-default"> Strategic Financial management with Ease </h2>
 						</div>
 						<p>Administrating finance is a significant task as this component is interlinked with each pharmacy segment. Furthermore, finance is essential for smooth running business and accomplishing objectives faster. The pharmacy management software helps to improve cash flow through strategic planning and procedure.</p>
-						<a class="button" href="https://healthray.com/pms-software"> Explore </a>
+						<a class="button" href="https://healthray.com/pharmacy-management-system/"> Explore </a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- pms functionalities -->
+	<!-- Pharmacy Management functionalities -->
 	<div class="section section-functionaly">
 		<div class="container">
 			<div class="functionaly-wrapper">
 				<div class="heading sec-heading centered">
 					<div class="headline-color">
-						<h2 class="elementor-heading-title elementor-size-default"> Explore Features of The Best PMS Software </h2>
+						<h2 class="elementor-heading-title elementor-size-default"> Explore Features of The Best Pharmacy Management Software </h2>
 					</div>
 				</div>
 				<div class="icon-box-container">
@@ -78,7 +78,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 						</div>
 						<div class="icon-box-content">
 							<h3 class="icon-box-title"> Medication Reminder</h3>
-							<p class="icon-box-description">Study shows that more than 80% of people forget to take medication on time. However, the PMS software lightens the brain overload by providing reminders.</p>
+							<p class="icon-box-description">Study shows that more than 80% of people forget to take medication on time. However, the Pharmacy Management software lightens the brain overload by providing reminders.</p>
 						</div>
 					</div>
 					<div class="icon-box-wrapper left-align">
@@ -114,7 +114,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 						</div>
 						<div class="icon-box-content">
 							<h3 class="icon-box-title"> Dashboard Reporting</h3>
-							<p class="icon-box-description">Our PMS software makes it easier to visualize data on the unified dashboard and simplify to determine overall performance and increasing collaboration.</p>
+							<p class="icon-box-description">Our Pharmacy Management software makes it easier to visualize data on the unified dashboard and simplify to determine overall performance and increasing collaboration.</p>
 						</div>
 					</div>
 					<div class="icon-box-wrapper left-align">
@@ -149,7 +149,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 		</div>
 	</div>
 
-	<!-- pms Software -->
+	<!-- Pharmacy Management Software -->
 	<div class="section section-benefits">
 		<div class="container">
 			<div class="heading sec-heading centered">
@@ -330,7 +330,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 
 			<div class="heading sec-heading centered">
 				<div class="headline-color">
-					<h2 class="elementor-heading-title elementor-size-default">Best PMS Software In <span><?= $state_name; ?></span></h2>
+					<h2 class="elementor-heading-title elementor-size-default">Best Pharmacy Management Software In <span><?= $state_name; ?></span></h2>
 				</div>
 			</div>
 
@@ -341,8 +341,8 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 			</style>
 			<div class="list-widget width-auto">
 				<div class="list-widget-text">
-					<a href="https://healthray.com/best-pms-software-india/" target="_blank">
-						<span>Best PMS Software In India</span>
+					<a href="https://healthray.com/best-pharmacy-management-software-india/" target="_blank">
+						<span>Best Pharmacy Management Software In India</span>
 					</a>
 				</div>
 				<?php
@@ -356,7 +356,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 				$post_id = $post->ID;
 				$pages = get_pages($args);
 				foreach ($pages as $index => $item) {
-					$title = get_post_field('post_title', $item->ID, 'raw');
+					$title = str_replace('Best PMS Software In','Best Pharmacy Management Software In',get_post_field('post_title', $item->ID, 'raw'));
 
 					$state = get_field('state_name_link', $item->ID);
 					$state_id = $state->ID;
@@ -394,7 +394,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 				<div class="half-width">
 					<div class="content-box">
 						<h3>Cost reduction strategies by analysis</h3>
-						<p>The PMS software amassed diverse information including personnel data, customer information, and historical records. Here are the list of cost strategies adopted by PMS software: </p>
+						<p>The Pharmacy Management software amassed diverse information including personnel data, customer information, and historical records. Here are the list of cost strategies adopted by Pharmacy Management software: </p>
 						<ul>
 							<li>It is an electronic pharmacy software, which minimizes expenses through saving a variety of costs.</li>
 							<li>Includes interoperability for efficient communication with stakeholders and other experienced physicians.</li>
@@ -469,9 +469,9 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 						</div>
 						<div class="texh-content">
 							<p>The pharmacy management software includes intelligent tools such as calendar management for scheduling meetings with members, stock control to maintain inventory level, syncing with medical systems, aids to accumulate performance reports, and order management for optimizing pharmacy processes.</p>
-							<p>Most importantly, our software helps to manage the rooting element for improving efficiency like pharmacy finances and smooth billing. Furthermore, the PMS software handles these elements so well. It has automated features which lower errors, eliminate omissions, and iteration mistakes for capturing accurate transactions.</p>
-							<p>Our software helps in accurate accounting management through precise record-keeping, adherence to accounting principles and consistent monitoring. Moreover, the PMS software consolidated an array of information that supports the creation of the monthly or financial budget of pharmacies.</p>
-							<p>It analyzes pharmacy cash flow and forecasts financial outcomes. Moreover, it records financial historical information, current transactions, and maintains confidentiality of pharmacy documents. Therefore, the PMS software saves you from financial crises and unnecessary legitimate expenses.</p>
+							<p>Most importantly, our software helps to manage the rooting element for improving efficiency like pharmacy finances and smooth billing. Furthermore, the Pharmacy Management software handles these elements so well. It has automated features which lower errors, eliminate omissions, and iteration mistakes for capturing accurate transactions.</p>
+							<p>Our software helps in accurate accounting management through precise record-keeping, adherence to accounting principles and consistent monitoring. Moreover, the Pharmacy Management software consolidated an array of information that supports the creation of the monthly or financial budget of pharmacies.</p>
+							<p>It analyzes pharmacy cash flow and forecasts financial outcomes. Moreover, it records financial historical information, current transactions, and maintains confidentiality of pharmacy documents. Therefore, the Pharmacy Management software saves you from financial crises and unnecessary legitimate expenses.</p>
 							<p>The pharmacy management system software monitors each financial transaction with precise details. Consequently, it improves financial performance, increases pharmacy efficiency, maximizes resource utilization, simplifies to predict upcoming costs, and makes clear decisions.</p>
 
 						</div>
@@ -499,7 +499,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 				<div class="elementor-toggle-item">
 					<div id="elementor-tab-title-1" class="elementor-tab-title" data-tab="1" role="button" aria-controls="elementor-tab-content-1" aria-expanded="false">
 						<?= $arrow; ?>
-						<a class="elementor-toggle-title" tabindex="0">What are the Key Features of PMS software?</a>
+						<a class="elementor-toggle-title" tabindex="0">What are the Key Features of Pharmacy Management software?</a>
 					</div>
 					<div id="elementor-tab-content-1" class="elementor-tab-content elementor-clearfix answer" data-tab="1" role="region" aria-labelledby="elementor-tab-title-1">
 						<p>The pharmacy management software is the computerized software for administering pharmacy operations. Furthermore, the operations include registering client details with their prescription data, amassing numerous data, tasks delegation, space optimization, and re-order management. Therefore, it increases efficiency.</p>
@@ -517,16 +517,16 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 				<div class="elementor-toggle-item">
 					<div id="elementor-tab-title-3" class="elementor-tab-title" data-tab="3" role="button" aria-controls="elementor-tab-content-3" aria-expanded="false">
 						<?= $arrow; ?>
-						<a class="elementor-toggle-title" tabindex="0">Does PMS software improve financial sustainability?</a>
+						<a class="elementor-toggle-title" tabindex="0">Does Pharmacy Management software improve financial sustainability?</a>
 					</div>
 					<div id="elementor-tab-content-3" class="elementor-tab-content elementor-clearfix answer" data-tab="3" role="region" aria-labelledby="elementor-tab-title-3">
-						<p>Indeed, pharmacy management software improves financial sustainability. Moreover, this software includes advanced functionalities and those elements which are the root cause of improving efficiency. It stores information, systemizes it, and develops reports. Consequently, the PMS software makes great decisions and improves patient engagement.</p>
+						<p>Indeed, pharmacy management software improves financial sustainability. Moreover, this software includes advanced functionalities and those elements which are the root cause of improving efficiency. It stores information, systemizes it, and develops reports. Consequently, the Pharmacy Management software makes great decisions and improves patient engagement.</p>
 					</div>
 				</div>
 				<div class="elementor-toggle-item">
 					<div id="elementor-tab-title-4" class="elementor-tab-title" data-tab="4" role="button" aria-controls="elementor-tab-content-4" aria-expanded="false">
 						<?= $arrow; ?>
-						<a class="elementor-toggle-title" tabindex="0">Does the PMS software support cost reduction strategies?</a>
+						<a class="elementor-toggle-title" tabindex="0">Does the Pharmacy Management software support cost reduction strategies?</a>
 					</div>
 					<div id="elementor-tab-content-4" class="elementor-tab-content elementor-clearfix answer" data-tab="4" role="region" aria-labelledby="elementor-tab-title-4">
 						<p>Indeed, the pharmacy management software is the leading system for cutting expenses and enhancing income. The cost reduction strategies related to proper planning and execution of pharmacy resources, precise budgeting, and reducing investment expenses. Furthermore, it includes tools to improve patient care, increasing patient safety, and enhancing performance.</p>
@@ -544,7 +544,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 				<div class="elementor-toggle-item">
 					<div id="elementor-tab-title-6" class="elementor-tab-title" data-tab="6" role="button" aria-controls="elementor-tab-content-6" aria-expanded="false">
 						<?= $arrow; ?>
-						<a class="elementor-toggle-title" tabindex="0">Which is the best PMS software in <?= $state_name; ?>?</a>
+						<a class="elementor-toggle-title" tabindex="0">Which is the best Pharmacy Management software in <?= $state_name; ?>?</a>
 					</div>
 					<div id="elementor-tab-content-6" class="elementor-tab-content elementor-clearfix answer" data-tab="6" role="region" aria-labelledby="elementor-tab-title-6">
 						<p>Healthray is the pharmacy management software in <?= $state_name; ?>. This software comprises an intelligent tool that revolutionizes the pharmacy workflow with minimizing expenses. Furthermore, it practices pharmacy protocols accurately to save invaluable time and lower legitimate costs.</p>
@@ -562,7 +562,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 				<div class="elementor-toggle-item">
 					<div id="elementor-tab-title-8" class="elementor-tab-title" data-tab="8" role="button" aria-controls="elementor-tab-content-8" aria-expanded="false">
 						<?= $arrow; ?>
-						<a class="elementor-toggle-title" tabindex="0">What is the objective of PMS software?</a>
+						<a class="elementor-toggle-title" tabindex="0">What is the objective of Pharmacy Management software?</a>
 					</div>
 					<div id="elementor-tab-content-8" class="elementor-tab-content elementor-clearfix answer" data-tab="8" role="region" aria-labelledby="elementor-tab-title-8">
 						<p>The pharmacy management software facilitates sophisticated solutions of pharmaceutical works and makes it easier. Furthermore, this software turns complicated procedures to simple procedures and well-dispensed each resource across pharma segments. It includes marvelous functions, which streamlined pharma workflow. Simultaneously, heightens the enthusiasm among workers.</p>
@@ -583,7 +583,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
 						<a class="elementor-toggle-title" tabindex="0">What is the scope of pharmacy management software?</a>
 					</div>
 					<div id="elementor-tab-content-10" class="elementor-tab-content elementor-clearfix answer" data-tab="10" role="region" aria-labelledby="elementor-tab-title-10">
-						<p>The pharmacy management software maintains inventory in a way that it reduces the overstock situation and minimizes wastage. Moreover, this software helps to manage pharma accounts and monitor each payment. Furthermore, this maintains information of pharma workers in the precise ledger format Therefore, the pms software improves patient care.</p>
+						<p>The pharmacy management software maintains inventory in a way that it reduces the overstock situation and minimizes wastage. Moreover, this software helps to manage pharma accounts and monitor each payment. Furthermore, this maintains information of pharma workers in the precise ledger format Therefore, the Pharmacy Management software improves patient care.</p>
 					</div>
 				</div>
 			</div>
@@ -594,7 +594,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What are the Key Features of PMS software?",
+      "name": "What are the Key Features of Pharmacy Management software?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "The pharmacy management software is the computerized software for administering pharmacy operations. Furthermore, the operations include registering client details with their prescription data, amassing numerous data, tasks delegation, space optimization, and re-order management. Therefore, it increases efficiency."
@@ -610,15 +610,15 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
     },
     {
       "@type": "Question",
-      "name": "Does PMS software improve financial sustainability?",
+      "name": "Does Pharmacy Management software improve financial sustainability?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Indeed, pharmacy management software improves financial sustainability. Moreover, this software includes advanced functionalities and those elements which are the root cause of improving efficiency. It stores information, systemizes it, and develops reports. Consequently, the PMS software makes great decisions and improves patient engagement."
+        "text": "Indeed, pharmacy management software improves financial sustainability. Moreover, this software includes advanced functionalities and those elements which are the root cause of improving efficiency. It stores information, systemizes it, and develops reports. Consequently, the Pharmacy Management software makes great decisions and improves patient engagement."
       }
     },
     {
       "@type": "Question",
-      "name": "Does the PMS software support cost reduction strategies?",
+      "name": "Does the Pharmacy Management software support cost reduction strategies?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Indeed, the pharmacy management software is the leading system for cutting expenses and enhancing income. The cost reduction strategies related to proper planning and execution of pharmacy resources, precise budgeting, and reducing investment expenses. Furthermore, it includes tools to improve patient care, increasing patient safety, and enhancing performance."
@@ -634,7 +634,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
     },
     {
       "@type": "Question",
-      "name": "Which is the best PMS software in <?= $state_name; ?>?",
+      "name": "Which is the best Pharmacy Management software in <?= $state_name; ?>?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Healthray is the pharmacy management software in <?= $state_name; ?>. This software comprises an intelligent tool that revolutionizes the pharmacy workflow with minimizing expenses. Furthermore, it practices pharmacy protocols accurately to save invaluable time and lower legitimate costs."
@@ -650,7 +650,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
     },
     {
       "@type": "Question",
-      "name": "What is the objective of PMS software?",
+      "name": "What is the objective of Pharmacy Management software?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "The pharmacy management software facilitates sophisticated solutions of pharmaceutical works and makes it easier. Furthermore, this software turns complicated procedures to simple procedures and well-dispensed each resource across pharma segments. It includes marvelous functions, which streamlined pharma workflow. Simultaneously, heightens the enthusiasm among workers."
@@ -669,7 +669,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img) {
       "name": "What is the scope of pharmacy management software?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The pharmacy management software maintains inventory in a way that it reduces the overstock situation and minimizes wastage. Moreover, this software helps to manage pharma accounts and monitor each payment. Furthermore, this maintains information of pharma workers in the precise ledger format. Therefore, the PMS software improves patient care."
+        "text": "The pharmacy management software maintains inventory in a way that it reduces the overstock situation and minimizes wastage. Moreover, this software helps to manage pharma accounts and monitor each payment. Furthermore, this maintains information of pharma workers in the precise ledger format. Therefore, the Pharmacy Management software improves patient care."
       }
     }
   ]

@@ -51,7 +51,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img  ) {
 						<div class="headline-color">
 							<h2 class="elementor-heading-title elementor-size-default"> Advancing Your Healthcare Quality </h2>
 						</div>
-						<p>Escalating medical efficiency, curtailing expenses, and scrutinizing patient outcomes is now easy through implementing Healthray, the best EHR software in <?= $state_name; ?>. Additionally, it increases healthcare efficiency, improves health outcomes, and enhances quality of care.</p>
+						<p>Rapid advancement in the medical sector due after implementing Healthray, the best EHR software. It reduces complications and improves healthcare quality from patient se+ts analyzing medical details and decreases errors.</p>
 						
 						<a class="button" href="https://healthray.com/ehr-software/" target="_blank"> Explore </a>
 
@@ -209,21 +209,16 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img  ) {
 			</div>
 
 			<style>
-				.ehr-product-slider .swiper-slide {padding:20px;border-radius:20px;background-color:#E9F8FF;height:auto;}
-				.ehr-product-slider .swiper-slide .icon-title {display:flex;align-items:center;}
-				.ehr-product-slider .swiper-slide .icon-title .slide-img {flex-shrink:0;}
-				.ehr-product-slider .swiper-slide .icon-title h3 {font-size:20px;font-weight:700;margin-left:8px;}
-				.ehr-product-slider .swiper-slide .slide-content {padding:0;}
-				.ehr-product-slider .swiper-slide.swiper-slide-active {background:var(--hr-secondary-color);color:#fff;}
-				.ehr-product-slider .swiper-slide.swiper-slide-active .icon-title .title_text,
-				.ehr-product-slider .swiper-slide.swiper-slide-active .icon-title .slide-content .text_style,
-				.ehr-product-slider .swiper-slide.swiper-slide-active .slide-content ul li { color:#fff; }
+				.ehr-product-slider .slide {padding:20px;border-radius:20px;background-color:#E9F8FF;height:auto;}
+				.ehr-product-slider .slide .icon-title {display:flex;align-items:center;}
+				.ehr-product-slider .slide .icon-title .slide-img {flex-shrink:0;}
+				.ehr-product-slider .slide .icon-title h3 {font-size:20px;font-weight:700;margin-left:8px;}
+				.ehr-product-slider .slide .slide-content {padding:0;}
+				
 			</style>
-
-			<div class="swiper ehr-product-slider">
-				<!-- Additional required wrapper -->
-				<div class="swiper-wrapper">
-					<div class="swiper-slide">
+			<div class="slider ehr-product-slider">
+				<div class="owl-carousel" data-dots="true" data-nav="false" data-desk_num="3" data-lap_num="2" data-tab_num="2" data-mob_num="1" data-mob_sm="1" data-autoplay="true" data-loop="true" data-margin="30">				
+					<div class="slide">
 						<div class="icon-title">
 							<div class="slide-img"><img width="81" height="80" src="https://healthray.com/wp-content/uploads/2024/07/Electronic-Health-Record-Healthray.svg" class="attachment-300xauto size-300xauto" alt="Electronic Health Record Healthray" decoding="async"></div>
 							<h3 class="title_text">Electronic Health Record</h3>
@@ -235,7 +230,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img  ) {
 							</div>
 						</div>
 					</div>
-					<div class="swiper-slide">
+					<div class="slide">
 						<div class="icon-title">
 							<div class="slide-img"><img width="80" height="80" src="https://healthray.com/wp-content/uploads/2024/07/Hospital-Information-Management-System-Healthray.svg" class="attachment-300xauto size-300xauto" alt="Hospital Information Management System Healthray" decoding="async"></div>
 							<h3 class="title_text">Electronic Medical Record</h3>
@@ -247,7 +242,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img  ) {
 							</div>
 						</div>
 					</div>
-					<div class="swiper-slide">
+					<div class="slide">
 						<div class="icon-title">
 							<div class="slide-img"><img width="80" height="80" src="https://healthray.com/wp-content/uploads/2024/07/Laboratory-Information-Management-System-Healthray.svg" class="attachment-300xauto size-300xauto" alt="Hospital Information Management System Healthray" decoding="async"></div>
 							<h3 class="title_text">Laboratory Information Management System </h3>
@@ -259,7 +254,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img  ) {
 							</div>
 						</div>
 					</div>
-					<div class="swiper-slide">
+					<div class="slide">
 						<div class="icon-title">
 							<div class="slide-img"><img width="80" height="80" src="https://healthray.com/wp-content/uploads/2024/07/Pharmacy-Management-System-Healthray.svg" class="attachment-300xauto size-300xauto" alt="Hospital Information Management System Healthray" decoding="async"></div>
 							<h3 class="title_text">Pharmacy Management System</h3>
@@ -268,12 +263,12 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img  ) {
 							<p class="text_style">Now, pharmaceuticals are more than a place of taking medications. Moreover, they are linked with various medical players and try to improve their coordination with them. With Healthray’s pharmacy management system, it becomes easy. </p>
 							<div class="content_style">
 								<ul>
-									<li>Inventory tracking </li><li>Proper counseling  to patients </li><li>Entered order items </li><li>Create financial statement </li><li>E-payment system </li><li>Digital prescribing </li><li>Records of delivery items </li><li>Interoperability</li><li>
+									<li>Inventory tracking </li><li>Proper counseling  to patients </li><li>Entered order items </li><li>Create financial statement </li><li>E-payment system </li><li>Digital prescribing </li><li>Records of delivery items </li><li>Interoperability</li>
 								</ul>
 							</div>
 						</div>
 					</div>
-					<div class="swiper-slide">
+					<div class="slide">
 						<div class="icon-title">
 							<div class="slide-img"><img width="80" height="80" src="https://healthray.com/wp-content/uploads/2024/07/Hospital-Information-Management-System-Healthray.svg" class="attachment-300xauto size-300xauto" alt="Hospital Information Management System Healthray" decoding="async"></div>
 							<h3 class="title_text">Hospital Information Management System</h3>
@@ -293,13 +288,8 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img  ) {
 								</ul>
 							</div>
 						</div>
-					</div>
+					</div>			
 				</div>
-			</div>
-
-			<!-- If we need navigation buttons -->
-			<div class="flex">
-				<div class="swiper-pagination"></div>
 			</div>
 		</div>
 	</div>
@@ -365,7 +355,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img  ) {
 				<div class="half-width">
 					<div class="content-box">
 						<h3>Providing analytical solutions with automated tools.</h3>
-						<p>Electronic health record software follows systematic procedure of proper administration of healthcare records. Moreover, the records accumulated, structurization information, creating medical reports instantaneously. These reports are helpful for examining prevalent patient conditions and forecasting their situation while taking treatment. Here are some of the benefits of analytical solution and automated tools in healthcare industry:</p>
+						<p>Transforming the path of maintaining healthcare records from manual documents processing to  digitizing files. Each of the electronic files have been transferred and locked with security guidelines. Furthermore, it refines information and creates AI models to predict a treatment solution and analyze detailed medical insights. Subsequent advantages of the superior EHR software are :</p>
 						<ul>
 							<li>Facilitate digital appointment system that helps to record appointment history, schedule time for consultation, and receive reminders. </li>
 							<li>EHR software provides a record management system that can capture each medical detail whether it is related to warehousing stock or treatment history.</li>
@@ -399,7 +389,7 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img  ) {
 
 							<p> Modifying conventional healthcare systems and eradicating medical challenges are only possible with the electronic health record software. Furthermore, the prominent hurdles are long queues, increasing medical costs, and difficulty optimizing resources. </p>
 							<p>Electronic health records have the unimaginable capacity as it instantly improves patient safety and coordinated care. Furthermore, it can apply medical regulations with the structured format and easily connect with multiple medical players. </p>
-							<p> It transmitted information to another healthcare practitioner without incurring any difficulty and saves a plenty of time Consequently, it improves patient quality care, increasing their experiences, and enhances satisfaction of medical workers. </p>	
+							<p> Promote healthcare innovation from patient registration to revenue management. A specialized medical software not only upscale productivity but also minimizes expenses. Moreover, It enhances data security, improves diagnostic accuracy, and reduces costs. </p>	
 							<p> Always opt for software which is easily modified, simplified to implement and includes necessary functions such as custom forms, prescription reports, medication tracking, information security, and consolidating healthcare records. </p>
 							<p> Digital communication with diverse physicians improves patient medical knowledge and advanced experience. Moreover, the EHR software simplifies to maintain documentation, placing time at a decided place and improves efficiency.</p>
 						</div>
@@ -563,7 +553,3 @@ if (has_post_thumbnail($post->ID) && get_post_thumbnail_id() != $state_img  ) {
 		</div>
 	</div>
 </div>
-<script>
-	setTimeout(function(){
-		swiperSlider()
-	},500)</script>
