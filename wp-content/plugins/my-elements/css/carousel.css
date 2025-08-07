@@ -1,0 +1,11 @@
+.trusted-standars .owl-carousel .item { padding: 16px; border-radius: 16px; border: #dfdfdf 1px solid; text-align: center; width: 100%; height: 100%; }
+.trusted-standars .owl-carousel .item img { max-height: 100px; object-fit: contain; }
+.trusted-standars .owl-carousel .image-title { margin-top: 10px; }
+/* .owl-carousel .owl-stage-outer {}
+
+@media (max-width: 767px) {
+    .trusted-standars .owl-carousel .owl-stage { gap: 12px; }
+    .trusted-standars .owl-carousel .item { padding: 16px 10px; border-radius: 12px; }
+    .trusted-standars .owl-carousel .item img { max-height: 80px; }
+    .trusted-standars .owl-carousel .image-title { font-size: 13px; }
+} */
