@@ -35,7 +35,7 @@ $this->add_render_attribute('slider', 'data-margin', $settings['margin']['size']
 		<div class="pt-testimonial-box pt-style-3">
 			<?php if(!empty($item['image']['id'])){ ?> <div class="pt-testimonial-img"> <?php echo wp_get_attachment_image($item['image']['id'], array('150', '150'), "", []);  ?></div> <?php } ?>
 			<div class="pt-testimonial-content">
-				<h3><?= esc_html($item['title_text']); ?></h3>
+				<div class="h3"><?= esc_html($item['title_text']); ?></div>
 				<?php if(!empty($item['location_text'])){ ?><p class="loaction-name"><?= esc_html($item['location_text']); ?></p> <?php } ?>
 				<p><?= $desc_html; ?></p>
 			</div>

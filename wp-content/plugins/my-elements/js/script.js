@@ -22,8 +22,6 @@ function owl_carousel(e) {
 	jQuery('.owl-carousel').each(function () {
 		var app_slider = jQuery(this);
 
-		console.log(app_slider);
-
 		var prev = '<span><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.99983 1L3.05284 4.87375C3.03612 4.89016 3.02283 4.90979 3.01375 4.93147C3.00468 4.95316 3 4.97646 3 5C3 5.02354 3.00468 5.04684 3.01375 5.06853C3.02283 5.09021 3.03612 5.10984 3.05284 5.12625L7 9" stroke="currentcolor" stroke-linecap="round"/> </svg></span>';
 		var next = '<span><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M3.00017 9L6.94716 5.12625C6.96388 5.10984 6.97717 5.09021 6.98625 5.06853C6.99532 5.04684 7 5.02354 7 5C7 4.97646 6.99532 4.95316 6.98625 4.93147C6.97717 4.90979 6.96388 4.89016 6.94716 4.87375L3 1" stroke="currentcolor" stroke-linecap="round"/> </svg></span>';
 		var prev_text = 'Prev';
@@ -44,18 +42,23 @@ function owl_carousel(e) {
 			autoplayTimeout: 5000,
 			autoplayHoverPause:true,
 			nav: app_slider.data("nav"),
+			autoHeight: app_slider.data("autoheight"),
 			navText: [prev, next],
 			responsiveClass: true,
 			responsive: {
+				// breakpoint from 0 up
 				0: {
-					items: 1,
+					items: app_slider.data("mob_sm"),
 				},
+				// breakpoint from 480 up
 				480: {
 					items: app_slider.data("mob_num"),
 				},
+				// breakpoint from 786 up
 				786: {
 					items: app_slider.data("tab_num")
 				},
+				// breakpoint from 1023 up
 				1023: {
 					items: app_slider.data("lap_num")
 				},
@@ -189,7 +192,6 @@ function tabbar() {
 
 	tabLinks.forEach(link => {
 		link.addEventListener("click", event => {
-			console.log('link', link);
 			event.preventDefault();
 			document.querySelector(".tab-link.active")?.classList.remove("active");
 			document.querySelector(".tab-panel.active")?.classList.remove("active");
@@ -205,10 +207,8 @@ jQuery(window).on('elementor/frontend/init', function () {
 	elementorFrontend.hooks.addAction('frontend/element_ready/swiper_widget.default', owl_carousel);
 	elementorFrontend.hooks.addAction('frontend/element_ready/ml-doctor-reviews.default', owl_carousel);
 	elementorFrontend.hooks.addAction('frontend/element_ready/slider_logo.default', owl_carousel);
-	
-	elementorFrontend.hooks.addAction('frontend/element_ready/ml-product-slider.default', owl_carousel);
-	elementorFrontend.hooks.addAction('frontend/element_ready/ml-product-slider-2.default', owl_carousel);
 	elementorFrontend.hooks.addAction('frontend/element_ready/ml-ehr-product-slider.default', owl_carousel);
+	elementorFrontend.hooks.addAction('frontend/element_ready/ml-product-slider-2.default', owl_carousel);
 	elementorFrontend.hooks.addAction('frontend/element_ready/ML_slider_set.default', owl_carousel);
 
 	elementorFrontend.hooks.addAction('frontend/element_ready/ml-alternative.default', alternative);

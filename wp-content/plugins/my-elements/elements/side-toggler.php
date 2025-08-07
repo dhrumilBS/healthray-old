@@ -15,7 +15,7 @@ class ML_Slider extends Widget_Base
 	}
 	public function get_categories()
 	{
-		return ['my-element'];
+		return ['my-element-slider'];
 	}
 
 	protected function register_controls()

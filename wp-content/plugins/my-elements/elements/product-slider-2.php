@@ -9,9 +9,6 @@ class ML_Product_Slider_2 extends Widget_Base
 	public function get_name() { return 'ml-product-slider-2'; }
 	public function get_title() { return __('Product Slider 2 ', 'my-elements'); }
 	public function get_categories() { return ['my-element-slider']; }
-	public function get_icon() { return 'eicon-slides'; }
-	public function get_style_depends() { return ['ml-slider-logo', 'owl.carousal']; }
-	public function get_script_depends() { return ['owl.carousal'];}
 	protected function register_controls()
 	{
 		$this->start_controls_section(

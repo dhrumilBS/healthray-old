@@ -453,7 +453,7 @@ class Ml_Widget_Doctor_Reviews extends Widget_Base
 	.grid-item .grid-box .text-block p { font-style: italic; line-height: 1.5; margin: 0 0 8px; color: #161c26; } 
 
 	.doctor-details { text-align: center; flex-shrink: 0;} 
-	.name { display: block; line-height: 1.5; margin: 0px; font-size: 0.875rem; color: #161C26; } 
+	.name { display: block; line-height: 1.5; margin: 0px; font-size: 20px; color: var(--hr-primary-color); font-weight: 600; } 
 
 	.hospital-details span{ font-weight: 400; font-size:14px; line-height: 1.5; margin: 0px; color: #516173; display: block;} 
 	@media only screen and ( max-width: 768px) { 
@@ -501,7 +501,7 @@ class Ml_Widget_Doctor_Reviews extends Widget_Base
 				</div>
 			</div>
 			<div class="doctor-details">
-				<?php if (!empty($item['doctor_name'])) {  ?><h3 class="name"><?= esc_html($item['doctor_name']); ?></h3><?php } ?>
+				<?php if (!empty($item['doctor_name'])) {  ?><div class="name"><?= esc_html($item['doctor_name']); ?></div><?php } ?>
 				<div class="hospital-details">
 					<?php if (!empty($item['doctor_job'])) { ?><span><?= esc_html($item['doctor_job']);?></span><?php } ?>
 					<?php if (!empty($item['doctor_hospital_name'])) {  ?><span><strong> <?= esc_html($item['doctor_hospital_name']); ?> </strong></span><?php } ?>	
@@ -548,7 +548,7 @@ class Ml_Widget_Doctor_Reviews extends Widget_Base
 						</div>
 					</div>
 					<div class="doctor-details">
-						<?php if (!empty($item['doctor_name'])) {  ?><h3 class="name"><?= esc_html($item['doctor_name']); ?></h3><?php } ?>
+						<?php if (!empty($item['doctor_name'])) {  ?><div class="name h3"><?= esc_html($item['doctor_name']); ?></div><?php } ?>
 						<div class="hospital-details">
 							<?php if (!empty($item['doctor_job'])) { ?><span><?= esc_html($item['doctor_job']);?></span><?php } ?>
 							<?php if (!empty($item['doctor_hospital_name'])) {  ?><span><strong> <?= esc_html($item['doctor_hospital_name']); ?> </strong></span><?php } ?>	

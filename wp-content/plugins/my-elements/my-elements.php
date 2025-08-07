@@ -66,13 +66,11 @@ add_action('elementor/elements/categories_registered', function ($elements_manag
 add_action('wp_enqueue_scripts', 'ML_init');
 function ML_init()
 {
+	wp_enqueue_style('my-elements', ML_URL . 'css/my-elements.css', [], rand());
 	wp_enqueue_script('my-element-js', ML_URL . 'js/script.js', array('jquery'), rand());
-	
+
 	// Register style
 	wp_register_style('owl.carousal', ML_URL . 'css/owl.carousel.min.css', [], '1.0');
-
-	wp_register_style('ml-product-slider', ML_URL . 'css/product-slider-1.css', [], '1.0');
-	
 	wp_register_style('ml-swiper-widget', ML_URL . 'css/swiper-widget.css', [], '1.0');
 	wp_register_style('ml-slider-logo', ML_URL . 'css/slider-logo.css', [], '1.0');
 
@@ -85,23 +83,22 @@ function ML_init()
 add_filter('elementor/widgets/register', 'my_elements');
 function my_elements()
 {
-	require_once ML_PATH . 'elements/slider-healthray-product-1.php'; // product-slider
-	require_once ML_PATH . 'elements/slider-healthray-product-2.php'; // product-slider-2
-	require_once ML_PATH . 'elements/slider-healthray-product-3.php'; // ehr-product-slider-3
-	require_once ML_PATH . 'elements/slider-healthray-product-4.php'; // pms-product-slider
+	require_once ML_PATH . 'elements/product-slider.php';
+	require_once ML_PATH . 'elements/product-slider-2.php';
+	require_once ML_PATH . 'elements/ehr-product-slider-3.php';
+	require_once ML_PATH . 'elements/pms-product-slider.php';
 	
 	require_once ML_PATH . 'elements/swiper-grid.php';
 	require_once ML_PATH . 'elements/slider-logo.php';
-	require_once ML_PATH . 'elements/slider-set/controls.php';
-	require_once ML_PATH . 'elements/testimonial/controls.php';
-	require_once ML_PATH . 'elements/doctor-reviews.php';
-	require_once ML_PATH . 'elements/za-slider-client-review.php';
-	
-	
 	require_once ML_PATH . 'elements/side-toggler.php';
+	require_once ML_PATH . 'elements/slider-set/controls.php';
+
+	require_once ML_PATH . 'elements/testimonial/controls.php';
 
 	require_once ML_PATH . 'elements/healthray-tabs.php';
 	require_once ML_PATH . 'elements/healthray-tabs-2.php';
+	require_once ML_PATH . 'elements/doctor-reviews.php';
+	require_once ML_PATH . 'elements/za-slider-client-review.php';
 	require_once ML_PATH . 'elements/fancybox-list.php';
 	require_once ML_PATH . 'elements/social-rating.php';
 
@@ -112,6 +109,7 @@ function my_elements()
 	require_once ML_PATH . 'elements/custom-toggle.php';
 	require_once ML_PATH . 'elements/alternativ.php';
 	require_once ML_PATH . 'elements/service-card.php';
-
-	require_once ML_PATH . 'elements/before-after-slider-widget.php';
+	
+	require_once ML_PATH . 'elements/trust-content.php';
+	require_once ML_PATH . 'elements/before-after-slider.php';	
 }

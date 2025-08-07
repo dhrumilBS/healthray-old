@@ -4,11 +4,20 @@ namespace Elementor;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-class ML_EHR_Product_Slider extends Widget_Base
+class ML_Product_Slider extends Widget_Base
 {
-	public function get_name() { return 'ml-ehr-product-slider'; }
-	public function get_title() { return __('Product Slider 3', 'my-elements'); }
-	public function get_categories() { return ['my-element-slider']; }
+	public function get_name()
+	{
+		return 'ml-product-slider';
+	}
+	public function get_title()
+	{
+		return __('product Slider', 'my-elements');
+	}
+	public function get_categories()
+	{
+		return ['my-element-slider'];
+	}
 	protected function register_controls()
 	{
 		$this->start_controls_section(
@@ -86,7 +95,8 @@ class ML_EHR_Product_Slider extends Widget_Base
 		);
 		$this->end_controls_section();
 
-
+		$btn = new ML_Slider_Controls();
+		$btn->get_slider_btn_controls($this);
 
 		$this->start_controls_section(
 			'section__2p0vfh01x',
@@ -106,10 +116,10 @@ class ML_EHR_Product_Slider extends Widget_Base
 		$this->add_control(
 			'title_color',
 			[
-				'label' => esc_html__( 'Title Color', 'textdomain' ),
+				'label' => esc_html__('Title Color', 'textdomain'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .title_text' => 'color:{{VALUE}}',
+					'{{WRAPPER}} .title_text' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -125,10 +135,10 @@ class ML_EHR_Product_Slider extends Widget_Base
 		$this->add_control(
 			'content_color',
 			[
-				'label' => esc_html__( 'Content Color', 'textdomain' ),
+				'label' => esc_html__('Content Color', 'textdomain'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .text_style' => 'color:{{VALUE}}',
+					'{{WRAPPER}} .text_style' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -144,13 +154,14 @@ class ML_EHR_Product_Slider extends Widget_Base
 		$this->add_control(
 			'text_color',
 			[
-				'label' => esc_html__( 'Text Color', 'textdomain' ),
+				'label' => esc_html__('Text Color', 'textdomain'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .content_style' => 'color:{{VALUE}}',
+					'{{WRAPPER}} .content_style' => 'color: {{VALUE}}',
 				],
 			]
 		);
+
 
 
 		$this->add_responsive_control(
@@ -159,16 +170,83 @@ class ML_EHR_Product_Slider extends Widget_Base
 				'label' => __('Border Radius', 'healthray'),
 				'type' => Controls_Manager::DIMENSIONS,
 				'selectors' => [
-					'{{WRAPPER}} .slide' => 'border-radius:{{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .slide' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'border',
+				'selector' => '{{WRAPPER}} .slide',
+			]
+		);
+		$this->add_responsive_control(
+			'box_padding',
+			[
+				'label' => __('Padding', 'healthray'),
+				'type' => Controls_Manager::DIMENSIONS,
+				'selectors' => [
+					'{{WRAPPER}} .slide-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
 		$this->end_controls_section();
 
-		$btn = new ML_Slider_Controls();
-		$btn->get_slider_btn_controls($this);
-		
+		$this->start_controls_section(
+			'section__f0xx',
+			[
+				'label' => __('Slider Style', 'healthray'),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
 
+		$this->add_control(
+			'head_dot',
+			[
+				'label' => __('Owl dot', 'healthray'),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'owldotact_color',
+			[
+				'label' => __('Active Color', 'healthray'),
+
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .owl-carousel .owl-dots .owl-dot.active' => 'background: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'owldot_color',
+			[
+				'label' => __('Inactive Color', 'healthray'),
+
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .owl-carousel .owl-dots .owl-dot' => 'background: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'owldot_hover',
+			[
+				'label' => __('Hover Color', 'healthray'),
+
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .owl-carousel .owl-dots .owl-dot:hover' => 'background: {{VALUE}};',
+				],
+			]
+		);
+		$this->end_controls_section();
 	}
 	protected function render()
 	{
@@ -188,45 +266,31 @@ class ML_EHR_Product_Slider extends Widget_Base
 		$this->add_render_attribute('slider', 'data-loop', $settings['loop']);
 		$this->add_render_attribute('slider', 'data-margin', $settings['margin']['size']);
 ?>
-<style> 
 
-	.ehr-product-slider .slide { padding:20px; border-radius:20px; background-color:#eef2ff; height:auto;}
+		<div class="slider">
+			<div class="owl-carousel" <?= $this->get_render_attribute_string('slider'); ?>>
+				<?php foreach ($tabs as $index => $item) { ?>
+					<div class="slide">
+						<?php if (!empty($item['image']['id'])) { ?> <div class="slide-img"> <?= wp_get_attachment_image($item['image']['id'], ['300', 'auto'], "", []);  ?></div> <?php } ?>
+						<?php if (!empty($item['title_text']) || !empty($item['description_content']) || !empty($item['description_text'])) { ?>
+							<div class="slide-content">
+								<?php if (!empty($item['title_text'])) { ?><h3 class="title_text"><?= esc_html($item['title_text']); ?></h3> <?php  } ?>
+								<?php if (!empty($item['description_text'])) {
+									echo "<p class='text_style'>" . $this->parse_text_editor($item['description_text']) . "</p>";
+								}
+								if (!empty($item['description_content'])) {
+									echo  "<div class='content_style'>" . $this->parse_text_editor($item['description_content']) . "</div>";
+								}
+								?>
+							</div>
+						<?php } ?>
+					</div>
 
-	.ehr-product-slider .slide .icon-title{ display:flex; align-items:center;} 
-	.ehr-product-slider .slide .icon-title .slide-img{ flex-shrink:0;}
-	.ehr-product-slider .slide .icon-title h3{ font-size:20px; font-weight:700;margin-left:8px;}
-
-	.ehr-product-slider .slide .slide-content { padding:0;}
-
-</style>
-<div class="section-procuct">
-	<div class="owl-carousel ehr-product-slider"  <?= $this->get_render_attribute_string('slider'); ?>>
-
-		<?php 
-		foreach ($tabs as $index => $item) 
-		{ ?>
-		<div class="slide">
-			<div class="icon-title">
-				<div class="slide-img"> <?= wp_get_attachment_image($item['image']['id'], ['300', 'auto'], "", []); ?></div>
-				<?php if (!empty($item['title_text'])){ echo '<h3 class="title_text">'. esc_html($item['title_text']).'</h3>'; } ?>
-			</div>
-			<div class="slide-content">
-				<?php
-		 if (!empty($item['description_text'])) {
-			 echo "<p class='text_style'>" . $this->parse_text_editor($item['description_text']) . "</p>";
-		 }
-		 if (!empty($item['description_content'])) {
-			 echo  "<div class='content_style'>" . $this->parse_text_editor($item['description_content']) . "</div>";
-		 }
-				?>
+				<?php } ?>
 			</div>
 		</div>
-		<?php } 
-		?>	
-	</div>
-</div>
-<?php
+	<?php
 	}
 }
 
-Plugin::instance()->widgets_manager->register(new ML_EHR_Product_Slider());
+Plugin::instance()->widgets_manager->register(new ML_Product_Slider());

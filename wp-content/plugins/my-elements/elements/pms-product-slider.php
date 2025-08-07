@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 class ML_PMS_Product_Slider extends Widget_Base
 {
 	public function get_name() { return 'ml-pms-product-slider'; }
-	public function get_title()	{ return __('Product Slider 4', 'my-elements');	}
+	public function get_title()	{ return __('PMS Product Slider', 'my-elements');	}
 	public function get_categories() { return ['my-element-slider']; }
 	protected function register_controls()	{
 		$this->start_controls_section(

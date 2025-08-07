@@ -7,11 +7,11 @@ class Healthray_tabs extends Widget_Base
 {
 	public function get_name()
 	{
-		return __('healthray-tabs', 'my-element');
+		return __('healthray-tabs', 'healthray');
 	}
 	public function get_title()
 	{
-		return __('Healthray Tabs', 'my-element');
+		return __('Healthray Tabs', 'healthray');
 	}
 	public function get_categories()
 	{
@@ -23,7 +23,7 @@ class Healthray_tabs extends Widget_Base
 		$this->start_controls_section(
 			'section_slideryguy',
 			[
-				'label' => __('Healthray tabs', 'my-element'),
+				'label' => __('Healthray tabs', 'healthray'),
 			]
 		);
 	
@@ -32,7 +32,7 @@ class Healthray_tabs extends Widget_Base
 		$repeater->add_control(
 			'image',
 			[
-				'label' => __('Choose Image', 'my-element'),
+				'label' => __('Choose Image', 'healthray'),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [
 					'url' => \Elementor\Utils::get_placeholder_image_src(),
@@ -45,26 +45,26 @@ class Healthray_tabs extends Widget_Base
 		$repeater->add_control(
 			'tab_title',
 			[
-				'label' => __('Tab Title', 'my-element'),
+				'label' => __('Tab Title', 'healthray'),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
 				],
-				'default' => __('This is sample title', 'my-element'),
-				'placeholder' => __('Enter your title', 'my-element'),
+				'default' => __('This is sample title', 'healthray'),
+				'placeholder' => __('Enter your title', 'healthray'),
 				'label_block' => true,
 			]
 		);
 		$repeater->add_control(
 			'tab_desc',
 			[
-				'label' => __('Description', 'my-element'),
+				'label' => __('Description', 'healthray'),
 				'type' => Controls_Manager::TEXTAREA,
 				'dynamic' => [
 					'active' => true,
 				],
-				'default' => __('This is designation title', 'my-element'),
-				'placeholder' => __('Enter your title', 'my-element'),
+				'default' => __('This is designation title', 'healthray'),
+				'placeholder' => __('Enter your title', 'healthray'),
 				'label_block' => true,
 			]
 		);
@@ -72,44 +72,44 @@ class Healthray_tabs extends Widget_Base
 			$repeater->add_control(
 				'tab_side_title',
 				[
-					'label' => __('Side Description Title', 'my-element'),
+					'label' => __('Side Title', 'healthray'),
 					'type' => Controls_Manager::TEXTAREA,
 					'dynamic' => [
 						'active' => true,
 					],
 					'default' => "Heading",
-					'placeholder' => __('Enter your title', 'my-element'),
+					'placeholder' => __('Enter your title', 'healthray'),
 					'label_block' => true,
 				]
 			);
 		$repeater->add_control(
 			'tab_side_desc1',
 			[
-				'label' => __('Side Description Top', 'my-element'),
+				'label' => __('Side Description Top', 'healthray'),
 				'type' => Controls_Manager::TEXTAREA,
 				'dynamic' => [
 					'active' => true,
 				],
-				'placeholder' => __('Enter your title', 'my-element'),
+				'placeholder' => __('Enter your title', 'healthray'),
 				'label_block' => true,
 			]
 		);
 		$repeater->add_control(
 			'tab_side_desc2',
 			[
-				'label' => __('Side Description Bottom', 'my-element'),
+				'label' => __('Side Description Bottom', 'healthray'),
 				'type' => Controls_Manager::TEXTAREA,
 				'dynamic' => [
 					'active' => true,
 				],
-				'placeholder' => __('Enter your title', 'my-element'),
+				'placeholder' => __('Enter your title', 'healthray'),
 				'label_block' => true,
 			]
 		);
 		$this->add_control(
 			'tabs',
 			[
-				'label' => __('Tabs Items', 'my-element'),
+				'label' => __('Tabs Items', 'healthray'),
 				'type' => Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'title_field' => '{{{ tab_title }}}',
@@ -124,7 +124,7 @@ class Healthray_tabs extends Widget_Base
 		$this->start_controls_section(
 			'section_tab_setting',
 			[
-				'label' => __('Tab Setting', 'my-element'),
+				'label' => __('Tab Setting', 'healthray'),
 			]
 		);
 		$this->add_responsive_control(
@@ -172,7 +172,7 @@ class Healthray_tabs extends Widget_Base
 		$this->start_controls_section(
 			'section_imgsetting',
 			[
-				'label' => __('Image Setting', 'my-element'),
+				'label' => __('Image Setting', 'healthray'),
 			]
 		);
 
