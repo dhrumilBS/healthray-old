@@ -174,6 +174,11 @@ class Cf7_To_Any_Api {
 		$this->loader->add_filter('manage_edit-cf7_to_any_api_sortable_columns',$plugin_admin,'cf7_to_any_api_sortable_columns');
 		$this->loader->add_action('plugins_loaded',$plugin_admin,'cf7toanyapi_add_new_table',10, 2);
 		$this->loader->add_action('wp_ajax_delete_records',$plugin_admin,'delete_cf7_records',10, 2);
+		// Admin Widget add
+		$this->loader->add_action('wp_dashboard_setup', $plugin_admin, 'cf7anyapi_add_dashboard_widget');
+		// Plugin links
+		$this->loader->add_filter('plugin_row_meta', $plugin_admin, 'cf7anyapi_add_plugin_links', 10, 2);	
+
 	}
 
 	/**

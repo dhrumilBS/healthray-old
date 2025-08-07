@@ -54,13 +54,13 @@
 			        <li class="reason email">
 			            <label>
 			                <span><?php esc_html_e( 'Email Address', 'contact-form-to-any-api' ); ?></span>
-			                <input type="email" name="selected-email" value="" placeholder="Enter Email Address">
+			                <input type="email" name="selected-email" value="" placeholder="<?php esc_attr_e( 'Enter Email Address', 'contact-form-to-any-api' ); ?>">
 			            </label>
 			        </li>
 			    </ul>
 			</div>
 			<div class="cf7-any-api-modal-footer">
-				<input type="submit" class="button button-secondary" name="submit" value="Submit &amp; Deactivate">
+				<input type="submit" class="button button-secondary" name="submit" value="<?php esc_attr_e( 'Submit &amp; Deactivate', 'contact-form-to-any-api' ); ?>">
 				<?php wp_nonce_field('cf7_any_api_action', 'cf7_any_api_nonce_field');?>
 				<a href="jQuery:;" class="button button-secondary button-close"><?php esc_html_e( 'Cancel', 'contact-form-to-any-api' ); ?></a>
 			</div>

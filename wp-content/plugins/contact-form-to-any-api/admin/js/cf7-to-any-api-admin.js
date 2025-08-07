@@ -153,8 +153,26 @@
 			});
 			// merge filter ,  uttons , search into one div
 			jQuery('.dt-buttons, .dataTables_length, .dataTables_filter').wrapAll( jQuery('<div>').addClass('cf7toanyapi_table_wrap') );
-
 		}
+
+		//View More click event for the log table
+		jQuery('.cf7anyapi_logs .view_more').on('click', function() {
+	        var logData = jQuery(this).siblings('pre').text();
+		    try {
+		        var formattedData = JSON.stringify(JSON.parse(logData), null, 2); 
+		    } catch (e) {
+		        var formattedData = logData; 
+		    }
+	        jQuery('#cf7anyapi-log-popup .cf7anyapi-log-content pre').text(formattedData);
+	        jQuery('#cf7anyapi-log-popup').fadeIn();
+	    });
+
+	    jQuery('#cf7anyapi-log-popup .close-popup').on('click', function() {
+	        jQuery('#cf7anyapi-log-popup').fadeOut();
+	    	jQuery('#cf7anyapi-log-popup .cf7anyapi-log-content pre').empty();
+	    });
+
+
 	});
 
 })( jQuery );

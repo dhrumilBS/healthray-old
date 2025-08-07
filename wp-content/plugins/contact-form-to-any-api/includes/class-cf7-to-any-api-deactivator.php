@@ -30,11 +30,8 @@ class Cf7_To_Any_Api_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-        
-        if(wp_verify_nonce($_REQUEST['cf7_any_api_nonce_field'], 'cf7_any_api_action') && isset($_POST) && !empty($_POST['selected-reason'])){
-
+        if(isset($_REQUEST['cf7_any_api_nonce_field']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['cf7_any_api_nonce_field'])), 'cf7_any_api_action') && isset($_POST) && !empty($_POST['selected-reason'])){
             self::send_data_to_google_form($_POST);
-
         }
 	}
 	/*

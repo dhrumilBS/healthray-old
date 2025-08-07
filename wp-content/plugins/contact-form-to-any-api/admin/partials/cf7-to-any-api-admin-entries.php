@@ -15,8 +15,9 @@
 <?php
 global $wpdb;
 $Cf7_To_Any_Api = new Cf7_To_Any_Api();
-$cf_id = (isset($_GET['form_id']) && is_numeric($_GET['form_id']) ? intval($_GET['form_id']) : 0); ?>
-
+$cf_id = filter_input(INPUT_GET, 'form_id', FILTER_VALIDATE_INT);
+$cf_id = $cf_id !== null && $cf_id !== false ? intval($cf_id) : 0; 
+?>
 <div class="cf_entries" id="cf_entries">
 	<form name="form_entries" id="form_entries" class="cf7toanyapi_entries" method="get">
 		<label for="form" class="cf7toanyapi_select_form"><?php esc_html_e( 'Choose a form:', 'contact-form-to-any-api' ); ?></label>
@@ -32,10 +33,11 @@ $cf_id = (isset($_GET['form_id']) && is_numeric($_GET['form_id']) ? intval($_GET
             );
             $count = 0;
             foreach($posts as $post){
-            	$selected = ( $cf_id === 0 && $count == 0 ) ? 'selected="selected"' : ($post->ID === $cf_id ? 'selected="selected"' : ''); 
-            	( $cf_id === 0  && $count == 0 ) ? $cf_id = $post->ID :  0; 
-                ?>
-                <option value="<?php echo esc_attr($post->ID); ?>" <?php echo $selected; ?>>
+            	$is_selected = ( $cf_id === 0 && $count == 0 ) || ( $post->ID === $cf_id );
+			    if ( $cf_id === 0 && $count == 0 ) {
+			        $cf_id = $post->ID;
+			    }?>
+                <option value="<?php echo esc_attr($post->ID); ?>" <?php selected( $is_selected, true ); ?>>
                 	<?php echo esc_html($post->post_title.'('.$post->ID.')'); ?> 
                 </option>
                 <?php $count++;
@@ -44,8 +46,7 @@ $cf_id = (isset($_GET['form_id']) && is_numeric($_GET['form_id']) ? intval($_GET
 	</form>
 	<?php
 		if(isset($cf_id) && $cf_id != ''){
-
-		    $cf7_entries_sql = $wpdb->prepare(
+			$result = $wpdb->get_results($wpdb->prepare(
 		        'SELECT * FROM ' . $wpdb->prefix . 'cf7anyapi_entries 
 		        WHERE `form_id` = %d 
 		        AND data_id IN( 
@@ -60,8 +61,7 @@ $cf_id = (isset($_GET['form_id']) && is_numeric($_GET['form_id']) ? intval($_GET
 		        ORDER BY `data_id` DESC',
 		        $cf_id,
 		        $cf_id
-		    );
-			$result = $wpdb->get_results($cf7_entries_sql);
+		    ));
 
 			if($result){
 			$data_sorted = $Cf7_To_Any_Api->cf7toanyapi_sortdata($result);
@@ -71,14 +71,14 @@ $cf_id = (isset($_GET['form_id']) && is_numeric($_GET['form_id']) ? intval($_GET
 			?>				
 				<div id="table_data">
 					<table class="tbl table table-striped table-bordered cf7toanyapi_table" id="cf7toanyapi_table">
-						<?php echo wp_nonce_field('cf_to_any_api_entrie_del_nonce','cf_to_any_api_entrie_del_nonce' ); ?>
+						<?php echo wp_kses_post( wp_nonce_field('cf_to_any_api_entrie_del_nonce','cf_to_any_api_entrie_del_nonce' ) ); ?>
 						<thead>
 							<tr class="cf7toanyapi_dataid_all">								
 								<?php
 								
 										echo '<th class="manage-column">checkbox</th>';
 									foreach ($fields as $k => $v){
-										echo '<th class="manage-column" data-key="'.esc_html($v).'">'.ucfirst(str_replace('_',' ',$Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v))).'</th>';
+										echo '<th class="manage-column" data-key="'.esc_attr($v).'">'.esc_html(ucfirst(str_replace('_',' ',$Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v)))).'</th>';
 									}
 								?>
 							</tr>
@@ -88,9 +88,9 @@ $cf_id = (isset($_GET['form_id']) && is_numeric($_GET['form_id']) ? intval($_GET
 							
 								if(!empty($data_sorted)){
 									foreach ($data_sorted as $k => $v )   {					
-										echo '<tr data-id="'.$k.'" class="cf7toanyapi_dataid">';
+										echo '<tr data-id="'.esc_attr($k).'" class="cf7toanyapi_dataid">';
 										$k = (int)$k;
-										echo '<td data-id="'.$k.'" class="cf7toanyapi_dataid"></td>';
+										echo '<td data-id="'.esc_attr($k).'" class="cf7toanyapi_dataid"></td>';
 										foreach ($fields as $k2 => $v2) {
 											//Get fields related values
 											$_value = ((isset($v[$k2])) ? $v[$k2] : '&nbsp;');
@@ -102,34 +102,30 @@ $cf_id = (isset($_GET['form_id']) && is_numeric($_GET['form_id']) ? intval($_GET
 												//If value is url then setup anchor tag with value
 												if(!empty($arr_field_type_info) && array_key_exists($k2,$arr_field_type_info) && $arr_field_type_info[$k2] == 'file'){
 													//Add download attributes in tag if field type is attachement
-													?><td data-head="<?php echo $Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v2); ?>">
+													?><td data-head="<?php echo esc_attr( $Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v2) ); ?>">
 														<a href="<?php echo esc_url($_value); ?>" target="_blank" title="<?php echo esc_url($_value); ?>" download ><?php echo esc_html(basename($_value)); ?>
 														</a>
 													</td><?php
 												}
 												else{
-													?><td data-head="<?php echo $Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v2); ?>">
+													?><td data-head="<?php echo esc_attr( $Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v2) ); ?>">
 														<a href="<?php echo esc_url($_value); ?>" target="_blank" title="<?php echo esc_url($_value); ?>" ><?php echo esc_html(basename($_value)); ?>
 														</a>
 													</td><?php
 												}
-											}
-											else if($Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v2) == 'submitted_from'){
-												echo '<td data-head="'.$Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v2).'"><a href="'.get_the_permalink($_value).'" target="_blank">'.get_the_title($_value).'</a></td>';
-											}
-											else{
+											} else if($Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v2) == 'submitted_from'){
+												echo '<td data-head="'.esc_attr( $Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v2) ).'"><a href="'.esc_url(get_the_permalink($_value)).'" target="_blank">'.esc_html(get_the_title($_value)).'</a></td>';
+											} else{
 												$_values = esc_html(html_entity_decode($_value));
 												if(strlen($_values) > $display_character){
-
-													echo '<td data-head="'.$Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v2).'">'.esc_html(substr($_values, 0, $display_character)).'...</td>';
+													echo '<td data-head="'. esc_attr(  $Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v2) ).'">'.esc_html(substr($_values, 0, $display_character)).'...</td>';
 												}else{
-													echo '<td data-head="'.$Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v2).'">'.htmlspecialchars_decode($_value).'</td>';
+													echo '<td data-head="'. esc_attr(  $Cf7_To_Any_Api->cf7toanyapi_admin_get_field_name($v2) ).'">'.htmlspecialchars_decode($_value).'</td>';
 												}
 											}
 										}//Close foreach
 										echo '</tr>';
-									}//Close foreach
-								
+									}//Close foreach							
 								
 								}
 							?>

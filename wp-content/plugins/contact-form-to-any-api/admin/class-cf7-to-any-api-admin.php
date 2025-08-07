@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -19,7 +20,8 @@
  * @subpackage Cf7_To_Any_Api/admin
  * @author     IT Path Solution <info@itpathsolutions.com>
  */
-class Cf7_To_Any_Api_Admin {
+class Cf7_To_Any_Api_Admin
+{
 
 	/**
 	 * The ID of this plugin.
@@ -46,11 +48,12 @@ class Cf7_To_Any_Api_Admin {
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct($plugin_name, $version)
+	{
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		add_action( 'admin_footer', array( $this, '_cf7_api_deactivation_feedback_popup' ) );
+		add_action('admin_footer', array($this, '_cf7_api_deactivation_feedback_popup'));
 	}
 
 	/**
@@ -58,7 +61,8 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -72,8 +76,7 @@ class Cf7_To_Any_Api_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/cf7-to-any-api-admin.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/cf7-to-any-api-admin.css', array(), $this->version, 'all');
 	}
 
 	/**
@@ -81,7 +84,8 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -95,12 +99,11 @@ class Cf7_To_Any_Api_Admin {
 		 * class.
 		 */
 		$data = array(
-	        'site_url' => site_url(),
-	        'ajax_url' => admin_url('admin-ajax.php'),
-	    );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/cf7-to-any-api-admin.js', array( 'jquery' ), $this->version, false );
+			'site_url' => site_url(),
+			'ajax_url' => admin_url('admin-ajax.php'),
+		);
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/cf7-to-any-api-admin.js', array('jquery'), $this->version, false);
 		wp_localize_script($this->plugin_name, 'ajax_object', $data);
-
 	}
 
 	/**
@@ -108,20 +111,20 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function cf7_to_any_api_verify_dependencies(){
-		if(is_multisite()){
-			if(!is_plugin_active_for_network('contact-form-7/wp-contact-form-7.php') && !is_plugin_active('contact-form-7/wp-contact-form-7.php')){
+	public function cf7_to_any_api_verify_dependencies()
+	{
+		if (is_multisite()) {
+			if (!is_plugin_active_for_network('contact-form-7/wp-contact-form-7.php') && !is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
 
-	         	echo '<div class="notice notice-warning is-dismissible"><p>'.esc_html__( 'Contact form 7 API integrations requires CONTACT FORM 7 Plugin to be installed and active', 'contact-form-to-any-api' ).'</p></div>';
+				echo '<div class="notice notice-warning is-dismissible"><p>' . esc_html__('Contact form 7 API integrations requires CONTACT FORM 7 Plugin to be installed and active', 'contact-form-to-any-api') . '</p></div>';
 			}
-		}else{
-			if(!is_plugin_active('contact-form-7/wp-contact-form-7.php')){	         	
-	         	echo '<div class="notice notice-warning is-dismissible">
-			         <p>' . esc_html__( 'Contact form 7 API integrations requires CONTACT FORM 7 Plugin to be installed and active', 'contact-form-to-any-api' ) . '</p>
+		} else {
+			if (!is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
+				echo '<div class="notice notice-warning is-dismissible">
+			         <p>' . esc_html__('Contact form 7 API integrations requires CONTACT FORM 7 Plugin to be installed and active', 'contact-form-to-any-api') . '</p>
 			      </div>';
-
-    		}
-    	}
+			}
+		}
 	}
 
 	/**
@@ -129,7 +132,8 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function cf7anyapi_custom_post_type(){
+	public function cf7anyapi_custom_post_type()
+	{
 		$supports = array(
 			'title', // Custom Post Type Title
 		);
@@ -161,7 +165,6 @@ class Cf7_To_Any_Api_Admin {
 			'menu_icon'           => 'dashicons-smiley',
 		);
 		register_post_type('cf7_to_any_api', $args);
-		flush_rewrite_rules(); 
 	}
 
 	/**
@@ -169,50 +172,59 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function cf7anyapi_metabox(){
-	    add_meta_box(
-	        'cf7anyapi-setting',
-	        __( 'Contact Form 7 Any Api Setting', 'contact-form-to-any-api' ),
-	        array($this,'cf7anyapi_settings'),
-	        'cf7_to_any_api'
-	    );
+	public function cf7anyapi_metabox()
+	{
+		add_meta_box(
+			'cf7anyapi-setting',
+			__('Contact Form 7 Any Api Setting', 'contact-form-to-any-api'),
+			array($this, 'cf7anyapi_settings'),
+			'cf7_to_any_api'
+		);
 	}
-	
-	public function cf7anyapi_add_settings_link($links,$file){
-		if($file === 'contact-form-to-any-api/cf7-to-any-api.php' && current_user_can('manage_options')){
+
+	public function cf7anyapi_add_settings_link($links, $file)
+	{
+		if ($file === 'contact-form-to-any-api/cf7-to-any-api.php' && current_user_can('manage_options')) {
 			$url = admin_url('edit.php?post_type=cf7_to_any_api');
 			$documentation = admin_url('edit.php?post_type=cf7_to_any_api&page=cf7anyapi_docs');
 			$links = (array) $links;
-			$links[] = sprintf('<a href="%s">%s</a>', $url, __('Settings','contact-form-to-any-api'));
-			$links[] = sprintf('<a href="%s">%s</a>', $documentation, __('Documentation','contact-form-to-any-api'));
+			$links[] = sprintf('<a href="%s">%s</a>', $url, __('Settings', 'contact-form-to-any-api'));
+			$links[] = sprintf('<a href="%s">%s</a>', $documentation, __('Documentation', 'contact-form-to-any-api'));
 		}
 		return $links;
 	}
-	
-	public function cf7_to_any_api_filter_posts_columns($columns){
+
+	/**
+	 * Filters the columns displayed in the custom post type list table.
+	 *
+	 * This function customizes the columns shown in the admin list view
+	 * for the custom post type related to the "Contact Form to Any API" plugin.
+	 */
+	public function cf7_to_any_api_filter_posts_columns($columns)
+	{
 		$columns = array(
 			'cb' => $columns['cb'],
-			'title' => __('Title'),
-			'cf7form' => __('Form Name','contact-form-to-any-api'),
-			'date' => __('Date','contact-form-to-any-api'),
+			'title' => __('Title', 'contact-form-to-any-api'),
+			'cf7form' => __('Form Name', 'contact-form-to-any-api'),
+			'date' => __('Date', 'contact-form-to-any-api'),
 		);
 		return $columns;
 	}
 
-	public function cf7_to_any_api_table_content($column_name,$post_id){
-		if($column_name == 'cf7form'){
-	    	$form_name = get_post_meta($post_id,'cf7anyapi_selected_form',true);
-	    	if($form_name){
-	    		echo '<a href="' . esc_url( site_url() . '/wp-admin/admin.php?page=wpcf7&post=' . $form_name . '&action=edit' ) . '" target="_blank">' . esc_html( get_the_title( $form_name ) ) . '</a>';
-
-	    	}
-	      	
-	    }
+	public function cf7_to_any_api_table_content($column_name, $post_id)
+	{
+		if ($column_name == 'cf7form') {
+			$form_name = get_post_meta($post_id, 'cf7anyapi_selected_form', true);
+			if ($form_name) {
+				echo '<a href="' . esc_url(site_url() . '/wp-admin/admin.php?page=wpcf7&post=' . $form_name . '&action=edit') . '" target="_blank">' . esc_html(get_the_title($form_name)) . '</a>';
+			}
+		}
 	}
 
-	public function cf7_to_any_api_sortable_columns($columns){
+	public function cf7_to_any_api_sortable_columns($columns)
+	{
 		$columns['cf7form'] = 'cf7anyapi_selected_form';
-  		return $columns;
+		return $columns;
 	}
 
 	/**
@@ -220,33 +232,34 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function cf7anyapi_register_submenu(){
-	    add_submenu_page(
-	        'edit.php?post_type=cf7_to_any_api',
-	        __('Logs', 'contact-form-to-any-api'),
-	        __('Logs', 'contact-form-to-any-api'),
-	        'manage_options',
-	        'cf7anyapi_logs',
-	        array(&$this,'cf7anyapi_submenu_callback')
-	    );
+	public function cf7anyapi_register_submenu()
+	{
+		add_submenu_page(
+			'edit.php?post_type=cf7_to_any_api',
+			__('Logs', 'contact-form-to-any-api'),
+			__('Logs', 'contact-form-to-any-api'),
+			'manage_options',
+			'cf7anyapi_logs',
+			array(&$this, 'cf7anyapi_submenu_callback')
+		);
 
 		add_submenu_page(
-	        'edit.php?post_type=cf7_to_any_api',
-	        __('Entries', 'contact-form-to-any-api'),
-	        __('Entries', 'contact-form-to-any-api'),
-	        'manage_options',
-	        'cf7anyapi_entries',
-	        array(&$this,'cf7anyapi_entries_callback')
-	    );
+			'edit.php?post_type=cf7_to_any_api',
+			__('Entries', 'contact-form-to-any-api'),
+			__('Entries', 'contact-form-to-any-api'),
+			'manage_options',
+			'cf7anyapi_entries',
+			array(&$this, 'cf7anyapi_entries_callback')
+		);
 
-	    add_submenu_page(
-	        'edit.php?post_type=cf7_to_any_api',
-	        __('Documentation', 'contact-form-to-any-api'),
-	        __('Documentation', 'contact-form-to-any-api'),
-	        'manage_options',
-	        'cf7anyapi_docs',
-	        array(&$this,'cf7anyapi_submenu_docs_callback')
-	    );
+		add_submenu_page(
+			'edit.php?post_type=cf7_to_any_api',
+			__('Documentation', 'contact-form-to-any-api'),
+			__('Documentation', 'contact-form-to-any-api'),
+			'manage_options',
+			'cf7anyapi_docs',
+			array(&$this, 'cf7anyapi_submenu_docs_callback')
+		);
 	}
 
 	/**
@@ -254,16 +267,17 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function cf7anyapi_submenu_callback(){
+	public function cf7anyapi_submenu_callback()
+	{
 		$myListTable = new cf7anyapi_List_Table();
-	  	echo '<div class="wrap"><h2>' . __( 'CF7 To Any API Log Data', 'contact-form-to-any-api' ) . '</h2>';
-    	  	echo wp_nonce_field('cf_to_any_api_log_del_nonce','cf_to_any_api_log_del_nonce' );
-	  		echo '<div class="cf7anyapi_log_button">';
-	  			echo '<a href="javascript:void(0);" class="cf7anyapi_bulk_log_delete">'.__( 'Delete All Log', 'contact-form-to-any-api' ).'</a>';
-	  		echo '</div>';
-	  	$myListTable->prepare_items();
-	  	$myListTable->display(); 
-	  	echo '</div>';
+		echo '<div class="wrap"><h2>' . esc_html__('CF7 To Any API Log Data', 'contact-form-to-any-api') . '</h2>';
+		echo wp_kses_post(wp_nonce_field('cf_to_any_api_log_del_nonce', 'cf_to_any_api_log_del_nonce'));
+		echo '<div class="cf7anyapi_log_button">';
+		echo '<a href="javascript:void(0);" class="cf7anyapi_bulk_log_delete">' . esc_html__('Delete All Log', 'contact-form-to-any-api') . '</a>';
+		echo '</div><div id="cf7anyapi-log-popup"><span class="close-popup">X</span><div class="cf7anyapi-log-content"><pre></pre></div></div>';
+		$myListTable->prepare_items();
+		$myListTable->display();
+		echo '</div>';
 	}
 
 	/**
@@ -271,17 +285,18 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function cf7_to_any_api_bulk_log_delete_function(){
-		if(isset($_POST['cf_to_any_api_log_del_nonce']) && wp_verify_nonce($_POST['cf_to_any_api_log_del_nonce'],'cf_to_any_api_log_del_nonce') )
-		{
+	public static function cf7_to_any_api_bulk_log_delete_function()
+	{
+		if (isset($_POST['cf_to_any_api_log_del_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['cf_to_any_api_log_del_nonce'])), 'cf_to_any_api_log_del_nonce')) {
 			global $wpdb;
-			$wpdb->query('TRUNCATE TABLE '.$wpdb->prefix.'cf7anyapi_logs');
+			$wpdb->query('TRUNCATE TABLE ' . $wpdb->prefix . 'cf7anyapi_logs');
 		}
 		exit();
 	}
 
-	public function cf7anyapi_submenu_docs_callback(){
-		include dirname(__FILE__).'/partials/cf7-to-any-api-admin-display-docs.php';
+	public function cf7anyapi_submenu_docs_callback()
+	{
+		include dirname(__FILE__) . '/partials/cf7-to-any-api-admin-display-docs.php';
 	}
 
 	/**
@@ -289,8 +304,9 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function cf7anyapi_settings() {
-		include dirname(__FILE__).'/partials/cf7-to-any-api-admin-display.php';
+	public static function cf7anyapi_settings()
+	{
+		include dirname(__FILE__) . '/partials/cf7-to-any-api-admin-display.php';
 	}
 
 	/**
@@ -298,37 +314,44 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function cf7anyapi_entries_callback(){
-		include dirname(__FILE__).'/partials/cf7-to-any-api-admin-entries.php';
-	 }
+	public static function cf7anyapi_entries_callback()
+	{
+		include dirname(__FILE__) . '/partials/cf7-to-any-api-admin-entries.php';
+	}
 
 	/**
 	 * Update the Metaboxes value on Post Save
 	 *
 	 * @since    1.0.0
 	 */
-	public static function cf7anyapi_update_settings($cf7_to_any_api_id,$cf7_to_any_api){
-		if($cf7_to_any_api->post_type == 'cf7_to_any_api'){
+	public static function cf7anyapi_update_settings($cf7_to_any_api_id, $cf7_to_any_api)
+	{
+		if ($cf7_to_any_api->post_type == 'cf7_to_any_api') {
 			$status = 'false';
-			if(isset($_POST['cf7_to_any_api_cpt_nonce']) && wp_verify_nonce($_POST['cf7_to_any_api_cpt_nonce'], 'cf7_to_any_api_cpt_nonce')){
-
-				$options['cf7anyapi_selected_form'] = (int)stripslashes($_POST['cf7anyapi_selected_form']);
-				$options['cf7anyapi_base_url'] = esc_url_raw($_POST['cf7anyapi_base_url']);
-				if(isset($_POST['cf7anyapi_basic_auth'])){
-					$options['cf7anyapi_basic_auth'] = sanitize_text_field($_POST['cf7anyapi_basic_auth']);
+			if (isset($_POST['cf7_to_any_api_cpt_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['cf7_to_any_api_cpt_nonce'])), 'cf7_to_any_api_cpt_nonce')) {
+				if (isset($_POST['cf7anyapi_selected_form'])) {
+					$options['cf7anyapi_selected_form'] = (int)sanitize_text_field(wp_unslash($_POST['cf7anyapi_selected_form']));
 				}
-				if(isset($_POST['cf7anyapi_bearer_auth'])){
-					$options['cf7anyapi_bearer_auth'] = sanitize_text_field($_POST['cf7anyapi_bearer_auth']);
+				if (isset($_POST['cf7anyapi_base_url'])) {
+					$options['cf7anyapi_base_url'] = esc_url_raw(wp_unslash($_POST['cf7anyapi_base_url']));
 				}
-				$options['cf7anyapi_input_type'] = sanitize_text_field($_POST['cf7anyapi_input_type']);
-				$options['cf7anyapi_method'] = sanitize_text_field($_POST['cf7anyapi_method']);
-				$options['cf7anyapi_form_field'] = self::Cf7_To_Any_Api_sanitize_array($_POST['cf7anyapi_form_field']);
-				$options['cf7anyapi_header_request'] = sanitize_textarea_field($_POST['cf7anyapi_header_request']);
+				if (isset($_POST['cf7anyapi_input_type'])) {
+					$options['cf7anyapi_input_type'] = sanitize_text_field(wp_unslash($_POST['cf7anyapi_input_type']));
+				}
+				if (isset($_POST['cf7anyapi_method'])) {
+					$options['cf7anyapi_method'] = sanitize_text_field(wp_unslash($_POST['cf7anyapi_method']));
+				}
+				if (isset($_POST['cf7anyapi_form_field'])) {
+					$options['cf7anyapi_form_field'] = self::Cf7_To_Any_Api_sanitize_array($_POST['cf7anyapi_form_field']);
+				}
+				if (isset($_POST['cf7anyapi_header_request'])) {
+					$options['cf7anyapi_header_request'] = sanitize_textarea_field(wp_unslash($_POST['cf7anyapi_header_request']));
+				}
 
-				foreach($options as $options_key => $options_value){
-					$response = update_post_meta( $cf7_to_any_api_id, $options_key, $options_value );
-    			}
-				if($response){
+				foreach ($options as $options_key => $options_value) {
+					$response = update_post_meta($cf7_to_any_api_id, $options_key, $options_value);
+				}
+				if ($response) {
 					$status = 'true';
 				}
 			}
@@ -340,104 +363,73 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function cf7_to_any_api_get_form_field_function(){
-		if(empty((int)stripslashes($_POST['form_id']))){
-			echo json_encode('No Fields Found for Selected Form.');
+	public static function cf7_to_any_api_get_form_field_function()
+	{
+		if (empty((int)sanitize_text_field(wp_unslash($_POST['form_id'])))) {
+			echo wp_json_encode(__('No Fields Found for Selected Form.', 'contact-form-to-any-api'));
 			exit();
 		}
 		$html = '';
-		$form_ID     = (int)stripslashes($_POST['form_id']);
-		$post_id     = (int)stripslashes($_POST['post_id']);
+		$form_ID     = (int)sanitize_text_field(wp_unslash($_POST['form_id']));
+		$post_id     = (int)sanitize_text_field(wp_unslash($_POST['post_id']));
 		$ContactForm = WPCF7_ContactForm::get_instance($form_ID);
 		$form_fields = $ContactForm->scan_form_tags();
 
-		$post_form_id = get_post_meta($post_id,'cf7anyapi_selected_form',true);
-		$post_form_field = get_post_meta($post_id,'cf7anyapi_form_field',true);
-		
-		if(!empty($post_form_field) && $post_form_id == $form_ID){
-			foreach($form_fields as $form_fields_key => $form_fields_value){
-				if($form_fields_value->basetype != 'submit'){
+		$post_form_id = get_post_meta($post_id, 'cf7anyapi_selected_form', true);
+		$post_form_field = get_post_meta($post_id, 'cf7anyapi_form_field', true);
+
+		if (!empty($post_form_field) && $post_form_id == $form_ID) {
+			foreach ($form_fields as $form_fields_key => $form_fields_value) {
+				if ($form_fields_value->basetype != 'submit') {
 					$html .= '<div class="cf7anyapi_field">';
-						$html .= '<label for="cf7anyapi_'.$form_fields_value->raw_name.'">'.$form_fields_value->name.'</label>';
-						$html .= '<input type="text" id="cf7anyapi_'.$form_fields_value->raw_name.'" name="cf7anyapi_form_field['.$form_fields_value->name.']" value="'.$post_form_field[$form_fields_value->raw_name].'" data-basetype="'.$form_fields_value->basetype.'" placeholder="'. __( 'Enter your API side mapping key', 'contact-form-to-any-api' ). '">'; 
+					$html .= '<label for="cf7anyapi_' . $form_fields_value->raw_name . '">' . $form_fields_value->name . '</label>';
+					$html .= '<input type="text" id="cf7anyapi_' . $form_fields_value->raw_name . '" name="cf7anyapi_form_field[' . $form_fields_value->name . ']" value="' . $post_form_field[$form_fields_value->raw_name] . '" data-basetype="' . $form_fields_value->basetype . '" placeholder="' . __('Enter your API side mapping key', 'contact-form-to-any-api') . '">';
+					$html .= '</div>';
+				}
+			}
+		} else {
+			foreach ($form_fields as $form_fields_key => $form_fields_value) {
+				if ($form_fields_value->basetype != 'submit') {
+					$html .= '<div class="cf7anyapi_field">';
+					$html .= '<label for="cf7anyapi_' . $form_fields_value->raw_name . '">' . $form_fields_value->name . '</label>';
+					$html .= '<input type="text" id="cf7anyapi_' . $form_fields_value->raw_name . '" name="cf7anyapi_form_field[' . $form_fields_value->name . ']" data-basetype="' . $form_fields_value->basetype . '" placeholder="' . __('Enter your API side mapping key', 'contact-form-to-any-api') . '">';
 					$html .= '</div>';
 				}
 			}
 		}
-		else{
-			foreach($form_fields as $form_fields_key => $form_fields_value){
-				if($form_fields_value->basetype != 'submit'){
-					$html .= '<div class="cf7anyapi_field">';
-						$html .= '<label for="cf7anyapi_'.$form_fields_value->raw_name.'">'.$form_fields_value->name.'</label>';
-						$html .= '<input type="text" id="cf7anyapi_'.$form_fields_value->raw_name.'" name="cf7anyapi_form_field['.$form_fields_value->name.']" data-basetype="'.$form_fields_value->basetype.'" placeholder="'. __( 'Enter your API side mapping key', 'contact-form-to-any-api' ). '">'; 
-					$html .= '</div>';
-				}
-			}
-		}
-		echo json_encode($html);
+		echo wp_json_encode($html);
 		exit();
 	}
 
-	public function cf7toanyapi_add_new_table(){
-		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-		global $wpdb;
+	public function cf7toanyapi_add_new_table()
+	{
 
-		if($wpdb->get_var("SHOW TABLES LIKE '".$wpdb->prefix."cf7anyapi_logs'") == $wpdb->prefix."cf7anyapi_logs"){
-			$sql = "SELECT COUNT(*) AS a FROM information_schema.COLUMNS WHERE TABLE_NAME = '". $wpdb->prefix."cf7anyapi_logs' AND COLUMN_NAME =  'form_data'";
-			$query_data = $wpdb->get_results($sql);
-			if($query_data[0]->a == 0){
-				$sql2 = 'ALTER TABLE `'.$wpdb->prefix.'cf7anyapi_logs` ADD `form_data` LONGTEXT NOT NULL AFTER `post_id`';
-				$wpdb->query($sql2);
-			}else{
-				$data_type_query = "SHOW COLUMNS FROM `".$wpdb->prefix."cf7anyapi_logs` LIKE 'form_data'";
-				$form_data_type = $wpdb->get_row($data_type_query);
-				if ($form_data_type && $form_data_type->Type === 'text') {
-					$formdata_datatype = "ALTER TABLE `".$wpdb->prefix."cf7anyapi_logs` MODIFY `form_data` LONGTEXT NOT NULL";
-					$wpdb->query($formdata_datatype);
-				}
-			}
+		global $wpdb;
+		$table = $wpdb->prefix . 'cf7anyapi_entry_id';
+		if ($wpdb->get_var(sprintf("SHOW TABLES LIKE '%s%s'", $wpdb->prefix, 'cf7anyapi_entry_id')) != $wpdb->prefix . 'cf7anyapi_entry_id') {
+			$charset_collate = $wpdb->get_charset_collate();
+			$wpdb->query($wpdb->prepare("CREATE TABLE IF NOT EXISTS %i ( id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP) $charset_collate;", $table));
 		}
 
-		$table = $wpdb->prefix.'cf7anyapi_entry_id';
-		if($wpdb->get_var(sprintf("SHOW TABLES LIKE '%s%s'", $wpdb->prefix, 'cf7anyapi_entry_id')) != $wpdb->prefix . 'cf7anyapi_entry_id'){
-	        $charset_collate = $wpdb->get_charset_collate();
-	        $qry = "CREATE TABLE IF NOT EXISTS " . $table . " (
-	            id int(11)  PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	            Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-	        )$charset_collate;";
-	        dbDelta($qry);
-	    }
-
-	    if($wpdb->get_var(sprintf("SHOW TABLES LIKE '%s%s'", $wpdb->prefix, 'cf7anyapi_entries')) != $wpdb->prefix . 'cf7anyapi_entries'){
-	    	$charset_collate = $wpdb->get_charset_collate();
-	        $table_name2 = $wpdb->prefix.'cf7anyapi_entries';
-	        $query = "CREATE TABLE IF NOT EXISTS " . $table_name2 . " (
-	            id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	            form_id int(11) ,
-	            data_id int(11),
-	            field_name varchar(255),
-	            field_value varchar(255),
-	            date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	            FOREIGN KEY (data_id) REFERENCES ".$table."(id)
-	        )$charset_collate;";
-	        dbDelta($query);
-	    }
+		if ($wpdb->get_var(sprintf("SHOW TABLES LIKE '%s%s'", $wpdb->prefix, 'cf7anyapi_entries')) != $wpdb->prefix . 'cf7anyapi_entries') {
+			$charset_collate = $wpdb->get_charset_collate();
+			$table_name2 = $wpdb->prefix . 'cf7anyapi_entries';
+			$wpdb->query($wpdb->prepare("CREATE TABLE IF NOT EXISTS %i ( id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT, form_id int(11) , data_id int(11), field_name varchar(255), field_value varchar(255), date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (data_id) REFERENCES %i (id) )$charset_collate;", $table_name2, $table));
+		}
 	}
-	
+
 	/**
 	 * Sanitize Array Value
 	 *
 	 * @since     1.0.0
 	 * @return    string
 	 */
-	public static function Cf7_To_Any_Api_sanitize_array($array){
-		
+	public static function Cf7_To_Any_Api_sanitize_array($array)
+	{
 		$sanitize_array = array();
-
-		foreach($array as $key => $value) {
+		foreach ($array as $key => $value) {
 			$sanitize_array[sanitize_text_field($key)] = sanitize_text_field($value);
 		}
-
 		return $sanitize_array;
 	}
 
@@ -446,40 +438,47 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function cf7_to_any_api_send_data_to_api($WPCF7_ContactForm){
+	public static function cf7_to_any_api_send_data_to_api($WPCF7_ContactForm)
+	{
 		global $wpdb;
-		$cf7_uploads_dir = trailingslashit( wp_upload_dir()['basedir'] ) . 'cf7-to-any-api-uploads';
-		$form_id = (int)stripslashes($_POST['_wpcf7']);
+		$cf7_uploads_dir = trailingslashit(wp_upload_dir()['basedir']) . 'cf7-to-any-api-uploads';
+		if (isset($_POST['_wpcf7'])) {
+			$form_id = sanitize_text_field((int)wp_unslash($_POST['_wpcf7']));
+		} else {
+			$form_id = 0;
+		}
 		if (! is_dir($cf7_uploads_dir)) {
-			wp_mkdir_p( $cf7_uploads_dir );
+			wp_mkdir_p($cf7_uploads_dir);
 		}
 		$submission = WPCF7_Submission::get_instance();
 		$posted_data = $submission->get_posted_data();
 		$cf7files = $submission->uploaded_files();
-		if( !empty($cf7files)){
+		if (!empty($cf7files)) {
 			foreach ($cf7files as $key => $cf7file) {
-				if(!empty($cf7file)){
+				if (!empty($cf7file)) {
 					$ext = pathinfo($cf7file[0], PATHINFO_EXTENSION);
-					$f_name = pathinfo($cf7file[0], PATHINFO_FILENAME );
-					$fileName = 'cf7-'.$form_id.'-'.time().'.'.$ext;
-					copy($cf7file[0], $cf7_uploads_dir.'/'.$fileName);	
-					$posted_data[$key] = '<a href="'.wp_upload_dir()['baseurl'] . '/cf7-to-any-api-uploads/'.$fileName.'" target="_blank">'.$fileName.'</a>';
-			    }
+					$f_name = pathinfo($cf7file[0], PATHINFO_FILENAME);
+					$fileName = 'cf7-' . $form_id . '-' . time() . '.' . $ext;
+					copy($cf7file[0], $cf7_uploads_dir . '/' . $fileName);
+					$posted_data[$key] = '<a href="' . wp_upload_dir()['baseurl'] . '/cf7-to-any-api-uploads/' . $fileName . '" target="_blank">' . $fileName . '</a>';
+				}
 			}
 		}
 		$post_id = $submission->get_meta('container_post_id');
 		$posted_data['submitted_from'] = $post_id;
 		$posted_data['submit_time'] = date('Y-m-d H:i:s');
-		$posted_data['User_IP'] = $_SERVER['REMOTE_ADDR'];		
-		self::cf7anyapi_save_form_submit_data($form_id,$posted_data);
+		if (isset($_SERVER['REMOTE_ADDR'])) {
+			$posted_data['User_IP'] = sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR']));
+		}
+		self::cf7anyapi_save_form_submit_data($form_id, $posted_data);
 
 		//Image set base64 encode
-		if( !empty($cf7files)){
+		if (!empty($cf7files)) {
 			foreach ($cf7files as $key => $cf7file) {
-				if(!empty($cf7file)){
-				   $posted_data[$key] = base64_encode(file_get_contents($cf7file[0]));
+				if (!empty($cf7file)) {
+					$posted_data[$key] = base64_encode(file_get_contents($cf7file[0]));
 				}
-			}   
+			}
 		}
 
 		$args = array(
@@ -487,66 +486,68 @@ class Cf7_To_Any_Api_Admin {
 			'post_status' => 'publish',
 			'posts_per_page' => -1,
 			'meta_query' => array(
-		        'relation' => 'AND',
-		        array(
-		            'key' => 'cf7anyapi_selected_form',
-		            'value' => $form_id,
-		            'compare' => '=',
-		        ),
-		    ),
+				'relation' => 'AND',
+				array(
+					'key' => 'cf7anyapi_selected_form',
+					'value' => $form_id,
+					'compare' => '=',
+				),
+			),
 		);
-		
+
 		$the_query = new WP_Query($args);
-		if($the_query->have_posts()){
-		    
-		    while($the_query->have_posts()){
-		        $the_query->the_post();
-		        $api_post_array = array();
-		        
-		        $cf7anyapi_form_field = array_filter(get_post_meta(get_the_ID(),'cf7anyapi_form_field',true));
-		        $cf7anyapi_base_url = get_post_meta(get_the_ID(),'cf7anyapi_base_url',true);
+		if ($the_query->have_posts()) {
 
-		        $cf7anyapi_basic_auth = get_post_meta(get_the_ID(),'cf7anyapi_basic_auth',true);
-		        $cf7anyapi_bearer_auth = get_post_meta(get_the_ID(),'cf7anyapi_bearer_auth',true);
+			while ($the_query->have_posts()) {
+				$the_query->the_post();
+				$api_post_array = array();
 
-		        $cf7anyapi_input_type = get_post_meta(get_the_ID(),'cf7anyapi_input_type',true);
-				$cf7anyapi_method = get_post_meta(get_the_ID(),'cf7anyapi_method',true);
+				$cf7anyapi_form_field = array_filter((array)get_post_meta(get_the_ID(), 'cf7anyapi_form_field', true));
+				$cf7anyapi_base_url = get_post_meta(get_the_ID(), 'cf7anyapi_base_url', true);
 
-				$header_request 		= get_post_meta(get_the_ID(),'cf7anyapi_header_request' ,true);
-				$cf7anyapi_header_request = apply_filters( 'cf7anyapi_header_request', $header_request, get_the_ID(), $form_id);
+				$cf7anyapi_basic_auth = get_post_meta(get_the_ID(), 'cf7anyapi_basic_auth', true);
+				$cf7anyapi_bearer_auth = get_post_meta(get_the_ID(), 'cf7anyapi_bearer_auth', true);
 
-		        foreach($cf7anyapi_form_field as $key => $value){
+				$cf7anyapi_input_type = get_post_meta(get_the_ID(), 'cf7anyapi_input_type', true);
+				$cf7anyapi_method = get_post_meta(get_the_ID(), 'cf7anyapi_method', true);
 
-		        	$api_post_array[$value] = (is_array($posted_data[$key]) ? implode(',', self::Cf7_To_Any_Api_sanitize_array($posted_data[$key])) : sanitize_text_field($posted_data[$key]));
+				$header_request 		= get_post_meta(get_the_ID(), 'cf7anyapi_header_request', true);
+				$cf7anyapi_header_request = apply_filters('cf7anyapi_header_request', $header_request, get_the_ID(), $form_id);
+				foreach ($cf7anyapi_form_field as $key => $value) {
+					$api_post_array[$value] = (is_array($posted_data[$key]) ? implode(',', self::Cf7_To_Any_Api_sanitize_array($posted_data[$key])) : sanitize_text_field($posted_data[$key]));
+				}
 
-		        }
-
-			try {
-				$all_data = array();
-        	                foreach($posted_data as $key => $value){
-	                                $all_data[$key] = (is_array($posted_data[$key]) ? implode(',', self::Cf7_To_Any_Api_sanitize_array($posted_data[$key])) : sanitize_text_field($posted_data[$key]));
-	                        }
-				$api_post_array["all_data"] = json_encode($all_data);
+				try {
+					$all_data = array();
+					foreach ($posted_data as $key => $value) {
+						$all_data[$key] = (is_array($posted_data[$key]) ? implode(',', self::Cf7_To_Any_Api_sanitize_array($posted_data[$key])) : sanitize_text_field($posted_data[$key]));
+					}
+					$api_post_array["all_data"] = json_encode($all_data);
+				} catch (Exception $e) {
+					//echo 'Message: ' .$e->getMessage();
+				}
+				self::cf7anyapi_send_lead($api_post_array, $cf7anyapi_base_url, $cf7anyapi_input_type, $cf7anyapi_method, $form_id, get_the_ID(), $cf7anyapi_basic_auth, $cf7anyapi_bearer_auth, $cf7anyapi_header_request, $posted_data);
 			}
-			catch(Exception $e) {
-				//echo 'Message: ' .$e->getMessage();
-			}
-		        self::cf7anyapi_send_lead($api_post_array, $cf7anyapi_base_url, $cf7anyapi_input_type, $cf7anyapi_method, $form_id, get_the_ID(), $cf7anyapi_basic_auth, $cf7anyapi_bearer_auth,$cf7anyapi_header_request, $posted_data);
-		    }
 		}
 		wp_reset_postdata();
 	}
 
-	public static function cf7anyapi_save_form_submit_data($form_id,$posted_data){
-		global $wpdb;
-		$table = $wpdb->prefix.'cf7anyapi_entry_id';
-		$table2 = $wpdb->prefix.'cf7anyapi_entries';
+	public static function cf7anyapi_save_form_submit_data($form_id, $posted_data)
+	{
 
-		$wpdb->insert($table,array('Created' => date("Y-m-d H:i:s")));
+		global $wpdb;
+		$table = $wpdb->prefix . 'cf7anyapi_entry_id';
+		$table2 = $wpdb->prefix . 'cf7anyapi_entries';
+
+		$wpdb->insert($table, array('Created' => date("Y-m-d H:i:s")));
 		$data_id = (int)$wpdb->insert_id;
 
-		foreach($posted_data as $field => $value){
-			$posted_value = (is_array($value) ? implode(',',$value) : $value);
+		foreach ($posted_data as $field => $value) {
+
+			$posted_value = (is_array($value) ? implode(',', $value) : $value);
+			if (is_string($posted_value) && strlen($posted_value) > 255) {
+				$posted_value = substr($posted_value, 0, 255);
+			}
 			$wpdb->insert(
 				$table2,
 				array(
@@ -565,13 +566,14 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function cf7anyapi_send_lead($data, $url, $input_type, $method, $form_id, $post_id, $basic_auth = '', $bearer_auth = '',$header_request = '', $posted_data = ''){
-		
+	public static function cf7anyapi_send_lead($data, $url, $input_type, $method, $form_id, $post_id, $basic_auth = '', $bearer_auth = '', $header_request = '', $posted_data = '')
+	{
+
 		global $wp_version;
 
-		if($method == 'GET' && ($input_type == 'params' || $input_type == 'json')){
+		if ($method == 'GET' && ($input_type == 'params' || $input_type == 'json')) {
 			$args = array(
-				'timeout'     => 5,
+				'timeout'     => 30,
 				'redirection' => 5,
 				'httpversion' => '1.0',
 				'user-agent'  => 'WordPress/' . $wp_version . '; ' . home_url(),
@@ -586,29 +588,26 @@ class Cf7_To_Any_Api_Admin {
 				'filename'    => null
 			);
 
-			if($input_type == 'params'){
+			if ($input_type == 'params') {
 				$data_string = http_build_query($data);
 
-        		$url = stripos($url,'?') !== false ? $url.'&'.$data_string : $url.'?'.$data_string;
-			}
-			else{
+				$url = stripos($url, '?') !== false ? $url . '&' . $data_string : $url . '?' . $data_string;
+			} else {
 				$args['headers']['Content-Type'] = 'application/json';
-        		$json = self::Cf7_To_Any_Api_parse_json($data);
+				$json = self::Cf7_To_Any_Api_parse_json($data);
 
-        		if(is_wp_error($json)){
-          			return $json;
-        		}
-        		else{
-          			$args['body'] = $json;
-        		}
+				if (is_wp_error($json)) {
+					return $json;
+				} else {
+					$args['body'] = $json;
+				}
 			}
-			
+
 			$result = wp_remote_retrieve_body(wp_remote_get($url, $args));
-      		self::Cf7_To_Any_Api_save_response_in_log($post_id, $form_id, $result, $posted_data);
-		}
-		else{
+			self::Cf7_To_Any_Api_save_response_in_log($post_id, $form_id, $result, $posted_data);
+		} else {
 			$args = array(
-				'timeout'     => 5,
+				'timeout'     => 30,
 				'redirection' => 5,
 				'httpversion' => '1.0',
 				'user-agent'  => 'WordPress/' . $wp_version . '; ' . home_url(),
@@ -623,37 +622,36 @@ class Cf7_To_Any_Api_Admin {
 				'filename'    => null
 			);
 
-			if(isset($basic_auth) && $basic_auth !== ''){
-        		$args['headers']['Authorization'] = 'Basic ' . base64_encode( $basic_auth );
-      		}
-      
-      		if(isset($bearer_auth) && $bearer_auth !== ''){
-    			$args['headers']['Authorization'] = 'Bearer ' . $bearer_auth;
-      		}
+			if (isset($basic_auth) && $basic_auth !== '') {
+				$args['headers']['Authorization'] = 'Basic ' . base64_encode($basic_auth);
+			}
 
-      		if(isset($header_request) && $header_request !== ''){
-      			$args['headers'] = $header_request;
-      		}
-			
-			if($input_type == "json"){
-				if(!isset($header_request) && $header_request === ''){
-        			$args['headers']['Content-Type'] = 'application/json';
-        		}
-        		$json = self::Cf7_To_Any_Api_parse_json($data);
-        	
-        		if(is_wp_error($json)){
-          			return $json;
-        		}  
-        		else{
-          			$args['body'] = $json;
-    			}
-      		}
-      		$result = wp_remote_post($url, $args);
-      		$result_body = wp_remote_retrieve_body($result);
-			if(!empty($result_body)){
+			if (isset($bearer_auth) && $bearer_auth !== '') {
+				$args['headers']['Authorization'] = 'Bearer ' . $bearer_auth;
+			}
+
+			if (isset($header_request) && $header_request !== '') {
+				$args['headers'] = $header_request;
+			}
+
+			if ($input_type == "json") {
+				if (!isset($header_request) && $header_request === '') {
+					$args['headers']['Content-Type'] = 'application/json';
+				}
+				$json = self::Cf7_To_Any_Api_parse_json($data);
+
+				if (is_wp_error($json)) {
+					return $json;
+				} else {
+					$args['body'] = $json;
+				}
+			}
+			$result = wp_remote_post($url, $args);
+			$result_body = wp_remote_retrieve_body($result);
+			if (!empty($result_body)) {
 				$result = $result_body;
 			}
-      		self::Cf7_To_Any_Api_save_response_in_log($post_id, $form_id, $result, $posted_data);
+			self::Cf7_To_Any_Api_save_response_in_log($post_id, $form_id, $result, $posted_data);
 		}
 	}
 
@@ -662,71 +660,167 @@ class Cf7_To_Any_Api_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function Cf7_To_Any_Api_parse_json($string){
+	public static function Cf7_To_Any_Api_parse_json($string)
+	{
 		return json_encode($string, JSON_UNESCAPED_UNICODE);
-  	}
+	}
 
-  	/**
+	/**
 	 * API response store into Database
 	 *
 	 * @since    1.0.0
 	 */
-  	public static function Cf7_To_Any_Api_save_response_in_log($post_id, $form_id, $response, $posted_data){
-  		global $wpdb;
-  		$table = $wpdb->prefix.'cf7anyapi_logs';
+	public static function Cf7_To_Any_Api_save_response_in_log($post_id, $form_id, $response, $posted_data)
+	{
+		global $wpdb;
+		$table = $wpdb->prefix . 'cf7anyapi_logs';
 
-  		// Base64 image get only 10 characters
-  		if(isset($posted_data)){
-  			foreach($posted_data as $key => $arr){
-				if(strstr($key, 'file-')){
-					$posted_data[$key] = mb_substr($arr, 0, 10).'...';
-			    }
+		// Base64 image get only 10 characters
+		if (isset($posted_data)) {
+			foreach ($posted_data as $key => $arr) {
+				$sanitized_key = sanitize_text_field($key);
+				if (strstr($sanitized_key, 'file-')) {
+					$posted_data[$sanitized_key] = mb_substr(sanitize_text_field($arr), 0, 10) . '...';
+				} else {
+					// Sanitize other input fields
+					$posted_data[$sanitized_key] = is_array($arr) ? array_map('sanitize_text_field', $arr) : sanitize_text_field($arr);
+				}
 			}
-  		}
-  		
-  		$form_data = json_encode($posted_data, JSON_UNESCAPED_UNICODE);
-  		if (gettype($response) != 'string') {
-			$response = json_encode($response, JSON_UNESCAPED_UNICODE);
 		}
-  		$data = array(
-  			'form_id' => $form_id,
-  			'post_id' => $post_id,
-  			'form_data' => $form_data,
-  			'log' => $response,
-  		);
 
-  		$wpdb->insert($table,$data);
-  	}
+		$form_data = json_encode($posted_data, JSON_UNESCAPED_UNICODE);
+		if (gettype($response) != 'string') {
+			$response = json_encode($response, JSON_UNESCAPED_UNICODE);
+		} else {
+			$response = sanitize_text_field($response);
+		}
 
-  	public static function delete_cf7_records(){
+		$data = array(
+			'form_id' => $form_id,
+			'post_id' => $post_id,
+			'form_data' => $form_data,
+			'log' => $response,
+		);
 
-  		if ( !empty($_POST['id']) && ( isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'],'cf_to_any_api_entrie_del_nonce') )  ) {
-		    global $wpdb;
-		    $record_id = isset($_POST['id']) ? $_POST['id'] : array();
-			$placeholders = implode(',', array_fill(0, count($record_id), '%d'));
-
-		    $table_entries = $wpdb->prefix.'cf7anyapi_entries';
-		    $table = $wpdb->prefix.'cf7anyapi_entry_id';
-
-		    $result_entries = $wpdb->query($wpdb->prepare("DELETE FROM $table_entries WHERE data_id IN ($placeholders)", $record_id));
-		    $result_id = $wpdb->query($wpdb->prepare("DELETE FROM $table WHERE id IN ($placeholders)", $record_id));
-		    if ($record_id !== false) {
-		        echo json_encode(array('status' => 1, 'Message' => 'Success'));
-		    }else {
-	        	echo json_encode(array('status' => -1, 'Message' => 'Failed'));
-	    	}
-		}else {
-	        echo json_encode(array('status' => -1, 'Message' => 'Invalid'));
-	    }
-	    exit();
+		$wpdb->insert($table, $data);
 	}
 
-  	public function _cf7_api_deactivation_feedback_popup(){
+	public static function delete_cf7_records()
+	{
+
+		if (!empty($_POST['id']) && (isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'cf_to_any_api_entrie_del_nonce'))) {
+			global $wpdb;
+			$record_id = isset($_POST['id']) ? $_POST['id'] : array();
+			$placeholders = implode(',', array_fill(0, count($record_id), '%d'));
+
+			$table_entries = $wpdb->prefix . 'cf7anyapi_entries';
+			$table = $wpdb->prefix . 'cf7anyapi_entry_id';
+
+			$result_entries = $wpdb->query($wpdb->prepare("DELETE FROM $table_entries WHERE data_id IN ($placeholders)", $record_id));
+			$result_id = $wpdb->query($wpdb->prepare("DELETE FROM $table WHERE id IN ($placeholders)", $record_id));
+			if ($record_id !== false) {
+				echo json_encode(array('status' => 1, 'Message' => 'Success'));
+			} else {
+				echo json_encode(array('status' => -1, 'Message' => 'Failed'));
+			}
+		} else {
+			echo json_encode(array('status' => -1, 'Message' => 'Invalid'));
+		}
+		exit();
+	}
+
+	public function _cf7_api_deactivation_feedback_popup()
+	{
 		$screen = get_current_screen();
 		if ($screen->base === 'plugins') {
-			if ( is_file( dirname(__FILE__) . '/partials/cf7-to-any-api-feedback.php') ) {
-				include dirname(__FILE__).'/partials/cf7-to-any-api-feedback.php';
-            }
-        }
+			if (is_file(dirname(__FILE__) . '/partials/cf7-to-any-api-feedback.php')) {
+				include dirname(__FILE__) . '/partials/cf7-to-any-api-feedback.php';
+			}
+		}
+	}
+
+	public function cf7anyapi_add_dashboard_widget()
+	{
+		wp_add_dashboard_widget(
+			'cf7anyapi_dashboard_widget',       // Widget slug
+			__('Contact Form 7 to Any API Statistics', 'contact-form-to-any-api'), // Widget title
+			array(&$this, 'cf7anyapi_render_dashboard_widget') // Callback function to display content
+		);
+
+		// Reorder the widget to appear at the top
+		global $wp_meta_boxes;
+
+		// Move your widget to the top of the 'normal' dashboard area
+		$widget = $wp_meta_boxes['dashboard']['normal']['core']['cf7anyapi_dashboard_widget'];
+		unset($wp_meta_boxes['dashboard']['normal']['core']['cf7anyapi_dashboard_widget']);
+
+		// Reinsert it at the top
+		$wp_meta_boxes['dashboard']['normal']['core'] = array_merge(
+			array('cf7anyapi_dashboard_widget' => $widget),
+			$wp_meta_boxes['dashboard']['normal']['core']
+		);
+	}
+
+	// Render the widget content
+	public function cf7anyapi_render_dashboard_widget()
+	{
+		$cf7_api_count = $this->get_cf7_api_post_count();
+
+		echo '<ul>';
+		if ($cf7_api_count > 0) {
+			echo '<li><span class="dashicons dashicons-rest-api"></span> <strong>' . esc_html(__('Number of API Connections:', 'contact-form-to-any-api')) . '</strong> ' . esc_html($cf7_api_count) . '</li>';
+		} else {
+			echo '<li><span class="dashicons dashicons-rest-api"></span> <a href="' . esc_url(admin_url('post-new.php?post_type=cf7_to_any_api')) . '"><strong>' . esc_html(__('Add New API Connection', 'contact-form-to-any-api')) . '</strong></a></li>';
+		}
+		echo '<li><span class="dashicons dashicons-book-alt"></span> <a href="' . esc_url(admin_url('edit.php?post_type=cf7_to_any_api&page=cf7anyapi_docs')) . '"><strong>' . esc_html(__('API Documentation', 'contact-form-to-any-api')) . '</strong></a></li>';
+		echo '<li><span class="dashicons dashicons-clipboard"></span> <a href="' . esc_url(admin_url('edit.php?post_type=cf7_to_any_api&page=cf7anyapi_logs')) . '"><strong>' . esc_html(__('API Logs', 'contact-form-to-any-api')) . '</strong></a></li>';
+		echo '</ul>';
+		echo '<hr>';
+		echo '<h3><strong>' . esc_html(__('Contact Form 7 to Any API PRO', 'contact-form-to-any-api')) . '</strong></h3>';
+		echo '<ul>';
+		echo '<li><span class="dashicons dashicons-saved"></span> ' . esc_html(__('200+ API Supports', 'contact-form-to-any-api')) . '</li>';
+		echo '<li><span class="dashicons dashicons-saved"></span> ' . esc_html(__('Support Multi Level or Any Format of JSON', 'contact-form-to-any-api')) . '</li>';
+		echo '<li><span class="dashicons dashicons-saved"></span> ' . esc_html(__('Supports Multiple Files Upload BASE64', 'contact-form-to-any-api')) . '</li>';
+		echo '<li><span class="dashicons dashicons-saved"></span> ' . esc_html(__('Priority Support (support@contactformtoapi.com)', 'contact-form-to-any-api')) . '</li>';
+		echo '<li><span class="dashicons dashicons-saved"></span> ' . esc_html(__('OAuth 2.0 Customization From our Expert Developer Team', 'contact-form-to-any-api')) . '</li>';
+		echo '</ul>';
+		echo '<ul>';
+		echo '<li><a href="https://www.contactformtoapi.com/pricing/" class="button button-primary"><strong>' . esc_html(__('Buy now', 'contact-form-to-any-api')) . '</strong></a> ';
+		echo '<a href="https://www.contactformtoapi.com/#contact_us" class="button button-secondary"><strong>' . esc_html(__('Need Help with Plugin Integration', 'contact-form-to-any-api')) . '</strong></a></li>';
+		echo '</ul>';
+	}
+
+	// Function to fetch the count of published posts for the cf7_to_any_api CPT
+	public function get_cf7_api_post_count()
+	{
+		$args = array(
+			'post_type'      => 'cf7_to_any_api',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'fields'         => 'ids'
+		);
+
+		$query = new WP_Query($args);
+		$count = $query->found_posts;
+		return $count;
+	}
+
+	// Function to add additional links in plugin meta area of plugin listing page
+	public function cf7anyapi_add_plugin_links($links, $file)
+	{
+
+		if ($file == 'contact-form-to-any-api/cf7-to-any-api.php') {
+			$new_links = array(
+				'<a href="https://www.contactformtoapi.com/#contact_us" target="_blank">' . esc_html__('Support', 'contact-form-to-any-api') . '</a>',
+				'<a href="https://www.contactformtoapi.com/pricing/#pricing" target="_blank">' . esc_html__('Upgrade To PRO', 'contact-form-to-any-api') . '</a>',
+				'<a href="https://www.contactformtoapi.com/pricing/#oauth" target="_blank">' . esc_html__('OAuth 2.0 Customization', 'contact-form-to-any-api') . '</a>',
+				'<a href="https://www.contactformtoapi.com/pricing/#crm" target="_blank">' . esc_html__('Supported CRM/API', 'contact-form-to-any-api') . '</a>',
+				'<a href="https://wordpress.org/plugins/connect-wpform-to-any-api/" target="_blank">' . esc_html__('Connect WPForm to Any API', 'contact-form-to-any-api') . '</a>'
+			);
+
+			// Merge new links with existing ones
+			$links = array_merge($links, $new_links);
+		}
+		return $links;
 	}
 }

@@ -33,12 +33,12 @@ class Cf7_To_Any_Api_Activator {
         if(is_multisite()){
             if(!is_plugin_active_for_network('contact-form-7/wp-contact-form-7.php') && !in_array( 'contact-form-7/wp-contact-form-7.php', apply_filters( 'active_plugins', get_option('active_plugins')))){
                 deactivate_plugins(plugin_basename( __FILE__));
-                 wp_die( __( 'Please activate <a href="https://wordpress.org/plugins/contact-form-7/" target="_blank">Contact Form 7.</a>', 'contact-form-to-any-api' ), 'Plugin dependency check', array( 'back_link' => true ) );
+                wp_die( wp_kses( 'Please activate <a href="https://wordpress.org/plugins/contact-form-7/" target="_blank">Contact Form 7.</a>', 'contact-form-to-any-api' ), 'Plugin dependency check', array( 'back_link' => true ) );
             }
         }else{
             if(!in_array( 'contact-form-7/wp-contact-form-7.php', apply_filters( 'active_plugins', get_option('active_plugins')))){
                 deactivate_plugins(plugin_basename( __FILE__));
-                wp_die( __( 'Please activate <a href="https://wordpress.org/plugins/contact-form-7/" target="_blank">Contact Form 7.</a>', 'contact-form-to-any-api' ), 'Plugin dependency check', array( 'back_link' => true ) );
+                wp_die( wp_kses( 'Please activate <a href="https://wordpress.org/plugins/contact-form-7/" target="_blank">Contact Form 7.</a>', 'contact-form-to-any-api' ), 'Plugin dependency check', array( 'back_link' => true ) );
             }
         }
 
@@ -65,8 +65,8 @@ class Cf7_To_Any_Api_Activator {
             id int(11) NOT NULL AUTO_INCREMENT,
             form_id int(11) NOT NULL,
             post_id int(11) NOT NULL,
-            form_data text NOT NULL,
-            log text NOT NULL,
+            form_data LONGTEXT NOT NULL,
+            log LONGTEXT NOT NULL,
             created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY  (id)
         ) $charset_collate;";

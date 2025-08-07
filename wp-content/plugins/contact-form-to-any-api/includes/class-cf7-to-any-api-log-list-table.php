@@ -21,15 +21,16 @@ class cf7anyapi_List_Table extends WP_List_Table{
   	public function column_default($item, $column_name){
     	switch($column_name){ 
         	case 'form_id':
-        		return '<a href="'.site_url()."/wp-admin/admin.php?page=wpcf7&post=".$item[ $column_name ]."&action=edit".'" target="_blank">'.get_the_title($item[$column_name]).'</a>';
+        		return '<a href="'.esc_url(site_url())."/wp-admin/admin.php?page=wpcf7&post=".esc_attr($item[ $column_name ])."&action=edit".'" target="_blank">'.esc_html(get_the_title($item[$column_name])).'</a>';
         	case 'post_id':
-        		return '<a href="'.get_edit_post_link($item[$column_name]).'" target="_blank">'.get_the_title($item[$column_name]).'</a>';
+        		return '<a href="'.esc_url(get_edit_post_link($item[$column_name])).'" target="_blank">'.esc_html(get_the_title($item[$column_name])).'</a>';
         	case 'form_data':
         	case 'log':
+            	return '<pre>'.esc_html($item[$column_name]).'</pre><span class="view_more">Expand JSON</span>';
             case 'created_date':
-            	return $item[ $column_name ];
+            	return esc_html($item[ $column_name ]);
         	default:
-            	return print_r($item, true); //Show the whole array for troubleshooting purposes
+            	return print_r($item, true); 
     	}
   	}
 
@@ -47,34 +48,37 @@ class cf7anyapi_List_Table extends WP_List_Table{
     public static function default_logs_data($page_number = 1){
 		global $wpdb;
 		if(!empty($_REQUEST['paged'])){
-			$page_number = (int)stripslashes($_REQUEST['paged']);
+			$page_number = absint(wp_unslash($_REQUEST['paged']));
 		}
 
 		$sql = "SELECT * FROM {$wpdb->prefix}cf7anyapi_logs";
+		
+		//Alllow List for ordering
+		$allowed_order = ['asc', 'desc'];
+		$allowed_orderby = ['form_id', 'post_id', 'created_date'];
 
 		if(!empty($_REQUEST['orderby'])){
-			$sql .= ' ORDER BY ' . sanitize_text_field($_REQUEST['orderby']);
-			$sql .= (!empty($_REQUEST['order']) ? ' ' . sanitize_text_field($_REQUEST['order']) : ' ASC');
+			$orderby = sanitize_sql_orderby(wp_unslash($_REQUEST['orderby']));
+			$orderby = in_array($orderby, $allowed_orderby, true) ? $orderby : 'created_date';
+	        $order = !empty($_REQUEST['order']) ? sanitize_text_field(wp_unslash($_REQUEST['order'])) : 'asc';
+	        $order = in_array($order, $allowed_order, true) ? $order : 'asc';
+	        $sql .= " ORDER BY $orderby $order";
 		}
 		else{
 			$sql .= ' ORDER BY created_date DESC';
 		}
 
-		if($page_number === 1){
-			$sql .= " LIMIT 10";
-		}
-		else{
-			$sql .= " LIMIT 10";
-			$sql .= ' OFFSET ' . ( $page_number - 1 ) * 10;
-		}
+		// Limit and offset for pagination
+	    $limit = 10;
+	    $offset = ($page_number - 1) * $limit;
 
-		$result = $wpdb->get_results($sql, 'ARRAY_A');
+		$result = $wpdb->get_results($wpdb->prepare("$sql LIMIT %d OFFSET %d", $limit, $offset), 'ARRAY_A');
 		return $result;
 	}
 
 	public static function get_logs_data(){
 		global $wpdb;
-		return $wpdb->get_results("SELECT * from {$wpdb->prefix}cf7anyapi_logs",ARRAY_A);
+		return $wpdb->get_results($wpdb->prepare("SELECT * FROM %i","{$wpdb->prefix}cf7anyapi_logs"),ARRAY_A);
     }
 
 	public function prepare_items(){
@@ -111,14 +115,18 @@ class cf7anyapi_List_Table extends WP_List_Table{
 	}
 
 	public function usort_reorder($a, $b){
+		//Alllow List for ordering
+		$allowed_order = ['asc', 'desc'];
+		$allowed_orderby = ['form_id', 'post_id', 'created_date'];
 		// If no sort, default to user_login
-		$orderby = (!empty($_GET['orderby'])) ? sanitize_text_field($_GET['orderby']) : 'form_id';
+		$orderby = (!empty($_GET['orderby'])) ? sanitize_text_field(wp_unslash($_GET['orderby'])) : 'form_id';
+		$orderby = in_array($orderby, $allowed_orderby, true) ? $orderby : 'form_id';
 		// If no order, default to asc
-		$order = (!empty($_GET['order'])) ? sanitize_text_field($_GET['order']) : 'asc';
+		$order = (!empty($_GET['order'])) ? sanitize_text_field(wp_unslash($_GET['order'])) : 'asc';
+		$order = in_array($order, $allowed_order, true) ? $order : 'asc';
 		// Determine sort order
 		$result = strcmp($a[$orderby], $b[$orderby]);
 		// Send final sort direction to usort
 		return ($order === 'asc') ? $result : -$result;
 	}
 }
-?>
