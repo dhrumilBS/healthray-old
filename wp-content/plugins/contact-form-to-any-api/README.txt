@@ -4,7 +4,7 @@ Tags: contact form 7 to api, contactform to api, api, wpform, crm
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.2.9
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,10 +78,15 @@ Contact Form to any API plugin is also available in a professional version which
 
 == Supported CRM/API with PRO ==
 
+* <a target="_blank" href="https://www.contactformtoapi.com/twilio-whatsapp-business-api-integration-with-contact-form-to-any-api/">Twilio WhatsApp </a>
+* <a target="_blank" href="https://www.contactformtoapi.com/brevo-integration-with-contact-form-to-any-api/">Brevo</a>
+* <a target="_blank" href="https://www.contactformtoapi.com/mailcoach-integration-with-contact-form-to-any-api/">Mailcoach </a>
+* <a target="_blank" href="https://www.contactformtoapi.com/pipeline-crm-integration-with-contact-form-to-any-api/">Pipeline CRM</a>
 * Sage CRM
-* Mail Chimp
+* <a taget="_blank" href="https://www.contactformtoapi.com/mailchimp-integration-with-contact-form-to-any-api/">Mailchimp</a>
 * Zapier
 * Odoo CRM/ERP System
+* Fluent CRM
 * Mailbluster
 * Lead Post API
 * Virtuagym API
@@ -112,7 +117,6 @@ Contact Form to any API plugin is also available in a professional version which
 * Lead IM Israel
 * Personio
 * Kala CRM Israel
-* Twilio WhatsApp
 * Pixxicrm
 * easybizy
 * And many more
@@ -194,6 +198,18 @@ For plugin integration, we provide premium support for free to help connect your
 3. Contact Form 7 Submitted Entries
 
 == Changelog ==
+
+= 2.0.0 =
+
+*Release Date 19 August 2025*
+
+* New – Settings screen to enable/disable entries and logging.
+* New – Option to send data to API before the mail is sent (using CF7 hook `wpcf7_before_send_mail`).
+* New – Added System Status screen.
+* New – Added filter option for logs (view API logs for specific forms).
+* New – Bulk delete option for logs.
+* Enhancement – Expanded API support.
+* Enhancement – Improved internationalization (i18n) support.
 
 = 1.2.9 =
 

@@ -11,9 +11,9 @@ class cf7anyapi_List_Table extends WP_List_Table{
     	global $status, $page;
         parent::__construct(
         	array(
-            	'singular'  => __( 'cf7anyapi_logs', 'contact-form-to-any-api' ),     //singular name of the listed records
-            	'plural'    => __( 'cf7anyapi_logs', 'contact-form-to-any-api' ),   //plural name of the listed records
-            	'ajax'      => false,        //does this table support ajax?
+            	'singular'  => __( 'cf7anyapi_logs', 'contact-form-to-any-api' ),  
+            	'plural'    => __( 'cf7anyapi_logs', 'contact-form-to-any-api' ), 
+            	'ajax'      => false,
     		)
         );
     }
@@ -36,6 +36,7 @@ class cf7anyapi_List_Table extends WP_List_Table{
 
 	public function get_columns(){
         $columns = array(
+        	'cb' => '<input type="checkbox" />',
             'form_id' => __( 'Form Name', 'contact-form-to-any-api' ),
             'post_id' => __( 'API Name', 'contact-form-to-any-api' ),
             'form_data' => __( 'Submitted Data', 'contact-form-to-any-api' ),
@@ -51,8 +52,12 @@ class cf7anyapi_List_Table extends WP_List_Table{
 			$page_number = absint(wp_unslash($_REQUEST['paged']));
 		}
 
-		$sql = "SELECT * FROM {$wpdb->prefix}cf7anyapi_logs";
+		$sql = "SELECT * FROM {$wpdb->prefix}cf7anyapi_logs WHERE 1=1";
 		
+		 if (!empty($_GET['cf7_form_filter'])) {
+	        $form_id = absint($_GET['cf7_form_filter']);
+	        $sql .= $wpdb->prepare(" AND form_id = %d", $form_id);
+	    }
 		//Alllow List for ordering
 		$allowed_order = ['asc', 'desc'];
 		$allowed_orderby = ['form_id', 'post_id', 'created_date'];
@@ -129,4 +134,42 @@ class cf7anyapi_List_Table extends WP_List_Table{
 		// Send final sort direction to usort
 		return ($order === 'asc') ? $result : -$result;
 	}
+
+	public function extra_tablenav( $which ) {
+	    if ( $which === 'top' ) {
+	        $selected_form = isset($_GET['cf7_form_filter']) ? absint($_GET['cf7_form_filter']) : '';
+	        $cf7_forms = get_posts( array(
+	            'post_type'      => 'wpcf7_contact_form',
+	            'posts_per_page' => -1,
+	        ) );
+	        ?>
+	        <div class="cf7log_filters alignleft actions">
+		        <form id="cf7log-filter" method="get" action="<?php echo esc_url( admin_url( 'edit.php' ) ); ?>">
+		        	<input type="hidden" name="post_type" value="cf7_to_any_api">
+    				<input type="hidden" name="page" value="cf7anyapi_logs">
+		            <select name="cf7_form_filter" id="cf7_form_filter">
+		                <option value=""><?php esc_html_e( 'All Contact Forms', 'contact-form-to-any-api' ); ?></option>
+		                <?php foreach ( $cf7_forms as $form ) : ?>
+		                    <option value="<?php echo esc_attr( $form->ID ); ?>" <?php selected( $selected_form, $form->ID ); ?>>
+		                        <?php echo esc_html( $form->post_title ); ?>
+		                    </option>
+		                <?php endforeach; ?>
+		            </select>
+		            <input type="submit" class="button" value="<?php esc_attr_e( 'Filter' ); ?>">
+		            <div class="cf7anyapi_log_button">
+			        	<button href="javascript:void(0);" class="cf7anyapi_bulk_log_delete button"><?php echo esc_html__( 'Delete Log', 'contact-form-to-any-api' );?></button>
+			        </div>
+			    </form>
+	        </div>
+	        <?php
+	    }
+	}
+	public function column_cb($item){
+	    return sprintf(
+	        '<input type="checkbox" name="log_ids[]" value="%s" />',
+	        esc_attr($item['id']) // assuming `id` is the primary key
+	    );
+	}
+
+
 }

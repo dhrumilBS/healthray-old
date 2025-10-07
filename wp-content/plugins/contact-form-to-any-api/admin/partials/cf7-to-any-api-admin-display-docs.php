@@ -13,8 +13,9 @@
         <a class="nav-link tab-index-5" id="v-pills-json-format-tab" data-toggle="pill" href="#v-pills-json-format" role="tab" aria-controls="v-pills-json-format" aria-selected="false"><div class="tab-index"></div><?php esc_html_e( 'Supported JSON Format', 'contact-form-to-any-api' ); ?></a>
         <a class="nav-link tab-index-6" id="v-pills-cf7-hidden-field-tab" data-toggle="pill" href="#v-pills-cf7-hidden-field" role="tab" aria-controls="v-pills-cf7-hidden-field" aria-selected="false"><div class="tab-index"></div><?php esc_html_e( 'CF7 Hidden Fields', 'contact-form-to-any-api' ); ?></a>
         <a class="nav-link tab-index-7" id="v-pills-pro-tab" data-toggle="pill" href="#v-pills-pro" role="tab" aria-controls="v-pills-pro" aria-selected="false"><div class="tab-index"></div><?php esc_html_e( 'Contact form to any API PRO', 'contact-form-to-any-api' ); ?></a>
-        <a class="nav-link tab-index-8" id="v-pills-contact-us-tab" data-toggle="pill" href="#v-pills-contact-us" role="tab" aria-controls="v-pills-contact-us" aria-selected="false"><div class="tab-index"></div><?php esc_html_e( 'Contact Us', 'contact-form-to-any-api' ); ?></a>
-        <a class="nav-link tab-index-9" id="v-pills-other-plugins-tab" data-toggle="pill" href="#v-pills-other-plugins" role="tab" aria-controls="v-pills-other-plugins" aria-selected="false"><div class="tab-index"></div><?php esc_html_e( 'Our Other Plugins', 'contact-form-to-any-api' ); ?></a>
+        <a class="nav-link tab-index-8" id="v-pills-oauth-tab" data-toggle="pill" href="#v-pills-oauth" role="tab" aria-controls="v-pills-oauth" aria-selected="false"><div class="tab-index"></div><?php esc_html_e( 'Oauth 2.0 API Integration', 'contact-form-to-any-api' ); ?></a>
+        <a class="nav-link tab-index-9" id="v-pills-contact-us-tab" data-toggle="pill" href="#v-pills-contact-us" role="tab" aria-controls="v-pills-contact-us" aria-selected="false"><div class="tab-index"></div><?php esc_html_e( 'Contact Us', 'contact-form-to-any-api' ); ?></a>
+        <a class="nav-link tab-index-10" id="v-pills-other-plugins-tab" data-toggle="pill" href="#v-pills-other-plugins" role="tab" aria-controls="v-pills-other-plugins" aria-selected="false"><div class="tab-index"></div><?php esc_html_e( 'Our Other Plugins', 'contact-form-to-any-api' ); ?></a>
         </div>
     </div>
     <div class="col-xl-10 col-lg-9 col-md-9 col-12 tab column-tab-content">
@@ -169,8 +170,6 @@
   }         </pre>
 
                     <h5 class="mt-5 mb-2"><?php echo wp_kses_post(__('<b>Your API has Nested or Multilevel format of JSON?</b>','contact-form-to-any-api'), array('b' => array())); ?></h5>
-                    
-                    <h5 class="mt-5 mb-2"><?php echo wp_kses_post(__( 'Click on <strong>Add New CF7 API</strong>.', 'contact-form-to-any-api' )); ?></h5>
 
                     <h5><?php echo wp_kses(__('<b> Don\'t worry, our development team can customize our plugin as per your need.</b><p class="get_pro_version-btn"><a target="_blank" href="https://www.contactformtoapi.com/#contact_us">Click here to contact us</a></p>','contact-form-to-any-api'), array('b' => array(),'p' => array('class' => array()),'a' => array('href' => array(), 'target' => array()))); ?></h5>
                 </li>
@@ -194,9 +193,9 @@
             </div>
         </div>
 
-          <!-- Pro Version -->
-          <div class="tab-pane fade cf7anyapi_full_width" id="v-pills-pro" role="tabpanel" aria-labelledby="v-pills-pro-tab">
-          <p class="pro_tab_description"><?php esc_html_e( 'Still not convinced? Here is the list of features that shows how Contact Form to Any API is the best plugin to connect any contact form with your CRM or any other third party services.', 'contact-form-to-any-api' ); ?></p>
+        <!-- Pro Version -->
+        <div class="tab-pane fade cf7anyapi_full_width" id="v-pills-pro" role="tabpanel" aria-labelledby="v-pills-pro-tab">
+            <p class="pro_tab_description"><?php esc_html_e( 'Still not convinced? Here is the list of features that shows how Contact Form to Any API is the best plugin to connect any contact form with your CRM or any other third party services.', 'contact-form-to-any-api' ); ?></p>
              <h5 class="pro_tab_title tab-title"><?php esc_html_e( 'Pro Version Features:', 'contact-form-to-any-api' ); ?></h5>
              <ul class="pro_feature_list">
                  <li><?php esc_html_e( 'Support Multi Level or Any Format of JSON', 'contact-form-to-any-api' ); ?></li>
@@ -213,41 +212,75 @@
           
              <h5 class="pro_tab_title tab-title"><?php esc_html_e( 'Supported CRM/API:', 'contact-form-to-any-api' ); ?></h5>
              <ul class="pro_crm_list">
-                 <li><?php esc_html_e( 'Sage CRM', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Mailchimp', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Zapier', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Odoo CRM/ERP system', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'MailBluster', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Lead Post Api', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Pilot Solution', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Virtuagym API', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Clio Grow', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'OSTicket', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Samdock CRM', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'FRS Labs API', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Mikrowisp', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Network Worldfilia', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Hubspot', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'GorillaDesk API', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Superoffice CRM', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Sembark API', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'SingleOps', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Twilio WhatsApp', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Kala CRM Israel', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Personio', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Lead Docket', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Fincenfetch', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Jetbrains / Intellij Space API', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Agendor API', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Unlatch CRM', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'JobAdder', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'Flowdesk', 'contact-form-to-any-api' ); ?></li>
-                 <li><?php esc_html_e( 'And many more', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Sage CRM', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Mail Chimp', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Zapier', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Odoo CRM/ERP System', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Mailbluster', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Lead Post API', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Virtuagym API', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Pilotsolution', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Clio Grow', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'OS Ticket', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Samdock CRM', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Mikrowisp', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Bats CRM', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'FRS Labs API', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Get Cobra by ArcaMax', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Network Worldfilia', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'One Page CRM', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'SingleOps', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'GorillaDesk API', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Hubspot', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Sembark API', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Superoffice CRM', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Flowdesk', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'JobAdder', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Unlatch CRM', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Mail2many', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Workato', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Jetbrains / Intellij Space API', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Fincenfetch', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Lead Docket', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Agendor API', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Lead IM Israel', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Personio', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Kala CRM Israel', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Twilio WhatsApp', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Pixxicrm', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'easybizy', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Brevo CRM', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Mailcoach CRM', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Pipeline CRM', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'Fluent CRM', 'contact-form-to-any-api' ); ?></li>
+                <li><?php esc_html_e( 'And many more', 'contact-form-to-any-api' ); ?></li>
              </ul>
 
              <p class="get_pro_version-btn text-center"><a href="https://www.contactformtoapi.com/pricing/#pricing" target="_blank"><?php esc_html_e( 'Get Pro Version', 'contact-form-to-any-api' ); ?></a></p>
-          </div>
-        
+        </div>
+        <!-- Oauth 2 -->
+        <div class="tab-pane fade cf7anyapi_full_width" id="v-pills-oauth" role="tabpanel" aria-labelledby="v-pills-oauth-tab">
+            
+             <h5 class="pro_tab_title tab-title"><?php esc_html_e( 'CF7 to Any API PRO Addon', 'contact-form-to-any-api' ); ?></h5>
+             <h5 class="text-left"><?php esc_html_e( 'OAuth 2.0 Customization for CF7 / WPForm to Any API', 'contact-form-to-any-api' ); ?></h5>
+             <ul class="pro_feature_list">
+                 <li><?php esc_html_e( 'OAuth 2.0 Authentication & Integration for Any API.', 'contact-form-to-any-api' ); ?></li>
+                 <li><?php esc_html_e( 'Dynamic Access and Refresh Tokens Update automatically based on expiration time.', 'contact-form-to-any-api' ); ?></li>
+                 <li><?php esc_html_e( 'JWT Token Integration with Any API.', 'contact-form-to-any-api' ); ?></li>
+                 <li><?php esc_html_e( 'Create a JSON file for each entry and upload it to an FTP server based on your required JSON payload or format.', 'contact-form-to-any-api' ); ?></li>
+             </ul>
+            <p>
+            <?php 
+            printf(
+                /* translators: %s: Support email address */
+                esc_html__( 'Note: You will have to provide your API test or development account details to our development team at %s. This will allow us to prepare customized authorization code tailored to your API requirements.', 'contact-form-to-any-api' ),
+                '<a href="mailto:support@contactformtoapi.com">support@contactformtoapi.com</a>'
+            ); 
+            ?>
+            </p>
+             <p class="get_pro_version-btn text-center"><a href="https://www.contactformtoapi.com/pricing/#pricing" target="_blank"><?php esc_html_e( 'Get Addon', 'contact-form-to-any-api' ); ?></a></p>
+        </div>
+
          <!-- contact us -->
          <div class="tab-pane fade cf7anyapi_full_width" id="v-pills-contact-us" role="tabpanel" aria-labelledby="v-pills-contact-us-tab">
             <h5 class="tab-title"><?php esc_html_e( 'Contact Us', 'contact-form-to-any-api' ); ?></h5><br>
@@ -305,7 +338,7 @@
                     <div class="our-plugin-details">
                         <h4><?php echo esc_html__( 'Connect WPForm to Any API', 'contact-form-to-any-api' ); ?></h4>
                         <ul>
-                            <li><?php echo esc_html__( 'Send WPForm Leads to Remote API’s such as CRM and other Extrenal API using POST/GET' ); ?></li>
+                            <li><?php echo esc_html__( 'Send WPForm Leads to Remote API’s such as CRM and other Extrenal API using POST/GET', 'contact-form-to-any-api' ); ?></li>
                             <li><?php echo esc_html__( 'Create unlimited connection with any API', 'contact-form-to-any-api' ); ?></li>
                             <li><?php echo esc_html__( 'Supports Simple & Fixed Format of JSON', 'contact-form-to-any-api' ); ?></li>
                             <li><?php echo esc_html__( 'API Logs Management with submitted data and API response', 'contact-form-to-any-api' ); ?></li>
@@ -321,22 +354,5 @@
 
         </div>
     </div>
-    <!-- <div class="col-3 image">
-        <div class="tab-content" id="v-pills-tabContent">
-        <a href="https://www.contactformtoapi.com/#contact_us" target="_blank">
-            <img src="<?php echo esc_url(CF7_CURL_DOMAIN.'/cf7-imges/right_image_1.jpg'); ?>" alt="" style="width:100%;">
-        </a>
-        <a href="https://wordpress.org/support/plugin/contact-form-to-any-api/reviews/" target="_blank">
-        <img height="400" width="100%" src="<?php echo esc_url(CF7_CURL_DOMAIN.'/cf7-imges/right_image_2.png');?>" alt="rating.png">
-        </a>
-        </div>
-    </div> -->
-    <!-- contact-us image -->
-    <!-- <div class="contact_us contact_image">
-        <a href="https://www.contactformtoapi.com/#contact_us" target="_blank">
-            <img src="<?php echo esc_url(CF7_CURL_DOMAIN.'/cf7-imges/bottom_image.jpg');?>" alt="" style="width:100%;">
-        </a>
-    </div> -->
-    
     </div>
 </div>

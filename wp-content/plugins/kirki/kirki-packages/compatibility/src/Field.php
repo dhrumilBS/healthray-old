@@ -31,6 +31,7 @@ class Field {
 	public $button_label;
 	public $description;
 	public $help;
+	public $compiler;
 
 	protected $args = array();
 
@@ -302,8 +303,8 @@ class Field {
 
 		// Set the class properties using the parsed args.
 		foreach ( $args as $key => $value ) {
-			$this->$key = $value;
-		}
+			$this->{$key} = $value;
+		}		
 
 		$this->args = $args;
 

@@ -158,6 +158,8 @@ class Cf7_To_Any_Api {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Cf7_To_Any_Api_Admin($this->get_plugin_name(), $this->get_version());
+		$api_mail_hook = $this->setting_get_options();
+
 		$this->loader->add_action('admin_notices', $plugin_admin, 'cf7_to_any_api_verify_dependencies');
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
@@ -166,7 +168,6 @@ class Cf7_To_Any_Api {
 		$this->loader->add_action('save_post',$plugin_admin,'cf7anyapi_update_settings',10,2);
 		$this->loader->add_action('wp_ajax_cf7_to_any_api_get_form_field',$plugin_admin,'cf7_to_any_api_get_form_field_function');
 		$this->loader->add_action('wp_ajax_cf7_to_any_api_bulk_log_delete',$plugin_admin,'cf7_to_any_api_bulk_log_delete_function');
-		$this->loader->add_action('wpcf7_mail_sent',$plugin_admin,'cf7_to_any_api_send_data_to_api');
 		$this->loader->add_action('admin_menu', $plugin_admin, 'cf7anyapi_register_submenu', 90);
 		$this->loader->add_filter('plugin_action_links',$plugin_admin,'cf7anyapi_add_settings_link',10,2);
 		$this->loader->add_filter('manage_cf7_to_any_api_posts_columns',$plugin_admin,'cf7_to_any_api_filter_posts_columns');
@@ -174,6 +175,18 @@ class Cf7_To_Any_Api {
 		$this->loader->add_filter('manage_edit-cf7_to_any_api_sortable_columns',$plugin_admin,'cf7_to_any_api_sortable_columns');
 		$this->loader->add_action('plugins_loaded',$plugin_admin,'cf7toanyapi_add_new_table',10, 2);
 		$this->loader->add_action('wp_ajax_delete_records',$plugin_admin,'delete_cf7_records',10, 2);
+		$this->loader->add_action('admin_post_save_cf7_to_any_api_update_settings',$plugin_admin,'cf7_to_any_api_update_settings');
+		$this->loader->add_action('manage_cf7_to_any_api_posts_custom_column', $plugin_admin, 'cf7_to_any_api_posts_custom_column', 10,2);
+		$this->loader->add_action('wp_ajax_cf7_to_any_api_toggle_status',  $plugin_admin, 'cf7_to_any_api_toggle_status_callback' );
+
+		if($api_mail_hook['cf7_to_api_before_mail_sent'] == true){
+			$cf7_filter_hook = 'wpcf7_before_send_mail';
+		}else{
+			$cf7_filter_hook = 'wpcf7_mail_sent';
+		}
+
+		$this->loader->add_action($cf7_filter_hook,$plugin_admin,'cf7_to_any_api_send_data_to_api');
+
 		// Admin Widget add
 		$this->loader->add_action('wp_dashboard_setup', $plugin_admin, 'cf7anyapi_add_dashboard_widget');
 		// Plugin links
@@ -385,5 +398,19 @@ class Cf7_To_Any_Api {
 		}
 
 		return $form;
+	}
+
+	/**
+	 * Retrieve the all current Setting data
+	 *
+	 * @since     1.1.2
+	 * @return    string
+	 */
+	public static function setting_get_options(){
+		$setting_options = [];
+		$setting_options['cf7_to_api_before_mail_sent'] = get_option('cf7_to_api_before_mail_sent');
+		$setting_options['cf7_to_api_log_hide'] = get_option('cf7_to_api_log_hide');
+		$setting_options['cf7_to_api_entry_hide'] = get_option('cf7_to_api_entry_hide');
+		return $setting_options;
 	}
 }

@@ -57,15 +57,32 @@
 
 		$('.cf7anyapi_bulk_log_delete').on('click',function(){
 			if(confirm("Are you Sure you want to delete all logs records?") == true){
+				const selected = $('input[name="log_ids[]"]:checked').map(function() {
+	                return this.value;
+	            }).get();
+
+	            if (selected.length === 0) {
+	                alert('Please select at least one log to delete.');
+	                return;
+	            }
 				var cf_to_any_api_log_del_nonce = jQuery(".cf7_to_any_api_page_cf7anyapi_logs #cf_to_any_api_log_del_nonce").val();
+
 				var data = {
 		                'action': 'cf7_to_any_api_bulk_log_delete',
 		                'cf_to_any_api_log_del_nonce' : cf_to_any_api_log_del_nonce,
+		                'cf_to_any_api_log_ids' : selected,
 		            };
 
 				var cf7anyapi_response = cf7anyapi_ajax_request(data);
 				cf7anyapi_response.done(function(result){
-					window.location.reload();
+					if (result.success) {
+						//window.location.reload();
+					} else {
+				        alert(result.data || 'Failed to delete logs.');
+				    }
+				});
+				cf7anyapi_response.fail(function () {
+				    alert('AJAX request failed. Please try again.');
 				});
 			}
 		});
@@ -126,7 +143,7 @@
 
 								return jQuery.ajax({
 							            type: "POST",
-							            url:ajax_object.ajax_url,
+							            url:cf7_to_any_api_ajax_object.cf7_to_any_api_ajax_url,
 							            dataType: "json",
 							            data:{
 	      									action : 'delete_records',
@@ -172,14 +189,39 @@
 	    	jQuery('#cf7anyapi-log-popup .cf7anyapi-log-content pre').empty();
 	    });
 
+	    jQuery(document).on('change', '.cf7api-status-switch .cf7api-toggle', function(e) {
+	    	e.preventDefault();
+	    	var $wrapper = jQuery(this).closest('.cf7api-status-switch');
+		    $wrapper.find('img').show();
+		    $wrapper.find('.cf7api-slider').css('opacity', '0.1');
+	        let $checkbox = jQuery(this);
+	        let post_id = $checkbox.data('post-id');
+	        let nonce = $checkbox.data('nonce');
+	        let isChecked = $checkbox.is(':checked');
+
+	        let newStatus = $checkbox.is(':checked') ? 'enabled' : 'disabled';
+
+	        $.post(cf7_to_any_api_ajax_object.cf7_to_any_api_ajax_url, {
+	            action: 'cf7_to_any_api_toggle_status',
+	            post_id: post_id,
+	            is_checked: isChecked,
+	            nonce: nonce
+	        }, function(response) {
+	            if (!response.success) {
+	                $checkbox.prop('checked', ! $checkbox.is(':checked'));
+	            }
+	            $wrapper.find('img').hide();
+	            $wrapper.find('.cf7api-slider').css('opacity', '1');
+	        });
+	    });
 
 	});
 
 })( jQuery );
 function cf7anyapi_ajax_request(cf7anyapi_data){
 	return jQuery.ajax({
-            type: "POST",
-            url: ajax_object.ajax_url,
-            data: cf7anyapi_data,
-        });
+        type: "POST",
+        url: cf7_to_any_api_ajax_object.cf7_to_any_api_ajax_url,
+        data: cf7anyapi_data,
+    });
 }

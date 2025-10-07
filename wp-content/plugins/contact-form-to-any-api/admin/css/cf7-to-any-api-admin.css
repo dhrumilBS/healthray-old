@@ -14,8 +14,6 @@
 .cf7anyapi_bulk_log_delete{
     margin-left: 4px;
     padding: 4px 8px;
-    position: relative;
-    top: 15px;
     text-decoration: none;
     border: 1px solid #2271b1;
     border-radius: 2px;
@@ -481,13 +479,21 @@ p.pro_tab_description { font-size: 17px; line-height: 24px; }
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1000;
+    max-height: 80vh;
+    overflow-y: auto;
+    margin-top: 13px;
 }
 
 #cf7anyapi-log-popup .close-popup {
     cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    position: sticky;
+    top: 0;
+    right: 0;
+    left: 100%;
+    background: black;
+    color: #fff;
+    padding: 6px 11px;
+    border-radius: 50%;
 }
 .cf7anyapi_logs span.view_more {
     color: #2271b1;
@@ -606,6 +612,9 @@ p.pro_tab_description { font-size: 17px; line-height: 24px; }
 .tab-index-9 .tab-index:after {
     content: "9";
 }
+.tab-index-10 .tab-index:after {
+    content: "10";
+}
 .tab-pane h5 {
     text-align: center;
     margin-bottom: 30px;
@@ -719,6 +728,228 @@ ul.pro_crm_list {
     background-color: #007cba;
     border: 1px solid #007cba;
 }
+
+/*settings*/
+.cf-settings-wrap.cf-settings {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    margin-top: 48px;
+    margin-right: 32px;
+    margin-bottom: 0;
+    margin-left: 12px;
+}
+.cfs-box {   
+    display: flex;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.1);
+    background: #ffffff;
+    position: relative;
+    flex-direction: column;
+}
+.cf-settings-wrap .cfs-box .cf-head {
+    display: flex;
+    align-items: center;
+    padding: 15px 28px 0;
+}
+.cf-settings-wrap .cfs-box .cf-head span {
+    margin-right: 8px;
+}
+.cf-settings-wrap .cfs-box .cf-settings {
+    padding: 0 28px 5px;
+}
+.cf-settings .cf7_to_any_api_setting_form input[type=checkbox]{
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+.cf-settings .cf7_to_any_api_setting_form label {
+    cursor: pointer;
+    text-indent: -9885px;
+    width: 38px;
+    height: 20px;
+    background: grey;
+    display: block;
+    border-radius: 99px;
+    position: relative;
+    margin-right: 15px;
+}
+
+.cf-settings .cf7_to_any_api_setting_form label:after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.1s;
+}
+
+.cf-settings .cf7_to_any_api_setting_form input:checked + label {
+    background: #007cba;
+}
+
+.cf-settings .cf7_to_any_api_setting_form input:checked + label:after {
+    left: calc(100% - 4px);
+    transform: translateX(-100%);
+}
+
+.cf-settings .cf7_to_any_api_setting_form label:active:after {
+    width: 16px;
+}
+.cf-settings .cf7_to_any_api_setting_form  .form-table td {
+    display: flex;
+    align-items: center;
+}
+.cf-settings .cf7_to_any_api_setting_form .form-table td{
+    flex-direction: column;
+    align-items: start;
+}
+.cf-settings .cf7_to_any_api_setting_form .form-table td.with-label {
+    margin-bottom: 0px;
+    padding-bottom: 10px;
+}
+.cf-settings .cf7_to_any_api_setting_form .form-table td.with-label small{
+    margin-top: 5px;
+}
+.w-100{
+    width: 100%;
+}
+.cf-settings .cfs-box .cf-head .title-wrapper{
+    display: flex;
+    align-items: center;
+}
+.cf-settings .cf-head .btn-wrap a {
+    font-size: 18px;
+    font-weight: 700;
+    background: #e5f1f8;
+    color: #212529;
+    border-bottom: 4px solid #007cba;
+    padding: 5px 20px;
+    border-radius: 5px;
+    text-decoration: none !important;
+    margin-left: 15px;
+}
+.cf-tab-wrapper {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/*System Status*/
+.wrap.cf-settings-wrap.cf-sys-status {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    margin-top: 48px;
+    margin-right: 32px;
+    margin-bottom: 0;
+    margin-left: 12px;
+}
+.cf-sys-status .cfs-box .title-wrap {
+    padding-right: 12px;
+    padding-left: 12px;
+}
+.cf-sys-status .status-wrap table.status-table {
+    margin-bottom: 6px;
+    border: none;
+    box-shadow: none;
+    border-top: 1px solid #dcdcde;
+}
+
+.cf-sys-status .status-wrap table.status-table tr:nth-child(2n-1) td {
+    background: #fcfcfc
+}
+
+.cf-sys-status .status-wrap table.status-table td:first-child {
+    width: 33%
+}
+
+.cf-sys-status .status-wrap table.status-table td{
+    font-size: 1.1em;
+    font-weight: 400
+}
+
+.status-table td{
+    padding: 8px 15px;
+}
+.cfs-box h3 img {
+    margin-right: 8px;
+    top: 3px;
+    position: relative;
+}
+.cf7anyapi_log_button {
+    display: inline;
+}
+
+/*Toggal button css*/
+.cf7api-status-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  position: relative;
+}
+
+.cf7api-status-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.cf7api-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 28px;
+}
+
+.cf7api-slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.cf7api-status-switch input:checked + .cf7api-slider {
+  background-color: #0073aa;
+}
+
+.cf7api-status-switch input:checked + .cf7api-slider:before {
+  transform: translateX(22px);
+}
+
+.cf7api-slider:before {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.cf7api-status-switch img {
+    width: 29px;
+    z-index: 11;
+    position: relative;
+    right: -9px;
+    top: -18px;
+}
+
 /* Popup CSS  */
 @media screen and (max-width: 1500px){
     
