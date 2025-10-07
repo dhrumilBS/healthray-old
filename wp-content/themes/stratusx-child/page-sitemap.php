@@ -238,6 +238,7 @@ if (!empty($results)) {
 					<li class="menu-link"><a href="https://healthray.com/best-hims-software-delhi-hospital/" target="_blank"> Best HIMS Software For Delhi Hospital </a></li>
 					<li class="menu-link"><a href="https://healthray.com/best-hims-software-gandhinagar-hospital/" target="_blank"> Best HIMS Software For Gandhinagar Hospital </a></li>
 					<li class="menu-link"><a href="https://healthray.com/best-hims-software-vadodara-hospital/" target="_blank"> Best HIMS Software For Vadodara Hospital </a></li>
+					<li class="menu-link"><a href="https://healthray.com/best-hims-software-kochi-hospital/" target="_blank"> Best HIMS Software For Kochi Hospital </a></li>
 				</ul>
 			</div>
 		</div>

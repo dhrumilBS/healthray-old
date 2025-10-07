@@ -1,6 +1,6 @@
 /* Single blog */
 .blog-single .widget-title { border: 0; margin: 0; font-size: 20px; font-weight: 700; }
-.post-content { text-align: justify; }
+
 .post-content a { color: #5669EC; font-weight: 800; }
 .post-content img { margin: 20px 0; }
 .single-post h1 { font-size: 48px; }
@@ -10,7 +10,7 @@
 .post-content ul { background-color: #eef9ff; padding: 12px 40px; max-width: max-content; width: 100%; margin-bottom: 20px; }
 .post-content ul li { color: #000; }
 .post-content ul li::marker { color: #5669ec; }
-
+.post-content p { text-align: justify; }
 .blog-cta-section { background-color: #f4f7ff; padding: 20px; border: 2px solid #477bff; margin-bottom: 20px; }
 .blog-cta-section .wp-block-buttons { text-align: center; }
 .blog-cta-section .wp-block-buttons .wp-element-button { color: #fff; }

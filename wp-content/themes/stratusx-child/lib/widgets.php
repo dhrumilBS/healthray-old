@@ -23,4 +23,12 @@ function hr_widgets_init()
 			'after_title'   => '</h3>',
 		));
 	}
+	
+	register_sidebar(array(
+			'name'          => esc_html__('Header Review', 'stratus'),
+			'id'            => "header-review-$i",
+			'before_widget' => '<section class="widget header-review-widget %1$s %2$s"><div class="widget-inner">',
+			'after_widget'  => '</div></section>',
+		));
+		
 }

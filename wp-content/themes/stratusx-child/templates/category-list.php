@@ -44,23 +44,23 @@
 	<ul>
 		<?php 
 		$blog_cat_id = 34;
-		$cat = [];
-		$show_cat = 7;
-		$current_term = get_queried_object();
-		$current_term_tax_id = is_object($current_term) && isset($current_term->term_taxonomy_id) ? $current_term->term_taxonomy_id : null;
+$cat = [];
+$show_cat = 7;
+$current_term = get_queried_object();
+$current_term_tax_id = is_object($current_term) && isset($current_term->term_taxonomy_id) ? $current_term->term_taxonomy_id : null;
 
-		foreach (get_categories(['orderby' => 'count', 'order' => 'DESC']) as $i => $category) {
-			$class  = ' catagory-' . $category->term_taxonomy_id;
-			$class .= ($current_term_tax_id === $category->term_taxonomy_id) ? ' active' : '';
+foreach (get_categories(['orderby' => 'count', 'order' => 'DESC']) as $i => $category) {
+	$class  = ' catagory-' . $category->term_taxonomy_id;
+	$class .= ($current_term_tax_id === $category->term_taxonomy_id) ? ' active' : '';
 
-			if ($category->term_id != $blog_cat_id) {
-				if ($i < $show_cat) {
-					echo '<li class="cat-item' . $class . '"><a class="cat-link" href="' . get_category_link($category) . '">' . $category->name . '</a></li>';
-				} else {
-					$cat[] = '<a class="more-cat-item cat-item cat-link' . $class . '" href="' . get_category_link($category) . '">' . $category->name . '</a>';
-				}
-			}
+	if ($category->term_id != $blog_cat_id) {
+		if ($i < $show_cat) {
+			echo '<li class="cat-item' . $class . '"><a class="cat-link" href="' . get_category_link($category) . '">' . $category->name . '</a></li>';
+		} else {
+			$cat[] = '<a class="more-cat-item cat-item cat-link' . $class . '" href="' . get_category_link($category) . '">' . $category->name . '</a>';
 		}
+	}
+}
 
 		?>
 		<?php if($i > $show_cat ){ ?>

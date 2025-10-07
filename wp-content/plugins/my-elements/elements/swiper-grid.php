@@ -82,7 +82,7 @@ class Ml_Swiper_Widget extends Widget_Base
 		$html = '';
 		foreach ($settings['gallery'] as $i => $image) {
 		    
-			$html .= '<div class="img-slide img-slide-' . $class . '">';
+			$html .= '<div class="img-slide">';
 			$html .=  wp_get_attachment_image($image['id'], 'full');
 			    
 			if($settings['caption'] == 'yes'){

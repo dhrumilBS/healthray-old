@@ -343,25 +343,7 @@ class Ml_Widget_Blog_FAQ extends Widget_Base
 				],
 			]
 		);
-
-		$this->end_controls_section();
-
-
-		$this->start_controls_section(
-			'section_icon_style',
-			[
-				'label' => esc_html__('FAQs Setting', 'elementor'),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-		$this->add_control(
-			'faq_schema',
-			[
-				'label' => esc_html__('FAQ Schema', 'elementor'),
-				'type' => Controls_Manager::SWITCHER,
-				'separator' => 'before',
-			]
-		);
+		
 		$this->end_controls_section();
 	}
 	protected function render()
@@ -373,56 +355,58 @@ class Ml_Widget_Blog_FAQ extends Widget_Base
 		$migrated = isset($settings['__fa4_migrated']['selected_icon']);
 
 		if (have_rows('blog_faqs')) { ?>
-<div class="elementor-toggle accordion-list">
-	<?php while (have_rows('blog_faqs')) {
-			the_row(); ?>
-	<div class="elementor-toggle-item">
-		<div id="elementor-tab-title-<?= get_row_index(); ?>" class="elementor-tab-title" data-tab="<?= get_row_index(); ?>" role="button" aria-controls="elementor-tab-content-<?= get_row_index(); ?>" aria-expanded="false">
-			<?php if ($has_icon) : ?>
-			<span class="elementor-toggle-icon elementor-toggle-icon-<?php echo esc_attr($settings['icon_align']); ?>" aria-hidden="true">
-				<?php
-			if ($is_new || $migrated) { ?>
-				<span class="elementor-toggle-icon-closed"><?php Icons_Manager::render_icon($settings['selected_icon']); ?></span>
-				<span class="elementor-toggle-icon-opened"><?php Icons_Manager::render_icon($settings['selected_active_icon'], ['class' => 'elementor-toggle-icon-opened']); ?></span>
-				<?php } else { ?>
-				<i class="elementor-toggle-icon-closed <?php echo esc_attr($settings['icon']); ?>"></i>
-				<i class="elementor-toggle-icon-opened <?php echo esc_attr($settings['icon_active']); ?>"></i>
+			<div class="elementor-toggle accordion-list">
+				<?php while (have_rows('blog_faqs')) {
+					the_row(); ?>
+					<div class="elementor-toggle-item">
+						<div id="elementor-tab-title-<?= get_row_index(); ?>" class="elementor-tab-title" data-tab="<?= get_row_index(); ?>" role="button" aria-controls="elementor-tab-content-<?= get_row_index(); ?>" aria-expanded="false">
+							<?php if ($has_icon) : ?>
+								<span class="elementor-toggle-icon elementor-toggle-icon-<?php echo esc_attr($settings['icon_align']); ?>" aria-hidden="true">
+									<?php
+									if ($is_new || $migrated) { ?>
+										<span class="elementor-toggle-icon-closed"><?php Icons_Manager::render_icon($settings['selected_icon']); ?></span>
+										<span class="elementor-toggle-icon-opened"><?php Icons_Manager::render_icon($settings['selected_active_icon']); ?></span>
+									<?php } else { ?>
+										<i class="elementor-toggle-icon-closed <?php echo esc_attr($settings['icon']); ?>"></i>
+										<i class="elementor-toggle-icon-opened <?php echo esc_attr($settings['icon_active']); ?>"></i>
+									<?php } ?>
+								</span>
+							<?php endif; ?>
+							<a class="elementor-toggle-title" tabindex="0"><?= get_sub_field('question'); ?></a>
+						</div>
+
+						<div id="elementor-tab-content-<?= get_row_index(); ?>" class="elementor-tab-content" data-tab="<?= get_row_index(); ?>" role="region" aria-labelledby="elementor-tab-title-<?= get_row_index(); ?>">
+							<div><?= get_sub_field('answer'); ?></div>
+						</div>
+					</div>
 				<?php } ?>
-			</span>
-			<?php endif; ?>
-			<a class="elementor-toggle-title" tabindex="0"><?= get_sub_field('question'); ?></a>
-		</div>
 
-		<div id="elementor-tab-content-<?= get_row_index(); ?>" class="elementor-tab-content elementor-clearfix answer" data-tab="<?= get_row_index(); ?>" role="region" aria-labelledby="elementor-tab-title-<?= get_row_index(); ?>">
-			<div><?= get_sub_field('answer'); ?></div>
-		</div>
-	</div>
-	<?php } ?>
+				<?php
+				if (isset($settings['faq_schema']) && 'yes' === $settings['faq_schema']) {
+					$json = [
+						'@context' => 'https://schema.org',
+						'@type' => 'FAQPage',
+						'mainEntity' => [],
+					];
 
-	<?php
-									 if (isset($settings['faq_schema']) && 'yes' === $settings['faq_schema']) {
-										 $json = [
-											 '@context' => 'https://schema.org',
-											 '@type' => 'FAQPage',
-											 'mainEntity' => [],
-										 ];
-
-										 foreach (get_field('blog_faqs') as $index => $item) {
-											 $json['mainEntity'][] = [
-												 '@type' => 'Question',
-												 'name' => wp_strip_all_tags($item['question']),
-												 'acceptedAnswer' => [
-													 '@type' => 'Answer',
-													 'text' => $this->parse_text_editor($item['answer']),
-												 ],
-											 ];
-										 }
-	?>
-	<script type="application/ld+json"> <?= wp_json_encode($json); ?> </script>
-	<?php } ?>
-</div>
+					foreach (get_field('blog_faqs') as $index => $item) {
+						$json['mainEntity'][] = [
+							'@type' => 'Question',
+							'name' => wp_strip_all_tags($item['question']),
+							'acceptedAnswer' => [
+								'@type' => 'Answer',
+								'text' => $this->parse_text_editor($item['answer']),
+							],
+						];
+					}
+				?>
+					<script type="application/ld+json">
+						<?= wp_json_encode($json); ?>
+					</script>
+				<?php } ?>
+			</div>
 <?php
-									}
+		}
 	}
 }
 

@@ -1,15 +1,14 @@
 jQuery(document).ready(function ($) {
 	jQuery.noConflict()
 	// 	=========================================== BLOG FAQ ===========================================
-	jQuery('.accordion-list > .elementor-toggle-item > .answer').hide();
 	jQuery('.accordion-list > .elementor-toggle-item .elementor-tab-title').click(function () {
-		if (jQuery(this).parent().hasClass("active")) {
-			jQuery(this).parent().removeClass("active").find(".answer").slideUp();
+		if ($(this).hasClass("elementor-active")) {
+			$(this).removeClass("elementor-active").parent().find('.elementor-tab-content').removeClass("elementor-active").slideUp();
 		} else {
-			jQuery(".accordion-list > .elementor-toggle-item.active .answer").slideUp();
-			jQuery(".accordion-list > .elementor-toggle-item.active").removeClass("active");
-			jQuery(this).parent().addClass("active").find(".answer").slideDown();
-		} return false;
+			$(this).addClass("elementor-active").parent().find('.elementor-tab-content').addClass("elementor-active").slideUp();
+			$(this).parent().find('.elementor-tab-content').slideDown();
+		}
+		return false;
 	});
 
 	// 	=========================================== owl-carousel ===========================================
@@ -40,7 +39,7 @@ function owl_carousel(e) {
 			loop: app_slider.data("loop"),
 			autoplay: app_slider.data("autoplay"),
 			autoplayTimeout: 5000,
-			autoplayHoverPause:true,
+			autoplayHoverPause: true,
 			nav: app_slider.data("nav"),
 			autoHeight: app_slider.data("autoheight"),
 			navText: [prev, next],
