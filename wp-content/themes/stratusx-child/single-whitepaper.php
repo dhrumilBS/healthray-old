@@ -4,22 +4,21 @@
                 <div class="hero-grid">
                     <div class="hero-text heading">
                         <h1><?= get_field('hero_title'); ?></h1>
-                        <p><?= get_field('hero_text'); ?></p>
+                        <p><?= get_the_content(); ?></p>
                         <div class="btn-group">
                             <a href="#downloadForm" class="btn btn-primary">Download Free Whitepaper</a>
                         </div>
                     </div>
                     <div class="hero-image text-center">
                         <div class="image-wrapper">
-                            <div class="image-glow"></div>
-                            <?= get_the_post_thumbnail(); ?>
+                            <?= get_the_post_thumbnail(get_the_ID(), 'full'); ?>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-
+    
 
         <section class="sec-padded features">
             <div class="container">
@@ -32,7 +31,7 @@
                     <div class="features-grid">
                         <?php while (have_rows('why_choose')) {
                             the_row(); ?>
-                            <div class="card card-professional">
+                            <div class="card-professional">
                                 <div class="icon-circle">
                                     <!-- Icon -->
                                     <?= get_sub_field('icon'); ?>
@@ -53,7 +52,7 @@
                     <h2>Get Your Free Healthcare Analytics Report</h2>
                     <p>Join thousands of healthcare professionals who trust our insights</p>
                 </div>
-                <div class="form-wrapper">
+                <div class="whitepaper-form-wrapper form-wrapper" data-form-id="61816" data-post-id="<?php the_ID(); ?>" data-nonce="<?= esc_attr(wp_create_nonce('whitepaper_pdf_nonce')); ?>">
                     <?= do_shortcode('[contact-form-7 id="e99fa6d" title="Whitepaper Form"]'); ?>
                 </div>
             </div>
@@ -94,41 +93,43 @@
 
                     <!-- Right Card -->
                     <div class="card-wrapper">
-                        <div class="card">
-                            <div class="skeleton"></div>
-                            <div class="skeleton full"></div>
-                            <div class="skeleton medium"></div>
-
-                            <div class="stats-wrap">
+                        <div class="card-box">
+                            <div class="card">
+                                <div class="skeleton"></div>
+                                <div class="skeleton full"></div>
+                                <div class="skeleton medium"></div>
+    
+                                <div class="stats-wrap">
+                                    <div class="stats">
+                                        <div class="stat">
+                                            <div class="value">95%</div>
+                                            <div class="label">Accuracy</div>
+                                        </div>
+                                        <div class="stat">
+                                            <div class="value">24/7</div>
+                                            <div class="label">Support</div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="stats">
                                     <div class="stat">
-                                        <div class="value">95%</div>
-                                        <div class="label">Accuracy</div>
+                                        <div class="value">99.9%</div>
+                                        <div class="label">Uptime</div>
                                     </div>
                                     <div class="stat">
-                                        <div class="value">24/7</div>
-                                        <div class="label">Support</div>
+                                        <div class="value">>2 Min</div>
+                                        <div class="label">Response</div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="stats">
-                                <div class="stat">
-                                    <div class="value">99.9%</div>
-                                    <div class="label">Uptime</div>
+    
+                                <div class="chart-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+                                        <path d="M18 17V9"></path>
+                                        <path d="M13 17V5"></path>
+                                        <path d="M8 17v-3"></path>
+                                    </svg>
                                 </div>
-                                <div class="stat">
-                                    <div class="value">>2 Min</div>
-                                    <div class="label">Response</div>
-                                </div>
-                            </div>
-
-                            <div class="chart-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
-                                    <path d="M18 17V9"></path>
-                                    <path d="M13 17V5"></path>
-                                    <path d="M8 17v-3"></path>
-                                </svg>
                             </div>
                         </div>
                     </div>
@@ -142,8 +143,7 @@
 
         <section class="sec-padded industry-leadership">
             <div class="container">
-
-                  <div class="text-center heading section-header">
+                <div class="text-center heading section-header">
                     <h2>Recognized Industry Leader</h2>
                     <p>Our commitment to excellence in healthcare analytics has earned recognition from leading
                         industry organizations</p>
@@ -219,55 +219,12 @@
                         <p class="award-desc">Most Innovative Data Solutions Provider</p>
                     </div>
                 </div>
-                <div class="industry-stats text-center mt-12">
-                    <div class="stat-item">
-                        <span class="icon star">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24"
-                                fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-star w-10 h-10 text-white">
-                                <path
-                                    d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
-                                </path>
-                            </svg>
-                        </span>4.9/5 Customer Rating
-                    </div>
-                    <div class="stat-item">
-                        <span class="icon trophy">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewbox="0 0 24 24"
-                                fill="none" stroke="#1c3378" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-trophy w-10 h-10 text-white">
-                                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-                                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-                                <path d="M4 22h16"></path>
-                                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
-                                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
-                                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
-                            </svg>
-                        </span>15+
-                        Industry Awards
-                    </div>
-                    <div class="stat-item">
-                        <span class="icon medal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24"
-                                fill="none" stroke="#007ee6" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-medal w-10 h-10 text-white">
-                                <path
-                                    d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15">
-                                </path>
-                                <path d="M11 12 5.12 2.2"></path>
-                                <path d="m13 12 5.88-9.8"></path>
-                                <path d="M8 7h8"></path>
-                                <circle cx="12" cy="17" r="5"></circle>
-                                <path d="M12 18v-2h-.5"></path>
-                            </svg>
-                        </span>ISO 27001 Certified
-                    </div>
-                </div>
             </div>
         </section>
 
+        <?php echo do_shortcode( '[elementor-template id="62278"]' ); ?>
 
-        <section class="sec-padded events-news">
+        <section class="sec-padded events-news d-none">
             <div class="container">
                 <div class="text-center section-header heading">
                     <h2>Latest Events & News</h2>
@@ -418,3 +375,4 @@
             </div>
         </section>
     </main>
+    <?php echo do_shortcode( '[elementor-template id="26869"]' ); ?>

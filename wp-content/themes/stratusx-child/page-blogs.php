@@ -1,24 +1,23 @@
-<section class="blog-hero hero">
+<section class="blog-hero hero-section">
 	<div class="container">
-		<div class="page-title">
-			<h1> <span>Healthray Blog</span> </h1>		 
+		<div class="heading text-center">
+			<h1> Healthray Blog </h1>
+			<p>Discover expert analyses, healthcare trends, and actionable insights designed to help you stay informed and make smarter health decisions with Healthray.</p>
 		</div>
 		<?php
-		$categories = get_categories();
-		if ($categories) {
-		?>
-		<div class="main-sidebar">
-			<?php get_template_part('templates/category-list'); ?>
-		</div>
-		<?php } ?>
-		<div class="sidebar-form">
-			<?php echo get_search_form(); ?>
-		</div>
+		if (get_categories()) {
+			get_template_part('templates/category-list');
+		} ?>
 
 	</div>
 </section>
-<section class="inner-container blog-container ">
+
+<section class="sec-padded blog-container ">
 	<div class="container">
+	    <div class="sidebar-form">
+			<?php echo get_search_form(); ?>
+		</div>
+		
 		<?php
 		$paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
 

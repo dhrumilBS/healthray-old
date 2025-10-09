@@ -447,22 +447,10 @@ endif;
 
 if ( ! function_exists( 'th_check_envato_market' ) ) :
 function th_check_envato_market() {
-	// wp_register_script( 'jquery-blockui-m', get_template_directory_uri() . '/plugins/envato_setup/js/jquery.blockUI.js', array( 'jquery' ), '2.70', true );
-	// wp_register_script( 'envato-setup-m', get_template_directory_uri() . '/assets/js/envato-setup-custom.js', array(
-	// 	'jquery',
-	// 	'jquery-blockui-m',
-	// ), '2.70' );
-	// wp_localize_script( 'envato-setup-m', 'envato_setup_params', array(
-	// 	'tgm_plugin_nonce' => array(
-	// 		'update'  => wp_create_nonce( 'tgmpa-update' ),
-	// 		'install' => wp_create_nonce( 'tgmpa-install' ),
-	// 	),
-	// 	'tgm_bulk_url'     => $GLOBALS['tgmpa']->get_tgmpa_url() ,
-	// 	'ajaxurl'          => admin_url( 'admin-ajax.php' ),
-	// 	'wpnonce'          => wp_create_nonce( 'envato_setup_nonce' ),
-	// 	'verify_text'      => esc_html__( '...verifying', 'stratus' ),
-	// ) );
-	// wp_enqueue_script( 'envato-setup-m' );
+// 	wp_register_script( 'jquery-blockui-m', get_template_directory_uri() . '/plugins/envato_setup/js/jquery.blockUI.js', array( 'jquery' ), '2.70', true );
+// 	wp_register_script( 'envato-setup-m', get_template_directory_uri() . '/assets/js/envato-setup-custom.js', array( 'jquery', 'jquery-blockui-m', ), '2.70' );
+// wp_localize_script( 'envato-setup-m', 'envato_setup_params', array( 'tgm_plugin_nonce' => array( 'update'  => wp_create_nonce( 'tgmpa-update' ), 'install' => wp_create_nonce( 'tgmpa-install' ), ), 'tgm_bulk_url'     => $GLOBALS['tgmpa' get_tgmpa_url() , 'ajaxurl'          => admin_url( 'admin-ajax.php' ), 'wpnonce'          => wp_create_nonce( 'envato_setup_nonce' ), 'verify_text'      => esc_html__( '...verifying', 'stratus' ), ) ); 
+// wp_enqueue_script( 'envato-setup-m' );
 
 	tgmpa_load_bulk_installer();
 	// install plugins with TGM.

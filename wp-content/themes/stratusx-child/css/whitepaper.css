@@ -1,9 +1,16 @@
+@import url(https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800;900&display=swap);
+body { color: #65758B; font-family: "DM Sans"; }
+input[type=submit],input[type=button],
+button, 
+.wrap .content :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6){ font-family: "Playfair Display"; }
+
 /* Archive CSS */
-.whitepapers-section { padding: 60px 0; } 
 .whitepapers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; } 
 .whitepaper-card { border: 1px solid var(--hr-border); border-radius: 12px; padding: 20px; background: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; transition: transform 0.25s ease, box-shadow 0.25s ease; } 
 .whitepaper-card:hover { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); } 
-.whitepaper-image { width: 100%; height: 160px; background: var(--hr-bg-light); border-radius: 8px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: var(--hr-text-muted); position: relative; overflow: hidden; } 
+.whitepaper-image { border-radius: 8px; margin-bottom: 16px; } 
+.whitepaper-image img { width: 100%; }
+
 .whitepaper-tag { position: absolute; top: 10px; left: 10px; background: var(--hr-primary-color); color: #fff; font-size: 12px; padding: 4px 12px; border-radius: 20px; display: inline-block; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); } 
 .whitepaper-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--hr-primary-color); } 
 .whitepaper-desc { font-size: 14px; color: var(--hr-text-muted); margin-bottom: 20px; line-height: 1.5; } 
@@ -24,58 +31,28 @@
 }
 
 /* =========================
-COMMON STYLES
-========================= */
-
-.full-width { width: 100%; }
-
-.card { background: #fff; border-radius: 12px; padding: 24px; text-align: center; transition: box-shadow 0.3s; box-shadow: 0 1px 8px rgba(0, 0, 0, 0.02); }
-.card:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
-
-.icon-circle { width: 64px; height: 64px; border-radius: 50%; background: var(--hr-secondary-color); color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-
-.stat-item{ text-align: center; }
-.stat-item .icon { display:block; width: 20px; height: 20px; }
-.stat-item .icon svg { width: 100%; height: 100%; }
-.stat-item p:last-child { margin-bottom: 0; }
-.stat-number { font-size: 1.65rem; font-weight: bold; color: var(--hr-secondary-color); }
-
-
-/* Form */
-.form-group { display: flex; flex-direction: column; gap: 6px; }
-.form-group input { padding: 10px 14px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-.form-group input:focus { border-color: var(--hr-secondary-color); outline: none; }
-.form-grid { display: grid; gap: 20px; grid-template-columns: 1fr 1fr; margin-bottom: 20px; }
-
-@media (max-width: 767px) {
-	.sec-padded{ padding: 40px 0; }
-	.form-grid { grid-template-columns: 1fr; }
-}
-.form-note { text-align: center; font-size: 14px; color: #777; margin-top: 12px; }
-/* =========================
 SECTION SPECIFIC STYLES
 ========================= */
 
 /* Hero */
-.hero { position: relative; background: #f9fafc; overflow: hidden; }
-.hero .container { position: relative; z-index: 10; }
-.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.hero { position: relative; background: #f9fafc; }
+.hero-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 40px; align-items: center; }
 @media (max-width: 992px) {
 	.hero-grid { grid-template-columns: 1fr; text-align: center; }
 }
-.hero-text h1 { font-size: 48px; line-height: 1.2; }
-.hero-text .highlight { color: var(--hr-secondary-color); display: block; }
+.hero .hero-text h1 { font-size: 48px; line-height: 1.2; }
 .hero-image .image-wrapper { position: relative; display: inline-block; }
-.image-glow { position: absolute; inset: -16px; background: rgba(255, 255, 255, 0.1); border-radius: 16px; filter: blur(20px); }
-.hero-image img { width: 320px; max-width: 100%; border-radius: 12px; transform: rotate(3deg); transition: transform 0.5s; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }
+.hero-image img { max-width: 100%; border-radius: 12px; transform: rotate(3deg); transition: transform 0.5s; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }
 .hero-image img:hover { transform: rotate(0deg); }
 
 /* Features */
 .features { background: #f4f6f8; }
 .section-header { text-align: center; }
 .features-grid { display: grid; gap: 20px; grid-template-columns: repeat(4, 1fr); }
-.features-grid .card-professional { background: #fff; border-radius: 12px; padding: 20px; text-align: center; transition: box-shadow 0.3s; box-shadow: 0 1px 8px rgba(0, 0, 0, 0.02); }
-.features-grid .card-professional h3{ margin-bottom: 12px; font-size: 24px }
+.features-grid .card-professional { background: #fff; border-radius: 12px; padding: 20px; text-align: center; transition: box-shadow 0.3s; border:1px solid #dcdfe5; box-shadow: 0 1px 8px rgba(0, 0, 0, 0.02); }
+.features-grid .card-professional h3{ margin-bottom: 12px; font-size: 20px; }
+.features-grid .card-professional .icon-circle { width: 64px; height: 64px; border-radius: 50%; background: var(--hr-secondary-color); color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+
 
 @media screen and (max-width: 1120px){
 	.features-grid { grid-template-columns: repeat(2, 1fr); }
@@ -85,20 +62,34 @@ SECTION SPECIFIC STYLES
 }
 
 /* Download Form */
+
+.download-form{}
 .download-form { background: #fff; }
-.download-form .form-wrapper { max-width: 600px; margin: auto; background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); }
+.download-form .form-wrapper { max-width: 600px; margin: auto; background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); border: 1px solid #dcdfe5; }
 .download-form .form-wrapper h2 { font-size: 26px; }
 .download-form .form-wrapper p { font-size: 18px; }
+.download-form .img-scribble{ display: none; }
+.wpcf7-form-control-wrap{ display: block; font-size: 15px; }
+.download-form :is(input, textarea, button, select, input.wpcf7-form-control) { font-family: inherit; padding: 8px 12px; border: 1px solid #ccc; border-radius: 10px; color: inherit; height: auto; line-height: 1.5 }
+.download-form .form-submit-btn .wpcf7-form-control.wpcf7-submit{ border: 0; padding: 8px; }
+.download-form .form-field .wpcf7-textarea{ height: 92px; }
+.download-form .form-field .row { } 
+.download-form .field-wrapper{ position: relative; margin-bottom: 20px; }
+.download-form .field-wrapper p{ position: relative; }
+.download-form .field-wrapper .form-label{ font-size: 14px; line-height: normal; margin-bottom: 4px; display:inline-block;  }
+
+.download-form .pdf-download-message { text-align: center; margin-top: 20px; font-size: 17px; }
+.download-form .pdf-download-message a{ padding: 6px 12px; display: inline-block; background: #152d7c20; border-radius: 8px; border: 1px solid #152d7c;}
+.download-form 1.pdf-download-message a:hover{ background: #152d7c; color: #fff;}
+
 @media screen and (max-width: 600px) {
-	.download-form .form-wrapper { padding: 0; box-shadow: none; }
+	.download-form .form-wrapper { padding: 0; box-shadow: none; border: 0; }
 }
 
 /* --- Section Base --- */
 .why-research { background: #f3f4f6; }
-.why-research .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
 .why-research .grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
 
-.why-research .intro { font-size: 1.25rem; margin-bottom: 32px; }
 .why-research .features-list { display: flex; flex-direction: column; gap: 24px; margin-bottom: 32px; }
 .why-research .feature { display: flex; align-items: flex-start; gap: 16px; }
 .why-research .icon-box { flex-shrink: 0; width: 48px; height: 48px; background: #2563eb; color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
@@ -110,7 +101,8 @@ SECTION SPECIFIC STYLES
 .why-research .trusted svg { width: 20px; height: 20px; color: #2563eb; flex-shrink: 0; }
 
 .why-research .card-wrapper { display: flex; justify-content: center; }
-.why-research .card { position: relative; background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); max-width: 400px; width: 100%; }
+.why-research .card-box { background: #fff; border-radius: 12px; padding: 12px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); max-width: 450px; width: 100%; }
+.why-research .card { position: relative; background: #fff; border-radius: 12px; padding: 32px; }
 .why-research .skeleton { height: 16px; background: rgba(37, 99, 235, 0.2); border-radius: 6px; margin-bottom: 12px; width: 75%; }
 .why-research .skeleton.full { width: 100%; background: rgba(37, 99, 235, 0.1); }
 .why-research .skeleton.medium { width: 66%; background: rgba(37, 99, 235, 0.15); }
@@ -123,10 +115,6 @@ SECTION SPECIFIC STYLES
 @media (min-width: 1024px) {
 	.why-research .grid { grid-template-columns: 1fr 1fr; gap: 64px; }
 }
-
-
-
-
 
 /* --- STATISTICS --- */
 .stats-grid,

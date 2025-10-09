@@ -119,23 +119,11 @@ if (!empty($results)) {
 ?>
 
 
-<section class="blog-hero hero">
+<section class="blog-hero hero-section">
 	<div class="container">
-		<div class="page-title">
+		<div class="heading">
 			<h1 class='entry-title header-default'> Healthray Sitemap</h1>
 		</div>
-		<?php
-		$categories = get_categories();
-		if ($categories) {
-		?>
-		<div class="main-sidebar">
-			<?php get_template_part('templates/category-list'); ?>
-		</div>
-		<?php } ?>
-		<div class="sidebar-form">
-			<?php echo get_search_form(); ?>
-		</div>
-
 	</div>
 </section>
 

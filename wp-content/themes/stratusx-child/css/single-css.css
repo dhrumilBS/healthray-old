@@ -4,13 +4,15 @@
 .post-content a { color: #5669EC; font-weight: 800; }
 .post-content img { margin: 20px 0; }
 .single-post h1 { font-size: 48px; }
-.post-content h1,.post-content h2,.post-content h3,.post-content h4,.post-content h5,.post-content h6 { font-weight: 800; }
+.post-content strong { font-weight: 700; }
+.post-content h1,.post-content h2,.post-content h3,.post-content h4,.post-content h5,.post-content h6 { font-weight: 700; }
 
 .post-content h3 { margin: 12px 0 8px; }
 .post-content ul { background-color: #eef9ff; padding: 12px 40px; max-width: max-content; width: 100%; margin-bottom: 20px; }
 .post-content ul li { color: #000; }
 .post-content ul li::marker { color: #5669ec; }
-.post-content p { text-align: justify; }
+.post-content p { text-align: justify; margin-bottom: 12px; }
+.post-content p:last-of-type { margin-bottom: 0; }
 .blog-cta-section { background-color: #f4f7ff; padding: 20px; border: 2px solid #477bff; margin-bottom: 20px; }
 .blog-cta-section .wp-block-buttons { text-align: center; }
 .blog-cta-section .wp-block-buttons .wp-element-button { color: #fff; }

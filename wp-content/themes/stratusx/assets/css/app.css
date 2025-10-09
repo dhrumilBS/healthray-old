@@ -1,8 +1,8 @@
 html { font-size: 100%; overflow-x: hidden; }
-body { font-family: "Nunito", sans-serif; color: #5c5c5c; }
-.container { width: calc(100% - 30px); max-width: 1170px !important; }
+body { font-family: "Nunito", sans-serif; }
+.container { width: 100%; max-width: 1240px; padding: 0 12px; }
 
-.inner-container>.content-editor { width: calc(100% - 30px); max-width: 1170px; margin: 0 auto; }
+.inner-container>.content-editor { width: 100%; max-width: 1170px; margin: 0 auto; padding: 0 12px;  }
 .error-404 { padding-top: 40px; padding-bottom: 40px }
 
 body.elementor-page .inner-container>.content-editor,

@@ -17,8 +17,8 @@ add_filter('wp_lazy_loading_enabled', '__return_false');
 add_filter('wpcf7_ajax_loader', '__return_false');
 add_filter('big_image_size_threshold', '__return_false');
 add_filter('wpseo_enable_xml_sitemap_transient_caching', '__return_true');
-// =----------------------------------------------------------------------------= //
 
+// =----------------------------------------------------------------------------= //
 add_action('init', function () {
 	if (isset($_GET['h']) && $_GET['h'] == 'true') {
 		add_filter('show_admin_bar', '__return_true');
@@ -26,9 +26,25 @@ add_action('init', function () {
 		add_filter('show_admin_bar', '__return_false');
 	}
 });
+// =----------------------------------------------------------------------------= //
+add_action('init', function () {
+	global $wp_post_types;
+	$wp_post_types['page']->exclude_from_search = true;
+	if (isset($wp_post_types['wpcf7r_action']))
+		$wp_post_types['wpcf7r_action']->exclude_from_search = true;
+});
 
 // =----------------------------------------------------------------------------= //
+add_action('init', function () {
+	$shortcode_dir = get_stylesheet_directory() . '/shortcodes/';
 
+	if (is_dir($shortcode_dir)) {
+		foreach (glob($shortcode_dir . '*.php') as $file) {
+			require_once $file;
+		}
+	}
+});
+// =----------------------------------------------------------------------------= //
 
 add_filter('manage_page_posts_columns', function ($columns) {
 	return array_merge($columns, ['thumb-img' => __('Image', 'textdomain')]);
@@ -61,36 +77,10 @@ function my_set_image_meta_upon_image_upload($post_ID)
 	}
 }
 
-// =---------------------------------------------------------= //
-
-// Auto add featured image
-// add_action('the_post', 'wpsites_auto_set_featured_image');
-function wpsites_auto_set_featured_image()
-{
-	global $post;
-
-	if (get_field('best_software_statecity_image')) {
-		$statecity_img = get_field('best_software_statecity_image');
-		set_post_thumbnail($post, $statecity_img);
-	}
-
-	$featured_image_exists = has_post_thumbnail($post->ID);
-	if (!$featured_image_exists) {
-		$attached_image = get_children("post_parent=$post->ID&post_type=attachment&post_mime_type=image&numberposts=1");
-		if ($attached_image) {
-			foreach ($attached_image as $attachment_id => $attachment) {
-				set_post_thumbnail($post->ID, $attachment_id);
-			}
-		}
-	}
-}
-
 // =----------------------------------------------------------------------------= //
 add_action('wp_enqueue_scripts', 'wp_optimize_file');
 function wp_optimize_file()
 {
-	wp_register_style('roots_app',  get_template_directory_uri() . '/assets/css/app.css', array(), '1');
-
 	wp_dequeue_style('themo-icons');
 	wp_deregister_style('themo-icons');
 
@@ -106,87 +96,62 @@ function wp_optimize_file()
 	wp_dequeue_style('wp-block-library');
 	wp_deregister_style('wp-block-library');
 
+	wp_dequeue_style('contact-form-7');
+	wp_dequeue_script('contact-form-7');
+
+	wp_dequeue_script('google-recaptcha');
+	wp_deregister_script('google-recaptcha');
+
 	// 	----------------------------------------- 
 	wp_enqueue_style('common-theme', get_stylesheet_directory_uri() . '/css/common.css', [], '1');
-	wp_enqueue_style('roots_app');
+	wp_enqueue_style('roots_app',  get_template_directory_uri() . '/assets/css/app.css', array(), '1');
 	wp_enqueue_style('roots_child-style', get_stylesheet_uri(), [], '1', 'all', 9999);
-
-
-
-
-
+	// 	----------------------------------------- 
 	wp_enqueue_style('abha-css', get_stylesheet_directory_uri() . '/css/abha-shortcode.css', array(), '1');
 	wp_enqueue_script('abha-js', get_stylesheet_directory_uri() . '/js/abha-shortcode.js', array('jquery'), '1');
 	wp_localize_script('abha-js', 'ajax_obj', admin_url('admin-ajax.php'));
-
-
-
-
+	if (is_page(26834)) {
+		wp_enqueue_style('abha-table', get_stylesheet_directory_uri() . '/css/abha-table.css', [], '1');
+	}
+	// 	-----------------------------------------
 	// 	wp_enqueue_style('bootstrap', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css', array(), '1');
 	// 	wp_enqueue_script('utm', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.min.js', [], '1');
-
+	// 	----------------------------------------- 
 
 	wp_enqueue_script('utm', get_stylesheet_directory_uri() . '/js/utm.js', [], '1');
 
+	// 	----------------------------------------- 
 	if (in_array('page-template-alternative', get_body_class())) {
 		wp_enqueue_style('alternative', get_stylesheet_directory_uri() . '/css/alternative.css', [],  '1');
 	}
+	// 	----------------------------------------- 
 	if (is_single()) {
 		wp_enqueue_style('single-post', get_stylesheet_directory_uri() . '/css/single-css.css', [], '1');
 	}
-
-	if (in_array('page-id-26834', get_body_class())) {
-		wp_enqueue_style('abha-table', get_stylesheet_directory_uri() . '/css/abha-table.css', [], '1');
-	}
+	// 	----------------------------------------- 
 	if (is_page_template('temp-dpa.php')) {
 		wp_enqueue_style('dpa-style', get_stylesheet_directory_uri() . '/css/dpa.css', [], '1.0');
 	}
-
-	/* Page-ID - Name
-    61804 - WhitePaper
-    61837 - Testimonial
-    61981 - Case Studies
-    */
-
-	if (in_array('archive', get_body_class()) || is_single()) {
+	// 	-----------------------------------------
+	if (in_array('archive', get_body_class()) || is_single() || is_page(23517) || is_search() || is_page(61837)) {
 		wp_enqueue_style('custom', get_stylesheet_directory_uri() . '/css/custom.css', [], rand());
 	}
-	// if (in_array('post-type-archive-whitepaper', get_body_class()) || is_single() && get_post_type() == 'whitepaper') {
-	// 	wp_enqueue_style('whitepaper-template', get_stylesheet_directory_uri() . '/css/whitepaper.css', [],  rand());
-	// }
-
 
 	wp_enqueue_style(get_post_type() . '-template', get_stylesheet_directory_uri() . '/css/' . get_post_type() . '.css', [],  rand());
-	
+	// 	------- 61837 - Testimonial --------------------------------
+
 	if (is_page(61837)) {
 		wp_enqueue_style('testimonial', get_stylesheet_directory_uri() . '/css/testimonial.css', [], '1.2');
 	}
 
-	if (is_page(61981) || in_array('case-studies-template-default', get_body_class())) {
-		wp_enqueue_style('case-studies', get_stylesheet_directory_uri() . '/css/case-studies.css', [], '1.2');
-	}
-
 	wp_enqueue_script('child-script', get_stylesheet_directory_uri() . '/js/script.js', [],  false);
-	wp_dequeue_script('contact-form-7');
-	wp_dequeue_script('google-recaptcha');
-	wp_dequeue_style('contact-form-7');
 }
 // =----------------------------------------------------------------------------= //
 function reading_time()
 {
 	global $post;
-	$content = get_post_field('post_content', $post->ID);
-	$word_count = str_word_count(strip_tags($content));
-	echo $readingtime = ceil($word_count / 200);
-
-	if ($readingtime == 1) {
-		$timer = " minute";
-	} else {
-		$timer = " minutes";
-	}
-	$totalreadingtime = $readingtime . $timer;
-
-	return $totalreadingtime;
+	$readingtime = ceil(str_word_count(strip_tags(get_post_field('post_content', $post->ID))) / 200);
+	return $readingtime . ($readingtime == 1) ? " minute" : " minutes";
 }
 
 
@@ -201,49 +166,17 @@ function child_themo_setup()
 	register_nav_menus(['footer_navigation' => esc_html__('Footer Navigation', 'stratus'),]);
 }
 // =----------------------------------------------------------------------------= //
-add_filter('feed_link', 'remove_category_from_feed_url');
-function remove_category_from_feed_url($feed_url)
-{
-	$feed_url = str_replace('/category/', '/', $feed_url);
-	return $feed_url;
-}
+// add_filter('feed_link', 'remove_category_from_feed_url');
+// function remove_category_from_feed_url($feed_url)
+// {
+// 	$feed_url = str_replace('/category/', '/', $feed_url);
+// 	return $feed_url;
+// }
 // =----------------------------------------------------------------------------= //
-// Prevent Multi Submit on all WPCF7 forms
-add_action('wp_footer', 'prevent_cf7_multiple_emails');
-function prevent_cf7_multiple_emails()
+function pagination_bar()
 {
-?>
-
-	<script type="text/javascript" id="contact-form-submit-js">
-		var disableSubmit = '';
-		jQuery(document).ready(function($) {
-			const val = $(':input[type="submit"]').val()
-			$('input.wpcf7-submit[type="submit"]').click(function() {
-				$(this).val("Sending...");
-				if (disableSubmit == true) {
-					return false;
-				}
-				disableSubmit = true;
-				return true;
-			});
-
-			$('.wpcf7').on('wpcf7_before_send_mail', function(event) {
-				$(':input[type="submit"]').val("Sent");
-				disableSubmit = false;
-			});
-
-			$('.wpcf7').on('wpcf7invalid', function(event) {
-				$(':input[type="submit"]').val(val);
-				disableSubmit = false;
-			});
-		});
-	</script>
-<?php
-}
-// =----------------------------------------------------------------------------= //
-function pagination_bar($custom_query)
-{
-	$total_pages = $custom_query->max_num_pages;
+	global $wp_query;
+	$total_pages = $wp_query->max_num_pages;
 	$big = 999999999; // need an unlikely integer
 	if ($total_pages > 1) {
 		$current_page = max(1, get_query_var('paged'));
@@ -265,24 +198,6 @@ function pagination_bar($custom_query)
 <?php
 }
 // =----------------------------------------------------------------------------= //
-
-function ScanWPostFilter($query)
-{
-	if ($query->is_search) {
-		$query->set('post_type', 'post');
-	}
-	return $query;
-}
-//add_filter('pre_get_posts','ScanWPostFilter');
-
-add_action('init', 'remove_pages_from_search');
-function remove_pages_from_search()
-{
-	global $wp_post_types;
-	$wp_post_types['page']->exclude_from_search = true;
-	if (isset($wp_post_types['wpcf7r_action']))
-		$wp_post_types['wpcf7r_action']->exclude_from_search = true;
-}
 
 // =----------------------------------------------------------------------------= //
 // add_filter('wpcf7_form_action_url', 'remove_unit_tag');
@@ -306,29 +221,7 @@ function custom_email_confirmation_validation_filter($result, $tag)
 	return $result;
 }
 // =----------------------------------------------------------------------------= //
-add_filter('wpcf7_validate_select*', 'custom_country_select', 20, 2);
-function custom_country_select($result, $tag)
-{
-	if ('your-country' == $tag->name) {
-		$val = isset($_POST['your-website']) ? trim($_POST['your-website']) : '';
-		echo "value is $val";
-		if (empty($val) || $val == 0 || $val == '0') {
-			$result->invalidate($tag, "Please Select Country");
-		}
-		print_r($result);
-	}
-	return $result;
-}
-
-
 // =----------------------------------------------------------------------------= //
-function wpdocs_script_subresource_integrity(array $attr): array
-{
-	if (empty($attr['id']) || empty($attr['src'])) return $attr;
-	$attr['defer'] = 'defer';
-	return $attr;
-}
-// add_filter('wp_script_attributes', 'wpdocs_script_subresource_integrity', 10, 1);
 function defer_parsing_of_js($url)
 {
 	if (is_user_logged_in()) return $url; //don't break WP Admin
@@ -421,17 +314,31 @@ function footer_popup()
 		});
 	</script>
 <?php }
-
 // =----------------------------------------------------------------------------= //
-function load_custom_shortcodes() {
-    $shortcode_dir = get_stylesheet_directory() . '/shortcodes/';
+add_action('wp_footer', function(){});
+// =----------------------------------------------------------------------------= //
 
-    if (is_dir($shortcode_dir)) {
-        foreach (glob($shortcode_dir . '*.php') as $file) {
-            require_once $file;
-        }
-    }
+add_action('wp_ajax_get_whitepaper_pdf', 'secure_whitepaper_pdf');
+add_action('wp_ajax_nopriv_get_whitepaper_pdf', 'secure_whitepaper_pdf');
+
+function secure_whitepaper_pdf()
+{
+	if (! isset($_POST['nonce']) || ! wp_verify_nonce($_POST['nonce'], 'whitepaper_pdf_nonce')) {
+		wp_send_json_error('Unauthorized');
+	}
+
+	$post_id = intval($_POST['post_id']);
+	if (! $post_id) wp_send_json_error('Invalid post');
+
+	$pdf = get_field('whitepaper_pdf', $post_id);
+
+	if ($pdf) {
+		$file_path = get_attached_file($pdf['ID']);
+		if (file_exists($file_path)) {
+			$file_url = wp_get_attachment_url($pdf['ID']);
+			wp_send_json_success(['url' => $file_url]);
+		}
+	}
+
+	wp_send_json_error('File not found');
 }
-add_action('init', 'load_custom_shortcodes');
-
-// =----------------------------------------------------------------------------= //

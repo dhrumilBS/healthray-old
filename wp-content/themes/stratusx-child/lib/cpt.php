@@ -137,44 +137,6 @@ function register_whitepaper_cpt()
 }
 add_action('init', 'register_whitepaper_cpt');
 
-function register_jobs_cpt()
-{
-    $labels = [
-        'name'                  => 'Jobs',
-        'singular_name'         => 'Job',
-        'menu_name'             => 'Jobs',
-        'name_admin_bar'        => 'Job',
-        'add_new'               => 'Add New',
-        'add_new_item'          => 'Add New Job',
-        'new_item'              => 'New Job',
-        'edit_item'             => 'Edit Job',
-        'view_item'             => 'View Job',
-        'all_items'             => 'All Jobs',
-        'search_items'          => 'Search Jobs',
-        'not_found'             => 'No jobs found.',
-        'not_found_in_trash'    => 'No jobs found in Trash.'
-    ];
-
-    $args = [
-        'labels'                => $labels,
-        'public'                => true,
-        'publicly_queryable'    => true,
-        'show_ui'               => true,
-        'show_in_menu'          => true,
-        'query_var'             => true,
-        'capability_type'       => 'post',
-        'has_archive'           => true,
-        'hierarchical'          => false,
-        'menu_position'         => 22,
-        'menu_icon'             => 'dashicons-businessperson',
-        'supports'              => ['title', 'author', 'editor', 'revisions', 'thumbnail', 'custom-fields'],
-        'show_in_rest'          => true,
-    ];
-
-    register_post_type('job', $args);
-}
-add_action('init', 'register_jobs_cpt');
-
 function register_event_cpt()
 {
     $labels = [

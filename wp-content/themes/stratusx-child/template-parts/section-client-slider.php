@@ -415,16 +415,16 @@
             
             <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-number">50,000+</div>
+                    <div class="stat-number">5,000+</div>
                     <p>Healthcare Professionals</p>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">1,200+</div>
-                    <p>Healthcare Organizations</p>
+                    <div class="stat-number">5M+</div>
+                    <p>Patients Records</p>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">95%</div>
-                    <p>Satisfaction Rate</p>
+                    <div class="stat-number">12+</div>
+                    <p>Specialities</p>
                 </div>
             </div>
         </div>

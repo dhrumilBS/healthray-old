@@ -203,30 +203,3 @@
 		</div>
 	</div>
 </footer>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    function getURLParameter(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-        var results = regex.exec(location.search);
-        return results === null ? null : decodeURIComponent    (results[1].replace(/\+/g, " "));
-        
-    }
-    document.addEventListener('wpcf7mailsent', function(event) {
-        const utmSource = getURLParameter('utm_source');
-        const fbAdsThankYouPage = 'https://healthray.com/thank-you-fb/';
-        const defaultThankYouPage = 'https://healthray.com/thank-you/';
-
-        setTimeout(function () {
-            if (utmSource === 'fbads') {
-                window.location.href = fbAdsThankYouPage;
-            } else {
-                window.location.href = defaultThankYouPage;
-            }
-        }, 1000); // slight delay to override default redirect
-    }, false);
-
-    console.log('Contact Form 7 conditional redirect script loaded.');
-});
-</script>

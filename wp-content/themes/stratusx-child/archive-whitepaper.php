@@ -1,9 +1,7 @@
 <section class="sec-padded hero-section blog-hero">
 	<div class="container">
 		<div class="heading text-center">
-			<div class="page-title">
-				<h1> <span>Whitepaper Library</span> </h1>
-			</div>
+			<h1> <span>Whitepaper Library</span> </h1>
 			<p style="margin-bottom: 0;">Explore our collection of in-depth industry research and insights</p>
 		</div>
 	</div>
@@ -26,8 +24,6 @@
 				while (have_posts()) {
 					the_post();
 					$post_id = get_the_ID();
-
-					// Title and excerpt
 					$title   = get_the_title($post_id);
 					$excerpt = get_the_excerpt($post_id);
 
@@ -36,7 +32,7 @@
 					}
 
 					$term_name = '';
-					$tax_list = ['whitepaper_topic', 'whitepaper_category', 'post_tag'];
+					$tax_list = ['whitepaper_topic', 'whitepaper_category' ];
 
 					foreach ($tax_list as $tax) {
 						$terms = get_the_terms($post_id, $tax);
@@ -47,28 +43,11 @@
 					}
 
 					$thumb = get_the_post_thumbnail($post_id, 'medium');
-
-					$pdf_url = '';
-					$meta_pdf = get_post_meta($post_id, 'whitepaper_pdf', true);
-					if (! empty($meta_pdf)) {
-						$pdf_url = esc_url($meta_pdf);
-					} else {
-						$attachments = get_children(['post_parent' => $post_id, 'post_type' => 'attachment', 'post_mime_type' => 'application/pdf', 'numberposts' => 1,]);
-						if ($attachments) {
-							$first = reset($attachments);
-							$pdf_url = esc_url(wp_get_attachment_url($first->ID));
-						}
-					}
-
-					$download_href = $pdf_url ? $pdf_url : get_permalink($post_id);
+					$href = get_permalink($post_id);
 
 					$term_out = '';
 					if ($term_name) {
 						$term_out = '<span class="whitepaper-tag">' . $term_name . '</span>';
-					}
-					$pdf_out = '';
-					if ($pdf_url) {
-						$pdf_out .= ' target="_blank" rel="noopener noreferrer"';
 					}
 				?>
 					<div class="whitepaper-card">
@@ -76,11 +55,11 @@
 							<?= $thumb; ?>
 							<?= $term_out; ?>
 						</div>
-						<a href="<?= $download_href; ?>">
+						<a href="<?= $href; ?>">
 							<h3 class="whitepaper-title"><?= $title; ?></h3>
 						</a>
 						<p class="whitepaper-desc"><?= $excerpt; ?></p>
-						<a href="<?= $download_href; ?>" class="btn btn-primary" <?= $pdf_out; ?>> View Whitepaper </a>
+						<a href="<?= $href; ?>" class="btn btn-primary" > View Whitepaper </a>
 					</div>
 				<?php } ?>
 				<?php wp_reset_postdata(); ?>

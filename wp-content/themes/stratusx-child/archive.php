@@ -1,38 +1,58 @@
 <section class="blog-hero hero-section">
 	<div class="container">
 		<div class="heading text-center">
-			<h1> Healthray Blog </h1>
-			<p>Discover expert analyses, healthcare trends, and actionable insights designed to help you stay informed and make smarter health decisions with Healthray.</p>
+		    
+			<?php if (is_category()) : ?>
+				<h1><?php single_cat_title(); ?></h1>
+				<div><?= (category_description()); ?></div>
+
+			<?php elseif (is_tag()) : ?>
+				<h1>Tag: <?php single_tag_title(); ?></h1>
+				<p>Explore articles tagged under <strong><?php single_tag_title(); ?></strong> for deeper insights and expert takes.</p>
+
+			<?php elseif (is_author()) : ?>
+				<h1>Posts by <?php the_author(); ?></h1>
+				<p>Read the latest posts and perspectives by <strong><?php the_author(); ?></strong>.</p>
+
+			<?php elseif (is_date()) : ?>
+				<h1>
+					<?php
+					if (is_day()) {
+						echo 'Daily Archives: ' . get_the_date();
+					} elseif (is_month()) {
+						echo 'Monthly Archives: ' . get_the_date('F Y');
+					} elseif (is_year()) {
+						echo 'Yearly Archives: ' . get_the_date('Y');
+					}
+					?>
+				</h1>
+				<p>Browse posts from <?php echo get_the_date(); ?> and stay updated with the latest insights.</p>
+
+			<?php else : ?>
+				<h1>Healthray Blog</h1>
+				<p>Discover expert analyses, healthcare trends, and actionable insights designed to help you stay informed and make smarter health decisions with Healthray.</p>
+			<?php endif; ?>
 		</div>
+
 		<?php
 		if (get_categories()) {
 			get_template_part('templates/category-list');
-		} ?>
-
+		}
+		?>
 	</div>
 </section>
+
 
 <section class="inner-container blog-container sec-padded">
 	<div class="container">
 		<div class="sidebar-form">
 			<?php echo get_search_form(); ?>
 		</div>
-		<?php
-		$paged = (get_query_var('paged')) ? absint(get_query_var('paged')) : 1;
-
-		$args = array(
-			'post_type' => array('post'),
-			'post_status' => array('publish'),
-			'orderby' => 'date',
-			'order' => 'DESC',
-			'paged' => $paged
-		);
-		$widget_wp_query = new \WP_Query($args); ?>
 		<section class="th-masonry-blog">
 			<div class="mas-blog row">
 				<?php
-				while ($widget_wp_query->have_posts()) {
-					$widget_wp_query->the_post();
+				while (have_posts()) {
+					the_post();
 				?>
 					<div <?= post_class('mas-blog-post'); ?>>
 						<div class="mas-blog-post-inner">
@@ -43,7 +63,7 @@
 			</div>
 
 			<nav class="post-nav">
-				<?= pagination_bar($widget_wp_query) ?>
+				<?= pagination_bar() ?>
 			</nav>
 			<?php wp_reset_postdata(); ?>
 		</section>
