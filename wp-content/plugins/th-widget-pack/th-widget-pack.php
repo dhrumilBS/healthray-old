@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Page Builder Widget Pack
- * Version: 2.2.9
+ * Version: 2.2.6
  * Plugin URI: themovation.com
  * Description: A widget pack for the Elementor Page Builder
  * Author: Themovation
@@ -12,7 +12,7 @@
  */
 
 
-define( 'THEMO_VERSION', '2.2.9' );
+define( 'THEMO_VERSION', '2.2.6' );
 define( 'THEMO__FILE__', __FILE__ );
 define( 'THEMO_PLUGIN_BASE', plugin_basename( THEMO__FILE__ ) );
 define( 'THEMO_URL', plugins_url( '/', THEMO__FILE__ ) );
@@ -22,20 +22,6 @@ define( 'THEMO_ASSETS_URL', THEMO_URL . 'assets/' );
 define( 'THEMO_COLOR_PRIMARY', '#3A3B74' );
 define( 'THEMO_COLOR_ACCENT', '#F6C15E' );
 define( 'ENABLE_BLOCK_LIBRARY', true );
-
-//HFE constants
-define('ALOHA_URL', plugin_dir_url(__FILE__));
-define('ALOHA_PATH', __DIR__);
-define('ALOHA_CSS_PATH', ALOHA_PATH . '/css');
-define('ALOHA_CSS_URL', ALOHA_URL . 'css');
-define('ALOHA_JS_PATH', ALOHA_PATH . '/js');
-define('ALOHA_JS_URL', ALOHA_URL . 'js');
-define('ALOHA_HFE_PATH', ALOHA_PATH . '/header-footer/hfe-plugin/header-footer');
-define('ALOHA_HFE_OLD_POST_TYPE', 'elementor-hf');
-define('ALOHA_HFE_NEW_POST_TYPE', 'elementor-thhf');
-define('ALOHA_DOMAIN', 'header-footer-elementor');
-define('ALOHA_WIDGETS_HELP_URL_PREFIX', 'https://help.themovation.com/');
-
 
 /**
  * Define Elementor Partner ID
@@ -68,41 +54,19 @@ endif;
 
 add_action( 'plugins_loaded', 'th_translation_ready' );
 
-function is_elementor_active() {
-    if (defined('ELEMENTOR_VERSION') && is_callable('Elementor\Plugin::instance')) {
-        return true;
-    }
-
-    return false;
-}
-
-function aloha_hfe_get_elementor_instance() {
-    if (defined('ELEMENTOR_VERSION') && is_callable('Elementor\Plugin::instance')) {
-        return $elementor_instance = Elementor\Plugin::instance();
-    }
-    return false;
-}
 /**
  * Load the header footer class loader.
  */
-add_action('plugins_loaded', 'aloha_init');
-function aloha_init(){
-  require_once THEMO_PATH . 'header-footer/aloha_hfe_overrides.php';
-  
-}
-//add_action('admin_menu', 'aloha_add_admin_menu');
+require_once THEMO_PATH . 'header-footer/inc/class-header-footer-elementor.php';
 
-function aloha_add_admin_menu() {
-    if (is_elementor_active()) {
-        add_submenu_page(
-                'stratus_dashboard',
-                __('Global Templates', ALOHA_DOMAIN),
-                __('Global Templates', ALOHA_DOMAIN),
-                'edit_pages',
-                'edit.php?post_type=elementor-thhf'
-        );
-    }
+/**
+ * Load the Plugin Class.
+ */
+function thmv_hfe_init() {
+	THHF_Header_Footer_Elementor::instance();
 }
+
+add_action( 'plugins_loaded', 'thmv_hfe_init' );
 
 // Enable white label for HFE and deactivate analytics tracking.
 function thmv_set_white_label_opt(){

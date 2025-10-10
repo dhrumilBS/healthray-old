@@ -39,6 +39,9 @@ class ML_Trust_Content_Stats_Widget extends Widget_Base {
 				'label' => __('Number', 'plugin-name'),
 				'type' => Controls_Manager::TEXT,
 				'default' => '3M+',
+			    'dynamic' => [
+                    'active' => true,
+                ],
 			]
 		);
 
@@ -48,6 +51,9 @@ class ML_Trust_Content_Stats_Widget extends Widget_Base {
 				'label' => __('Label', 'plugin-name'),
 				'type' => Controls_Manager::TEXT,
 				'default' => 'RX Written',
+			    'dynamic' => [
+                    'active' => true,
+                ],
 			]
 		);
 

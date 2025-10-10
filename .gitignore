@@ -3,3 +3,8 @@ wp-content/uploads/
 wp-content/wf*/
 .htaccess
 wp-content/debug.log
+_*
+wp-content/plugins/wpcf7-redirect
+wp-content/plugins/inter*
+wp-content/plugins/mega*
+wp-content/plugins/international-telephone-input-for-*

@@ -32,7 +32,7 @@ class Field {
 	public $description;
 	public $help;
 	public $compiler;
-
+	
 	protected $args = array();
 
 	/**

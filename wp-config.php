@@ -48,14 +48,14 @@ define( 'DB_COLLATE', '' );
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',         '!>$4DxOGC8/%,!yWm;hE3Lbjvwd6#/G*(;B^=Z( QcG0CvO>%, fO#=,Vg;ySOxa' );
-define( 'SECURE_AUTH_KEY',  'e}aCJg+yxOcArao$[y<yku:^2_Z[5s][R0{2{k.GI]G^[Ov50B|<ScNNEuZ)f}Vy' );
-define( 'LOGGED_IN_KEY',    'R{;UW5QGP@,y*<;f609-puCC86=M UW~m&``;p(H*v:53V5nCGE+Dm6wYG8hgfB3' );
-define( 'NONCE_KEY',        'zRQ>J%puCyZlcGiMTS{u%O Ru<)7f]eL_=5k*sUXj_X!1kYfYW1+NwhNml{J((=g' );
-define( 'AUTH_SALT',        'z1E*lb&bwykvx} j/OM+gS{/AXL~e^PO^o=m`VAc|P*vCzBt1o,.=;$08%!*)ntB' );
-define( 'SECURE_AUTH_SALT', 'Sg@M4UI3IO`q6h9$J9M@|j4H,0u>FYIjMTOQnN/}>p=UOG>F@}cCB <2pnereaV,' );
-define( 'LOGGED_IN_SALT',   '^-8>ql,Ve<MwsbC;=_rtKy}Bm3ZN()Aw4f%5oiZ&|R/NYUh}PZlR)>MTUF*//<up' );
-define( 'NONCE_SALT',       '0e]/4?Rnx1G`;7KZs|4([,59O][CF|9fMUQ/#uE@uf$nEl!Wk]yIFVq-<DA@h6<^' );
+define( 'AUTH_KEY',         '4!E@e2jp=i& dB}8.0u0>CXAGxDEB++WyKqMkac;Z8j0 zSyb@Ex75+@swoQ!6EA' );
+define( 'SECURE_AUTH_KEY',  '<Pz63!n!l[GVdPW$ck)1Y=|sCg1C39Nu?~`@}`PV1@Z!KRVC*v3#2]U!oMrG>*|{' );
+define( 'LOGGED_IN_KEY',    'O*eNN(_t(aW7qVRk^h2Ze7GN}Ha~z1`;7rEUY{Z?A*b7x+SB$)m&c`1w}pz@?=oj' );
+define( 'NONCE_KEY',        '=,!gga;g.B5^7lIscDdup5{zhR;hrku;HaSYM_/Qvau0P}N&Riu-{d0zhtPU1+}x' );
+define( 'AUTH_SALT',        'Wn72+A#<ShKhV?;]W c |R.-W?h+oxN-IL-|=8L,Y|/>=([>{tZ}np,If6T~6x{3' );
+define( 'SECURE_AUTH_SALT', '*A%])w>2tnn+E%~?Av~zGEdJqVxBFzy/$+GWKb|vA~<JB?9*#Xz%OonNY`AhgBG;' );
+define( 'LOGGED_IN_SALT',   '_t8ZDfCVcX^D32B!?z=gQS-+JP3po&sj[|!HeC.n1CXm LJh]5.8h0Sp*V5n.TDE' );
+define( 'NONCE_SALT',       'ZF(~x_&5SV5:$#g+pyx:?YD-A:9|MwOLr&:QdD`,jUW0<vnggc3f}M`GeTi(9,`K' );
 
 /**#@-*/
 
@@ -85,9 +85,8 @@ $table_prefix = 'wp_';
  *
  * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
  */
-define('WP_DEBUG', true);
-define('WP_DEBUG_LOG', true);
-define('WP_DEBUG_DISPLAY', false);
+define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
 
 /* Add any custom values between this line and the "stop editing" line. */
 

@@ -12,7 +12,7 @@ define('SF_PATH', plugin_dir_path(__FILE__));
 add_action('wp_enqueue_scripts', 'SF_init');
 function SF_init()
 {
-	wp_enqueue_style('sf-font', SF_URL . 'css/fonts.css', [], rand());
-	wp_enqueue_style('sf-common', SF_URL . 'css/common.css', [], rand());
-	wp_enqueue_style('sf-footer', SF_URL . 'css/footer.css', [], rand());
+	wp_enqueue_style('sf-font', SF_URL . 'css/fonts.css', [], '1');
+	wp_enqueue_style('sf-common', SF_URL . 'css/common.css', [], '1');
+	wp_enqueue_style('sf-footer', SF_URL . 'css/footer.css', [], '1');
 }

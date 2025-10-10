@@ -45,25 +45,11 @@ function owl_carousel(e) {
 			navText: [prev, next],
 			responsiveClass: true,
 			responsive: {
-				// breakpoint from 0 up
-				0: {
-					items: app_slider.data("mob_sm"),
-				},
-				// breakpoint from 480 up
-				480: {
-					items: app_slider.data("mob_num"),
-				},
-				// breakpoint from 786 up
-				786: {
-					items: app_slider.data("tab_num")
-				},
-				// breakpoint from 1023 up
-				1023: {
-					items: app_slider.data("lap_num")
-				},
-				1199: {
-					items: app_slider.data("desk_num")
-				}
+				0: { items: app_slider.data("mob_sm") },
+				480: { items: app_slider.data("mob_num") },
+				786: { items: app_slider.data("tab_num") },
+				1023: { items: app_slider.data("lap_num") },
+				1199: { items: app_slider.data("desk_num") }
 			}
 		});
 		if (jQuery('.custom-toggle-tabs').length > 0) {
@@ -79,9 +65,6 @@ function owl_carousel(e) {
 				jQuery('.custom-toggle-tabs li').eq(currentIndex).addClass('active');
 			})
 		}
-
-
-
 		// Custom Pagination Functionality
 		jQuery(".custom-pagination .dot").on("click", function () {
 			const slideIndex = jQuery(this).data("slide");
@@ -89,22 +72,14 @@ function owl_carousel(e) {
 			jQuery(".custom-pagination .dot").removeClass("active");
 			jQuery(this).addClass("active");
 		});
-
 		app_slider.on("changed.owl.carousel", function (event) {
 			const currentIndex = event.item.index - event.relatedTarget._clones.length / 2;
 			const realIndex = currentIndex < 0 ? event.item.count - 1 : currentIndex % event.item.count;
-
 			jQuery(".custom-pagination .dot").removeClass("active");
 			jQuery(".custom-pagination .dot").eq(realIndex).addClass("active");
 		});
-
-		// Initialize first dot as active
 		jQuery(".custom-pagination .dot").eq(0).addClass("active");
-
-
 	});
-
-
 }
 
 // ============================= Healthray Tab  ->   healthray-tabs/controls.php =====================================
@@ -152,18 +127,8 @@ function alternative(e) {
 				if (jsonData.img) {
 					jQuery('#jsonData tbody').html('')
 					jQuery.each(jsonData.content, function (key, value) {
-						if (value.our.trim().toLowerCase() == "yes") {
-							value.our = yesImage
-						} else if (value.our.trim().toLowerCase() == "no") {
-							value.our = noImage
-						}
-
-						if (value.other.trim().toLowerCase() == "yes") {
-							value.other = yesImage;
-						} else if (value.other.trim().toLowerCase() == "no") {
-							value.other = noImage
-						}
-						jQuery('#jsonData tbody').append('<tr> <td class="feature">' + value.key + '</td> <td class="our"> ' + value.our + '</td> <td class="other"> ' + value.other + '</td> </tr>');
+						const mapYesNo = val => val.trim().toLowerCase() === "yes" ? yesImage : val.trim().toLowerCase() === "no" ? noImage : val;						
+						jQuery('#jsonData tbody').append('<tr> <td class="feature">' + value.key + '</td> <td class="our"> ' + mapYesNo(value.our) + '</td> <td class="other"> ' + mapYesNo(value.other) + '</td> </tr>');
 					});
 				}
 			}
@@ -184,7 +149,6 @@ function new_slider() {
 		});
 	});
 }
-
 function tabbar() {
 	const tabLinks = document.querySelectorAll(".tab-link");
 	const tabPanels = document.querySelectorAll(".tab-panel");
@@ -192,14 +156,18 @@ function tabbar() {
 	tabLinks.forEach(link => {
 		link.addEventListener("click", event => {
 			event.preventDefault();
-			document.querySelector(".tab-link.active")?.classList.remove("active");
-			document.querySelector(".tab-panel.active")?.classList.remove("active");
+			const activeLink = document.querySelector(".tab-link.active");
+			const activePanel = document.querySelector(".tab-panel.active");
+			if (activeLink) activeLink.classList.remove("active");
+			if (activePanel) activePanel.classList.remove("active");
 			link.classList.add("active");
 			const targetPanel = document.querySelector(link.getAttribute("href"));
-			targetPanel?.classList.add("active");
+			if (targetPanel) targetPanel.classList.add("active");
 		});
 	});
 }
+
+
 
 jQuery(window).on('elementor/frontend/init', function () {
 

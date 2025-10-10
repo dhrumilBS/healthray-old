@@ -11,8 +11,32 @@ define('ML_URL', plugins_url('/', __FILE__));
 define('ML_PATH', plugin_dir_path(__FILE__));
 require_once plugin_dir_path(__FILE__) . '/elements/helper/slider-option.php';
 
+
+// add_action('elementor/elements/categories_registered', 'ml_add_elementor_widget_categories', 5);
+function ml_add_elementor_widget_categories($elements_manager)
+{
+	$elements_manager->add_category(
+		'my-element',
+		[
+			'title' => 'Custom',
+			'icon'  => 'fa fa-plug',
+		]
+	);
+
+	$elements_manager->add_category(
+		'my-element-slider',
+		[
+			'title' => 'my Element Slider',
+			'icon'  => 'fa fa-plug',
+		]
+	);
+}
+
 add_action('elementor/elements/categories_registered', function ($elements_manager) {
+	// Get existing categories
 	$categories = $elements_manager->get_categories();
+
+	// Insert your category at the right position
 	$new_categories = [];
 	foreach ($categories as $key => $category) {
 		if ($key === 'layout') {
@@ -31,6 +55,8 @@ add_action('elementor/elements/categories_registered', function ($elements_manag
 		}
 		$new_categories[$key] = $category;
 	}
+
+	// Re-register the categories
 	foreach ($new_categories as $slug => $category) {
 		$elements_manager->add_category($slug, $category);
 	}
@@ -43,17 +69,16 @@ add_filter('elementor/widgets/register', 'ML_init');
 function ML_init()
 {
 	wp_enqueue_style('owl.carousal', ML_URL . 'css/owl.carousel.min.css', [], '1');
-	wp_enqueue_style('my-elements', ML_URL . 'css/my-elements.css', [], '1');
-
 	wp_enqueue_script('owl.carousal', ML_URL . 'js/owl.carousel.min.js', array('jquery'), '1');
-	wp_enqueue_script('my-element-js', ML_URL . 'js/script.js', array('jquery'), '1');
+
+
+	wp_enqueue_style('my-elements', ML_URL . 'css/my-elements.css', [], '1');
+	wp_enqueue_script('my-element', ML_URL . 'js/script.js', array('jquery'), '1');
 
 	// Register style
-	wp_register_style('owl.carousal', ML_URL . 'css/owl.carousel.min.css', [], '1.0');
 	wp_register_style('ml-swiper-widget', ML_URL . 'css/swiper-widget.css', [], '1.0');
 	wp_register_style('ml-slider-logo', ML_URL . 'css/slider-logo.css', [], '1.0');
 
-	wp_register_script('owl.carousal', ML_URL . 'js/owl.carousel.min.js', array('jquery'), '1.1');
 
 	wp_register_style('ml-before-after-style', ML_URL . 'css/ml-before-after-style.css', [], '1.0');
 	wp_register_script('ml-before-after-script', ML_URL . 'js/ml-before-after-script.js', array('jquery'), '1.1');
@@ -66,7 +91,7 @@ function my_elements()
 	require_once ML_PATH . 'elements/product-slider-2.php';
 	require_once ML_PATH . 'elements/ehr-product-slider-3.php';
 	require_once ML_PATH . 'elements/pms-product-slider.php';
-
+	
 	require_once ML_PATH . 'elements/swiper-grid.php';
 	require_once ML_PATH . 'elements/slider-logo.php';
 
@@ -89,7 +114,9 @@ function my_elements()
 	require_once ML_PATH . 'elements/custom-toggle.php';
 	require_once ML_PATH . 'elements/alternativ.php';
 	require_once ML_PATH . 'elements/service-card.php';
-
+	
 	require_once ML_PATH . 'elements/trust-content.php';
-	require_once ML_PATH . 'elements/before-after-slider.php';
+	require_once ML_PATH . 'elements/before-after-slider.php';	
+	
+	
 }
