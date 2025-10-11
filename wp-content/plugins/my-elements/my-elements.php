@@ -93,6 +93,7 @@ function my_elements()
 	require_once ML_PATH . 'elements/pms-product-slider.php';
 	
 	require_once ML_PATH . 'elements/swiper-grid.php';
+	require_once ML_PATH . 'elements/trusted-standars.php';
 	require_once ML_PATH . 'elements/slider-logo.php';
 
 	require_once ML_PATH . 'elements/side-toggler.php';

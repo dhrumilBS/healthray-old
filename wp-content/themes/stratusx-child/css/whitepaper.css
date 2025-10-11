@@ -80,7 +80,7 @@ SECTION SPECIFIC STYLES
 
 .download-form .pdf-download-message { text-align: center; margin-top: 20px; font-size: 17px; }
 .download-form .pdf-download-message a{ padding: 6px 12px; display: inline-block; background: #152d7c20; border-radius: 8px; border: 1px solid #152d7c;}
-.download-form 1.pdf-download-message a:hover{ background: #152d7c; color: #fff;}
+.download-form .pdf-download-message a:hover{ background: #152d7c; color: #fff;}
 
 @media screen and (max-width: 600px) {
 	.download-form .form-wrapper { padding: 0; box-shadow: none; border: 0; }
