@@ -146,7 +146,7 @@ body{ font-family: 'Nunito', sans-serif;  color: #5c5c5c; }
 .search-form .input-group { position: relative; border: 1px solid #1b2374; border-radius: 12px; display: flex; overflow: hidden;}
 .search-form .input-group .search-field{ width: 100%; background-color: transparent; padding: 12px; }
 .search-form .input-group .btn-submit{ cursor: pointer; padding: 8px; border-radius: 2px; background-color: #1b2374;  line-height: 1; padding: 12px 20px; border: 0;}
-.search-form .input-group .btn-submit i{ line-height: 1; color: #fff; }
+.search-form .input-group .btn-submit svg{ line-height: 1; color: #fff; display: block; width: 16px; height: 16px; }
 
 /* ********************************************************************************************************************* */
 /* ***************************************** Search Result/404 CSS ************************************************************* */
@@ -285,7 +285,8 @@ body{ font-family: 'Nunito', sans-serif;  color: #5c5c5c; }
 .elementor-toggle .elementor-tab-content { padding:12px !important; padding-top:0 !important; display: none; }
 .elementor-toggle .elementor-tab-content >*:first-child{ border-top: 1px solid #d3ddeb; padding-top: calc(var(--padding) * .66); }
 .elementor-toggle .elementor-tab-content >*+*{ margin-top: 12px; }
-.elementor-toggle .elementor-tab-content *{ margin-bottom: 0; color: #65758b;}
+.elementor-toggle .elementor-tab-content { margin-bottom: 0; color: #65758b;}
+.elementor-toggle .elementor-tab-content a{ color: #152CE1;}
 
 .elementor-toggle .elementor-tab-title .elementor-toggle-icon-closed { display: block; }
 .elementor-toggle .elementor-tab-title .elementor-toggle-icon-opened { display: none; }

@@ -133,7 +133,7 @@ function wp_optimize_file()
 		wp_enqueue_style('dpa-style', get_stylesheet_directory_uri() . '/css/dpa.css', [], '1.0');
 	}
 	// 	-----------------------------------------
-	if (in_array('archive', get_body_class()) || is_single() || is_page(23517) || is_search() || is_page(61837)) {
+	if (in_array('archive', get_body_class()) || is_single() || is_page(23517) || is_search() || is_page(61837) || is_home()) {
 		wp_enqueue_style('custom', get_stylesheet_directory_uri() . '/css/custom.css', [], rand());
 	}
 
@@ -177,7 +177,7 @@ function pagination_bar()
 {
 	global $wp_query;
 	$total_pages = $wp_query->max_num_pages;
-	$big = 999999999; // need an unlikely integer
+	$big = 999999999;
 	if ($total_pages > 1) {
 		$current_page = max(1, get_query_var('paged'));
 		$pagelink = paginate_links(array(
@@ -315,7 +315,7 @@ function footer_popup()
 	</script>
 <?php }
 // =----------------------------------------------------------------------------= //
-add_action('wp_footer', function(){});
+add_action('wp_footer', function () {});
 // =----------------------------------------------------------------------------= //
 
 add_action('wp_ajax_get_whitepaper_pdf', 'secure_whitepaper_pdf');

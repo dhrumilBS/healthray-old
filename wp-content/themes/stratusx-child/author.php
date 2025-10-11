@@ -32,7 +32,7 @@ $author_id = get_the_author_meta('ID');
 		.author-hero .author-section .author{ max-width: 90%; }
 	}
 
-	.author-content { align-content font-size:17px;}
+	.author-content { align-content:center; font-size:17px;}
 	.author-content .box-container{ padding-bottom: 30px}
 	.author-content .title{ margin-bottom: 0.45em}
 	.author-content p { margin-bottom: .5em; font-size:17px; text-align: justify;}

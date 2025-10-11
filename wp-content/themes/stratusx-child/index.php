@@ -1,26 +1,21 @@
-<?php global $post; ?>
-<section class="blog-hero hero-section">
+<section class="blog-hero hero-section index">
 	<div class="container">
-		<div class="heading">
-			<?php
-			if (is_author()) {
-				$author = get_queried_object();
-			?>
-				<div class="profile-picture"> <?= get_avatar(get_the_author_meta('ID'), '250'); ?> </div>
-				<h1><?= $author->display_name . '\'s Blogs'; ?></h1>
-				<p class="description"><?= get_the_author_description(); ?></p>
-			<?php } else { ?>
-				<h1 class='entry-title header-default azsfdc'><?= wp_kses_post(roots_title()); ?> </h1>
-			<?php } ?>
+		<div class="heading text-center">
+
+			<?php if (is_category()) : ?>
+				<h1><?php single_cat_title(); ?></h1>
+				<div><?= (category_description()); ?></div>
+
+			<?php else : ?>
+				<h1>Healthray Blog</h1>
+				<p>Discover expert analyses, healthcare trends, and actionable insights designed to help you stay informed and make smarter health decisions with Healthray.</p>
+			<?php endif; ?>
 		</div>
 		<?php
-		$categories = get_categories();
-		if ($categories) {
+		if (get_categories()) {
+			get_template_part('templates/category-list');
+		}
 		?>
-			<div class="main-sidebar">
-				<?php get_template_part('templates/category-list'); ?>
-			</div>
-		<?php } ?>
 	</div>
 </section>
 
