@@ -1,4 +1,5 @@
 <?php global $post;  ?>
+
 <?php include( locate_template( 'templates/page-layout.php' ) ); ?>
 <div class="inner-container">
 	<?php include( locate_template( 'templates/page-header.php' ) ); ?>

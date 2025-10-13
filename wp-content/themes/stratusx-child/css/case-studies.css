@@ -1,0 +1,34 @@
+/* =========================== CONTAINERS & SECTIONS =========================== */
+.container { max-width: 1000px; }
+.container.narrow { max-width: 700px; }
+.container.medium { max-width: 800px; }
+.solution-section { background-color: #f9fafb; }
+.results-section { background-color: #fff; }
+.border-bottom { border-bottom: 1px solid #e2e8f0; }
+/* =========================== HERO IMAGE =========================== */
+.hero-section .badge { display: inline-block; background-color: #dde6fd1a; color: #fff; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.4rem 0.75rem; border-radius: 4px; margin-bottom: 1.5rem; line-height: 1; }
+.hero-image-section { background-color: #fff; }
+.hero-image-section .image-wrapper { border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; aspect-ratio: 2 / 1; }
+.hero-image-section .image-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* =========================== METRICS SECTION =========================== */
+.metrics-section { background-color: rgba(19, 45, 124, 0.05); }
+.metrics-section .grid-3 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+.metrics-section .card-metric { border: 2px solid #132d7c; background-color: #fff; padding: 2rem; text-align: center; border-radius: 8px; transition: all 0.3s ease; }
+.metrics-section .card-metric:hover { box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08); }
+.metrics-section .card-metric .icon-wrapper { width: 50px; height: 50px; margin: 0 auto 1rem; color: #132d7c; }
+.metrics-section .card-metric .icon-wrapper svg { width: 100%; height: 100%; }
+.metrics-section .card-metric .metric-value { font-size: 2.5rem; font-weight: 700; color: #132d7c; margin-bottom: 0.25rem; }
+.metrics-section .card-metric .metric-label { font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+@media only screen and (min-width: 768px) {
+    .metrics-section .grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* =========================== TESTIMONIAL SECTION =========================== */
+.quote-section { background-color: rgba(19, 45, 124, 0.05); }
+.quote-section .quote-box { background-color: #fff; border-left: 4px solid #132d7c; padding: 2.5rem; border-radius: 8px; }
+.quote-section .quote-text { font-size: 1.75rem; font-style: italic; color: #222; line-height: 1.6; margin-bottom: 1.5rem; }
+.quote-section .author-name { font-weight: 600; color: #111; margin-bottom: 0.25rem; }
+.quote-section .author-title { font-size: 0.9rem; font-weight: 500; color: #132d7c; }
+@media only screen and (min-width: 768px) {
+    .quote-section .quote-text { font-size: 2rem; }
+}

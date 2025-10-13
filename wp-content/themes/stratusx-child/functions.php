@@ -101,7 +101,9 @@ function wp_optimize_file()
 
 	wp_dequeue_script('google-recaptcha');
 	wp_deregister_script('google-recaptcha');
-
+	// 	-----------------------------------------
+		wp_enqueue_style('bootstrap', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css', array(), '1');
+		wp_enqueue_script('utm', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.min.js', [], '1');
 	// 	----------------------------------------- 
 	wp_enqueue_style('common-theme', get_stylesheet_directory_uri() . '/css/common.css', [], '1');
 	wp_enqueue_style('roots_app',  get_template_directory_uri() . '/assets/css/app.css', array(), '1');
@@ -113,9 +115,7 @@ function wp_optimize_file()
 	if (is_page(26834)) {
 		wp_enqueue_style('abha-table', get_stylesheet_directory_uri() . '/css/abha-table.css', [], '1');
 	}
-	// 	-----------------------------------------
-	// 	wp_enqueue_style('bootstrap', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css', array(), '1');
-	// 	wp_enqueue_script('utm', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.min.js', [], '1');
+
 	// 	----------------------------------------- 
 
 	wp_enqueue_script('utm', get_stylesheet_directory_uri() . '/js/utm.js', [], '1');

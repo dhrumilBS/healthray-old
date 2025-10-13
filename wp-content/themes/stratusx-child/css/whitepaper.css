@@ -80,7 +80,7 @@ SECTION SPECIFIC STYLES
 
 .download-form .pdf-download-message { text-align: center; margin-top: 20px; font-size: 17px; }
 .download-form .pdf-download-message a{ padding: 6px 12px; display: inline-block; background: #152d7c20; border-radius: 8px; border: 1px solid #152d7c;}
-.download-form .pdf-download-message a:hover{ background: #152d7c; color: #fff;}
+.download-form .pdf-download-message a:hover { background: #152d7c; color: #fff;}
 
 @media screen and (max-width: 600px) {
 	.download-form .form-wrapper { padding: 0; box-shadow: none; border: 0; }
@@ -102,7 +102,7 @@ SECTION SPECIFIC STYLES
 
 .why-research .card-wrapper { display: flex; justify-content: center; }
 .why-research .card-box { background: #fff; border-radius: 12px; padding: 12px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); max-width: 450px; width: 100%; }
-.why-research .card { position: relative; background: #fff; border-radius: 12px; padding: 32px; }
+.why-research .stats-card { position: relative; background: #fff; border-radius: 12px; padding: 32px; }
 .why-research .skeleton { height: 16px; background: rgba(37, 99, 235, 0.2); border-radius: 6px; margin-bottom: 12px; width: 75%; }
 .why-research .skeleton.full { width: 100%; background: rgba(37, 99, 235, 0.1); }
 .why-research .skeleton.medium { width: 66%; background: rgba(37, 99, 235, 0.15); }

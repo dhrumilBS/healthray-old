@@ -8,7 +8,11 @@ Version:  4.0
 @import url(https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800;900&display=swap);
 
 :root { --primary: #2563eb; --secondary: #0ea5e9; --text: #1e293b; --card-bg: #ffffff; } 
-body{ font-family: 'Nunito', sans-serif;  color: #5c5c5c; }
+body{ font-family: 'Nunito', sans-serif; color: #5c5c5c; }
+a{ text-decoration: none; }
+a:hover{ color: #132dc7; }
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 { color: var(--hr-primary-color); font-family: 'Nunito', sans-serif;  }
 .elementor-widget-text-editor, .elementor-widget-text-editor h1, .elementor-widget-text-editor h2,  .elementor-widget-text-editor h3, .elementor-widget-text-editor h4, .elementor-widget-text-editor h5, .elementor-widget-text-editor h6, .elementor-widget-text-editor p, .elementor-widget-text-editor ul li, .elementor-widget-text-editor ol li{ line-height: initial; }
 .elementor-widget-image-box .elementor-image-box-img{ text-align: -webkit-center; }
 
@@ -143,10 +147,10 @@ body{ font-family: 'Nunito', sans-serif;  color: #5c5c5c; }
 /* ***************************************** Search Form CSS ************************************************************* */
 /* ********************************************************************************************************************* */
 .search-form{ margin: 0 auto 24px; max-width: 500px; }
-.search-form .input-group { position: relative; border: 1px solid #1b2374; border-radius: 12px; display: flex; overflow: hidden;}
-.search-form .input-group .search-field{ width: 100%; background-color: transparent; padding: 12px; }
-.search-form .input-group .btn-submit{ cursor: pointer; padding: 8px; border-radius: 2px; background-color: #1b2374;  line-height: 1; padding: 12px 20px; border: 0;}
-.search-form .input-group .btn-submit svg{ line-height: 1; color: #fff; display: block; width: 16px; height: 16px; }
+.search-form .search-group { position: relative; border: 1px solid #1b2374; border-radius: 12px; display: flex; overflow: hidden;}
+.search-form .search-group .search-field{ width: 100%; background-color: transparent; padding: 12px; }
+.search-form .search-group .btn-submit{ cursor: pointer; padding: 8px; border-radius: 2px; background-color: #1b2374;  line-height: 1; padding: 12px 20px; border: 0;}
+.search-form .search-group .btn-submit svg{ line-height: 1; color: #fff; display: block; width: 16px; height: 16px; }
 
 /* ********************************************************************************************************************* */
 /* ***************************************** Search Result/404 CSS ************************************************************* */
@@ -283,10 +287,10 @@ body{ font-family: 'Nunito', sans-serif;  color: #5c5c5c; }
 .elementor-toggle .elementor-tab-title .elementor-toggle-icon svg { width:0.8em; height: 0.8em; fill: currentColor; margin-inline-start: 0 }
 
 .elementor-toggle .elementor-tab-content { padding:12px !important; padding-top:0 !important; display: none; }
-.elementor-toggle .elementor-tab-content >*:first-child{ border-top: 1px solid #d3ddeb; padding-top: calc(var(--padding) * .66); }
+.elementor-toggle .elementor-tab-content >*:first-child { border-top: 1px solid #d3ddeb; padding-top: calc(var(--padding) * .66); }
 .elementor-toggle .elementor-tab-content >*+*{ margin-top: 12px; }
-.elementor-toggle .elementor-tab-content { margin-bottom: 0; color: #65758b;}
-.elementor-toggle .elementor-tab-content a{ color: #152CE1;}
+.elementor-toggle .elementor-tab-content { margin-bottom: 0; color: #65758b; }
+.elementor-toggle .elementor-tab-content a { color: #152CE1; }
 
 .elementor-toggle .elementor-tab-title .elementor-toggle-icon-closed { display: block; }
 .elementor-toggle .elementor-tab-title .elementor-toggle-icon-opened { display: none; }
@@ -393,12 +397,3 @@ LIMS - PMS  */
 .patient-caring .elementor-widget-container { list-style-type: none;padding: 0;}
 .patient-caring .elementor-widget-container p {display: flex;position: relative;line-height: 33px;align-items: center;color: var(--hr-primary-color);font-size: 18px;font-weight: 600; }
 .patient-caring .elementor-widget-container p::before { content: ''; min-width: 20px; height: 20px; line-height:33px; margin-bottom: 3px; margin-right: 9px; background-image: url(/wp-content/uploads/assets/tick.svg); background-position: center; background-repeat: no-repeat; flex-shrink:0; }
-
-
-
-
-
-
-
-
-

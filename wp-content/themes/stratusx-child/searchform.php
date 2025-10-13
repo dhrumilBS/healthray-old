@@ -6,7 +6,7 @@ if (is_post_type_archive()) {
 ?>
 <form role="search" method="get" class="search-form form-inline" action="<?php echo esc_url(home_url('/')); ?>">
 	<!--<input type="hidden" value="<?= $pt; ?>" name="post_type">-->
-	<div class="input-group">
+	<div class="d-flex search-group">
 
 		<input type="search" value="<?php if (is_search()) {
 										echo get_search_query();

@@ -5,9 +5,8 @@
                     <div class="hero-text heading">
                         <h1><?= get_field('hero_title'); ?></h1>
                         <p><?= get_the_content(); ?></p>
-                        <div class="btn-group">
-                            <a href="#downloadForm" class="btn btn-primary">Download Free Whitepaper</a>
-                        </div>
+                        <a href="#downloadForm" class="btn btn-primary">Download Free Whitepaper</a>
+
                     </div>
                     <div class="hero-image text-center">
                         <div class="image-wrapper">
@@ -94,7 +93,7 @@
                     <!-- Right Card -->
                     <div class="card-wrapper">
                         <div class="card-box">
-                            <div class="card">
+                            <div class="stats-card">
                                 <div class="skeleton"></div>
                                 <div class="skeleton full"></div>
                                 <div class="skeleton medium"></div>
@@ -138,7 +137,10 @@
         </section>
 
 
-        <?php echo get_template_part('template-parts/section-client-slider'); ?>
+        <?php // echo get_template_part('template-parts/section-client-slider'); ?>
+        <div class="elementor-shortcode">
+        <?php echo do_shortcode('[elementor-template id="25539"]'); ?>
+        </div>
 
 
         <section class="sec-padded industry-leadership">
