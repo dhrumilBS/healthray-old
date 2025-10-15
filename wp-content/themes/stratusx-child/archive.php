@@ -1,7 +1,7 @@
 <section class="blog-hero hero-section">
 	<div class="container">
 		<div class="heading text-center">
-		    
+
 			<?php if (is_category()) : ?>
 				<h1><?php single_cat_title(); ?></h1>
 				<div><?= (category_description()); ?></div>
@@ -9,6 +9,14 @@
 			<?php elseif (is_tag()) : ?>
 				<h1>Tag: <?php single_tag_title(); ?></h1>
 				<p>Explore articles tagged under <strong><?php single_tag_title(); ?></strong> for deeper insights and expert takes.</p>
+
+			<?php elseif (is_author()) : ?>
+				<h1>Posts by <?php the_author(); ?></h1>
+				<p>Read the latest posts and perspectives by <strong><?php the_author(); ?></strong>.</p>
+
+			<?php elseif (is_post_type_archive()) : ?>
+				<h1><?php post_type_archive_title(); ?></h1>
+				<p>Browse through our collection of <strong><?php post_type_archive_title(); ?></strong> posts.</p>
 
 			<?php elseif (is_author()) : ?>
 				<h1>Posts by <?php the_author(); ?></h1>
@@ -62,9 +70,7 @@
 				<?php } ?>
 			</div>
 
-			<nav class="post-nav">
-				<?= pagination_bar() ?>
-			</nav>
+			<?= pagination_bar() ?>
 			<?php wp_reset_postdata(); ?>
 		</section>
 

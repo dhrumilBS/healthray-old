@@ -102,8 +102,8 @@ function wp_optimize_file()
 	wp_dequeue_script('google-recaptcha');
 	wp_deregister_script('google-recaptcha');
 	// 	-----------------------------------------
-		wp_enqueue_style('bootstrap', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css', array(), '1');
-		wp_enqueue_script('utm', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.min.js', [], '1');
+	wp_enqueue_style('bootstrap', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css', array(), '1');
+	wp_enqueue_script('utm', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.min.js', [], '1');
 	// 	----------------------------------------- 
 	wp_enqueue_style('common-theme', get_stylesheet_directory_uri() . '/css/common.css', [], '1');
 	wp_enqueue_style('roots_app',  get_template_directory_uri() . '/assets/css/app.css', array(), '1');
@@ -188,13 +188,15 @@ function pagination_bar()
 			'prev_text' => '&laquo;',
 			'next_text' => '&raquo;',
 			'type' => 'array'
-		));
-	} ?>
-	<ul class="pagination">
-		<?php foreach ($pagelink as $page) {
-			echo "<li>" . $page . "</li>";
-		} ?>
-	</ul>
+		)); ?>
+		<nav class="post-nav">
+			<ul class="pagination">
+				<?php foreach ($pagelink as $page) {
+					echo "<li>" . $page . "</li>";
+				} ?>
+			</ul>
+		</nav>
+	<?php } ?>
 <?php
 }
 // =----------------------------------------------------------------------------= //
@@ -342,3 +344,49 @@ function secure_whitepaper_pdf()
 
 	wp_send_json_error('File not found');
 }
+
+function custom_generate_toc_collapsible($atts) {
+    global $post;
+
+    $atts = shortcode_atts(array(
+        'title' => 'On this Page',
+        'depth' => 3,
+    ), $atts, 'toc');
+
+    $content = $post->post_content;
+
+    preg_match_all('/<h([2-' . intval($atts['depth']) . '])[^>]*>(.*?)<\/h[2-' . intval($atts['depth']) . ']>/i', $content, $matches, PREG_SET_ORDER);
+
+    if (empty($matches)) return '';
+
+    $toc = '<div class="custom-toc toc-collapsible">';
+    $toc .= '<div class="custom-toc-header">' . esc_html($atts['title']) . ' <span class="toc-toggle-icon">&#9650;</span></div>';
+    $toc .= '<div class="custom-toc-content">';
+
+    $prev_level = 1;
+
+    foreach ($matches as $match) {
+        $level = intval($match[1]);
+        $heading_text = strip_tags($match[2]);
+        $id = sanitize_title($heading_text);
+
+        $heading_tag = $match[0];
+        $heading_with_id = preg_replace('/<h([1-3])/', '<h$1 id="' . $id . '"', $heading_tag, 1);
+        $content = str_replace($heading_tag, $heading_with_id, $content);
+
+        if ($level > $prev_level) {
+            $toc .= str_repeat('<ul>', $level - $prev_level);
+        } elseif ($level < $prev_level) {
+            $toc .= str_repeat('</ul>', $prev_level - $level);
+        }
+
+        $toc .= "<li><a href='#$id'>$heading_text</a></li>";
+        $prev_level = $level;
+    }
+
+    $toc .= str_repeat('</ul>', $prev_level - 1);
+    $toc .= '</div></div>';
+
+    return $toc;
+}
+add_shortcode('toc', 'custom_generate_toc_collapsible');

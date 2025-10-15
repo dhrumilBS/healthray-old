@@ -1,3 +1,9 @@
+@import url(https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800;900&display=swap);
+body { color: #65758B; font-family: "DM Sans"; }
+input[type=submit],input[type=button],
+button, 
+.wrap .content :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6){ font-family: "Playfair Display"; }
+
 /* =========================== CONTAINERS & SECTIONS =========================== */
 .container { max-width: 1000px; }
 .container.narrow { max-width: 700px; }
@@ -23,6 +29,11 @@
     .metrics-section .grid-3 { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* =========================== Main Sec =========================== */
+.main-sec { }
+.main-sec .sec-padded:nth-child(even){ background-color: #f9fafb; }
+.text-lg {  }
+.text-lg p { font-size: 18px; }
 /* =========================== TESTIMONIAL SECTION =========================== */
 .quote-section { background-color: rgba(19, 45, 124, 0.05); }
 .quote-section .quote-box { background-color: #fff; border-left: 4px solid #132d7c; padding: 2.5rem; border-radius: 8px; }

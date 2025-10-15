@@ -100,10 +100,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		else {
 			setTimeout(() => {
 				try {
-					const source = window.utmSource || '';
+					const params = new URLSearchParams(window.location.search);
+					const source = params.get('utm_source') || '';
 					const fbPage = window.fbAdsThankYouPage || '/thank-you-fb';
 					const defaultPage = window.defaultThankYouPage || '/thank-you';
-					window.location.href = source === 'fbads' ? fbPage : defaultPage;
+					const target = source === 'fbads' ? fbPage : defaultPage;
+					console.log('Redirecting to:', target);
+					window.location.href = target;
 				} catch (e) {
 					console.error('Redirect error:', e);
 				}

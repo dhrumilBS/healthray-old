@@ -4,7 +4,7 @@
         <div class="container">
             <div class="heading">
                 <div class="badge">Orthopedics</div>
-                <h1> <?= the_title();?> </h1>
+                <h1> <?= the_title(); ?> </h1>
                 <div class="lead"> <?= the_content(); ?> </div>
             </div>
         </div>
@@ -22,41 +22,43 @@
     <!-- ========================= METRICS SECTION ========================== -->
     <section class="sec-padded metrics-section border-bottom">
         <div class="container">
-            <?php if(have_rows('metrics')) { ?>
+            <?php if (have_rows('metrics')) { ?>
                 <div class="grid-3 gap-lg">
-                <?php while(have_rows('metrics')) { the_row(); ?>
-                    <div class="card card-metric">
-                        <div class="icon-wrapper">
-                            <?= get_sub_field('icon'); ?>
+                    <?php while (have_rows('metrics')) {
+                        the_row(); ?>
+                        <div class="card card-metric">
+                            <div class="icon-wrapper">
+                                <?= get_sub_field('icon'); ?>
+                            </div>
+                            <div class="metric-value"><?= get_sub_field('title'); ?></div>
+                            <div class="metric-label"><?= get_sub_field('text'); ?> </div>
                         </div>
-                        <div class="metric-value"><?= get_sub_field('title'); ?></div>
-                        <div class="metric-label"><?= get_sub_field('text'); ?> </div>
-                    </div>
-                <?php } ?>
+                    <?php } ?>
                 </div>
             <?php } ?>
         </div>
     </section>
 
     <!-- ========================= CHALLENGE SECTION ========================== -->
-    <section class="sec-padded challenge-section border-bottom">
-        <div class="container narrow">
-            <div class="heading">
-                <h2 class="heading-lg"><?= get_field('challenge_title'); ?></h2>
-            </div>
-            <p class="text-lg"><?= get_field('challenge_text'); ?> </p>
-        </div>
-    </section>
-
-    <!-- ========================= SOLUTION SECTION ========================== -->
-    <section class="sec-padded solution-section border-bottom">
-        <div class="container narrow">
-
-            <div class="heading">
-                <h2 class="heading-lg"><?= get_field('solution_title'); ?></h2>
-            </div>
-            <p class="text-lg"><?= get_field('solution_text'); ?> </p>
-        </div>
+    <section class="main-sec">
+        <?php if (have_rows('text_block')) { ?>
+            <?php while (have_rows('text_block')) {
+                the_row(); ?>
+                <section class="sec-padded border-bottom">
+                    <div class="container narrow">
+                        <?php if (get_sub_field('image')) {
+                            echo "<div class=\"img-wrap\">";
+                            echo wp_get_attachment_image(get_sub_field('image'), 'full');
+                            echo "</div>";
+                        } ?>
+                        <div class="heading">
+                            <h2 class="heading-lg"><?= get_sub_field('title'); ?></h2>
+                        </div>
+                        <div class="text-lg"><?= get_sub_field('text'); ?> </div>
+                    </div>
+                </section>
+            <?php } ?>
+        <?php } ?>
     </section>
 
     <!-- ========================= TESTIMONIAL SECTION ========================== -->
@@ -78,8 +80,8 @@
             <div class="heading">
                 <h2 class="heading-lg"><?= get_field('result_title'); ?></h2>
             </div>
-            <p class="text-lg"><?= get_field('result_text'); ?></p>
+            <div class="text-lg"><?= get_field('result_text'); ?></div>
         </div>
     </section>
 </main>
-    <?php echo do_shortcode( '[elementor-template id="26869"]' ); ?>
+<?php echo do_shortcode('[elementor-template id="26869"]'); ?>

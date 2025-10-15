@@ -14,12 +14,12 @@
 
 <section class="sec-padded blog-container ">
 	<div class="container">
-	    <div class="sidebar-form">
+		<div class="sidebar-form">
 			<?php echo get_search_form(); ?>
 		</div>
-		
+
 		<?php
-		$paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+		$paged = (get_query_var('paged')) ? absint(get_query_var('paged')) : 1;
 
 		$args = array(
 			'post_type' => array('post'),
@@ -31,21 +31,20 @@
 		$widget_wp_query = new \WP_Query($args); ?>
 		<section class="th-masonry-blog">
 			<div class="mas-blog row">
-				<?php 
+				<?php
 				while ($widget_wp_query->have_posts()) {
 					$widget_wp_query->the_post();
 				?>
-				<div <?= post_class('mas-blog-post'); ?>>
-					<div class="mas-blog-post-inner">
-						<?php get_template_part('templates/content'); ?>
+					<div <?= post_class('mas-blog-post'); ?>>
+						<div class="mas-blog-post-inner">
+							<?php get_template_part('templates/content'); ?>
+						</div>
 					</div>
-				</div>
 				<?php } ?>
 			</div>
 
-			<nav class="post-nav">
-				<?= pagination_bar()?>
-			</nav>
+			<?= pagination_bar() ?>
+
 			<?php wp_reset_postdata(); ?>
 		</section>
 

@@ -21,35 +21,6 @@
 	.content-editor ol, .content-editor ul{ padding-left: 32px}
 }
 
-.text-center { text-align: center;}
-.d-none {display: none !important;}
-.d-flex { display: flex !important;}
-.d-block { display: block !important;}
-.d-inline-block { display: inline-block !important;}
-
-@media screen and (min-width: 576px){
-	.text-sm-end { text-align: end;}
-	.text-sm-start { text-align: start;}
-}
-
-@media screen and (min-width: 768px){
-	.d-md-flex{display: flex !important;}
-	.d-md-none{ display: none;}
-	.text-md-end { text-align: end;}
-	.text-md-start { text-align: start;}
-}
-@media screen and (min-width: 992px){
-	.text-lg-end { text-align: end;}
-	.text-lg-start { text-align: start;}
-}
-
-.row { --bs-gutter-x: 1.5rem; --bs-gutter-y: 0; display: flex; flex-wrap: wrap;    margin-top: calc(-1* var(--bs-gutter-y)); margin-right: calc(-.5* var(--bs-gutter-x)); margin-left: calc(-.5* var(--bs-gutter-x)); }
-.row>*{ flex-shrink: 0; width: 100%; max-width: 100%; padding-right: calc(var(--bs-gutter-x)* .5); padding-left: calc(var(--bs-gutter-x)* .5); margin-top: var(--bs-gutter-y);}
-
-.mb-3{ margin-bottom: 16px ;}
-.pb-4{ padding-bottom: 20px ;}
-.py-4{ padding-top: 20px; padding-bottom: 20px ;}
-
 /* Blog page  */
 .th-widget-area .widget ul { margin: 0; padding: 0; }
 .th-widget-area .widget ul li { padding: 8px 0; list-style: none; border-bottom: 1px solid #e2e2e2; }

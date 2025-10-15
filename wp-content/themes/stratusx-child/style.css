@@ -52,7 +52,7 @@ h1, h2, h3, h4, h5, h6,
 /* 4-6 & 2-6 Layout */
 #mega-menu-wrap-primary_navigation #mega-menu-primary_navigation li.mega-menu-megamenu>ul.mega-sub-menu>li.mega-menu-item.mega-menu-columns-4-of-6{ padding:  0; }
 #mega-menu-wrap-primary_navigation #mega-menu-primary_navigation li.mega-menu-megamenu>ul.mega-sub-menu>li.mega-menu-item.mega-menu-columns-4-of-6 .mega-sub-menu { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px;}
-#mega-menu-wrap-primary_navigation #mega-menu-primary_navigation li.mega-menu-megamenu>ul.mega-sub-menu>li.mega-menu-item.mega-menu-columns-4-of-6 .mega-sub-menu li{ max-width: 100%; width: 100%; }
+#mega-menu-wrap-primary_navigation #mega-menu-primary_navigation li.mega-menu-item.mega-menu-megamenu ul.mega-sub-menu li.mega-2-columns > ul.mega-sub-menu > li.mega-menu-item{ max-width: 100%; width: 100%; }
 
 #mega-menu-wrap-primary_navigation #mega-menu-primary_navigation li.mega-menu-megamenu>ul.mega-sub-menu>li.mega-menu-item.mega-menu-columns-2-of-6{background-color: #FFF; margin: 12px 0;}
 
@@ -63,7 +63,7 @@ h1, h2, h3, h4, h5, h6,
 	li.mega-menu-item-has-children.mega-toggle-on>a.mega-menu-link>span.mega-indicator:after { transform: rotate(180deg) !important; transition: all 200ms ease-in-out; }
 
 	#mega-menu-wrap-primary_navigation #mega-menu-primary_navigation li.mega-menu-megamenu>ul.mega-sub-menu>li.mega-menu-item.mega-menu-columns-4-of-6 { padding: 20px; }
-	#mega-menu-wrap-primary_navigation #mega-menu-primary_navigation li.mega-menu-megamenu>ul.mega-sub-menu>li.mega-menu-item.mega-menu-columns-4-of-6 .mega-sub-menu li{ max-width: calc(50% - 5px);}
+	#mega-menu-wrap-primary_navigation #mega-menu-primary_navigation li.mega-menu-item.mega-menu-megamenu ul.mega-sub-menu li.mega-2-columns > ul.mega-sub-menu > li.mega-menu-item{ max-width: calc(50% - 5px); }
 	#mega-menu-wrap-primary_navigation #mega-menu-primary_navigation li.mega-menu-megamenu>ul.mega-sub-menu>li.mega-menu-item.mega-menu-columns-2-of-6{ margin: 0; padding: 20px; }
 
 	.elementor-567 #mega-menu-wrap-primary_navigation #mega-menu-primary_navigation li.mega-menu-btn-contact { padding-left: 20px; }
