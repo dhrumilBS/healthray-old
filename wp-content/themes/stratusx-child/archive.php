@@ -1,78 +1,34 @@
-<section class="blog-hero hero-section">
-	<div class="container">
-		<div class="heading text-center">
+<?php get_template_part('template-parts/section', 'archive-hero'); ?>
 
-			<?php if (is_category()) : ?>
-				<h1><?php single_cat_title(); ?></h1>
-				<div><?= (category_description()); ?></div>
-
-			<?php elseif (is_tag()) : ?>
-				<h1>Tag: <?php single_tag_title(); ?></h1>
-				<p>Explore articles tagged under <strong><?php single_tag_title(); ?></strong> for deeper insights and expert takes.</p>
-
-			<?php elseif (is_author()) : ?>
-				<h1>Posts by <?php the_author(); ?></h1>
-				<p>Read the latest posts and perspectives by <strong><?php the_author(); ?></strong>.</p>
-
-			<?php elseif (is_post_type_archive()) : ?>
-				<h1><?php post_type_archive_title(); ?></h1>
-				<p>Browse through our collection of <strong><?php post_type_archive_title(); ?></strong> posts.</p>
-
-			<?php elseif (is_author()) : ?>
-				<h1>Posts by <?php the_author(); ?></h1>
-				<p>Read the latest posts and perspectives by <strong><?php the_author(); ?></strong>.</p>
-
-			<?php elseif (is_date()) : ?>
-				<h1>
-					<?php
-					if (is_day()) {
-						echo 'Daily Archives: ' . get_the_date();
-					} elseif (is_month()) {
-						echo 'Monthly Archives: ' . get_the_date('F Y');
-					} elseif (is_year()) {
-						echo 'Yearly Archives: ' . get_the_date('Y');
-					}
-					?>
-				</h1>
-				<p>Browse posts from <?php echo get_the_date(); ?> and stay updated with the latest insights.</p>
-
-			<?php else : ?>
-				<h1>Healthray Blog</h1>
-				<p>Discover expert analyses, healthcare trends, and actionable insights designed to help you stay informed and make smarter health decisions with Healthray.</p>
-			<?php endif; ?>
+<?php $class = (!have_posts()) ? "no-results-section" : ''; ?>
+<section class="inner-container blog-container sec-padded <?= $class; ?>">
+	<?php if (! have_posts()) { ?>
+		<div class="text-center">
+			<?php get_template_part('template-parts/section', '404'); ?>
 		</div>
-
-		<?php
-		if (get_categories()) {
-			get_template_part('templates/category-list');
-		}
-		?>
-	</div>
-</section>
-
-
-<section class="inner-container blog-container sec-padded">
-	<div class="container">
-		<div class="sidebar-form">
-			<?php echo get_search_form(); ?>
-		</div>
-		<section class="th-masonry-blog">
-			<div class="mas-blog row">
-				<?php
-				while (have_posts()) {
-					the_post();
-				?>
-					<div <?= post_class('mas-blog-post'); ?>>
-						<div class="mas-blog-post-inner">
-							<?php get_template_part('templates/content'); ?>
-						</div>
-					</div>
-				<?php } ?>
+	<?php } else { ?>
+		<div class="container">
+			<div style="max-width: 500px; margin: 0 auto 24px;">
+				<?php get_search_form(); ?>
 			</div>
 
-			<?= pagination_bar() ?>
-			<?php wp_reset_postdata(); ?>
-		</section>
+			<section class="th-masonry-blog">
+				<div class="mas-blog row">
+					<?php
+					while (have_posts()) {
+						the_post();
+					?>
+						<div <?= post_class('mas-blog-post'); ?>>
+							<div class="mas-blog-post-inner">
+								<?php get_template_part('templates/content'); ?>
+							</div>
+						</div>
+					<?php } ?>
+				</div>
 
-	</div><!-- /.container -->
-</section><!-- /.inner-container -->
+				<?= pagination_bar() ?>
+				<?php wp_reset_postdata(); ?>
+			</section>
+		</div>
+	<?php } ?>
+</section>

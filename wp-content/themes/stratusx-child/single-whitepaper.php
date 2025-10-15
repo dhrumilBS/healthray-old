@@ -17,7 +17,7 @@
             </div>
         </section>
 
-    
+
 
         <section class="sec-padded features">
             <div class="container">
@@ -97,7 +97,7 @@
                                 <div class="skeleton"></div>
                                 <div class="skeleton full"></div>
                                 <div class="skeleton medium"></div>
-    
+
                                 <div class="stats-wrap">
                                     <div class="stats">
                                         <div class="stat">
@@ -120,7 +120,7 @@
                                         <div class="label">Response</div>
                                     </div>
                                 </div>
-    
+
                                 <div class="chart-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                         <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
@@ -137,9 +137,8 @@
         </section>
 
 
-        <?php // echo get_template_part('template-parts/section-client-slider'); ?>
         <div class="elementor-shortcode">
-        <?php echo do_shortcode('[elementor-template id="25539"]'); ?>
+            <?php echo do_shortcode('[elementor-template id="25539"]'); ?>
         </div>
 
 
@@ -224,7 +223,7 @@
             </div>
         </section>
 
-        <?php echo do_shortcode( '[elementor-template id="62278"]' ); ?>
+        <?php echo do_shortcode('[elementor-template id="62278"]'); ?>
 
         <section class="sec-padded events-news d-none">
             <div class="container">
@@ -377,4 +376,4 @@
             </div>
         </section>
     </main>
-    <?php echo do_shortcode( '[elementor-template id="26869"]' ); ?>
+    <?php echo do_shortcode('[elementor-template id="26869"]'); ?>

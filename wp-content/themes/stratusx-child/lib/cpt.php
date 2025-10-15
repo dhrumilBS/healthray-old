@@ -175,7 +175,16 @@ function register_event_cpt()
             'hierarchical' => true,
             'show_in_rest' => true,
         ]
-
+    );
+    register_taxonomy(
+        'event_status',
+        'event',
+        [
+            'label' => __('Event Status', 'stratus'),
+            'rewrite' => ['slug' => 'event-status'],
+            'hierarchical' => true,
+            'show_in_rest' => true,
+        ]
     );
 }
 add_action('init', 'register_event_cpt');

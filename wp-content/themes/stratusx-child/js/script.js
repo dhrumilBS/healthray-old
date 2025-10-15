@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', function () {
 				try {
 					const params = new URLSearchParams(window.location.search);
 					const source = params.get('utm_source') || '';
-					const fbPage = window.fbAdsThankYouPage || '/thank-you-fb';
-					const defaultPage = window.defaultThankYouPage || '/thank-you';
+					const fbPage = fbAdsThankYouPage || '/thank-you-fb';
+					const defaultPage = defaultThankYouPage || '/thank-you';
 					const target = source === 'fbads' ? fbPage : defaultPage;
 					console.log('Redirecting to:', target);
 					window.location.href = target;
