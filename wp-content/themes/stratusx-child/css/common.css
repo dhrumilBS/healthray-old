@@ -127,8 +127,6 @@
 }
 /* section-all-india */
 .section-all-india .container { max-width: 1264px!important}
-.section-all-india .image {}
-.section-all-india .image img{/* aspect-ratio: 3 / 2; */}
 
 @media screen and (max-width: 767px){
 	.section-all-india .sec-heading{ margin-top: 12px}
@@ -157,21 +155,10 @@
 }
 
 /* section-procuct */
-
-.product-content > *{ opacity: 0; transition: 0.2s ease-in all; }
-
-.product-content >*:nth-child(1){transform: translateY(20px); transition-delay: 0.2s; }
-.product-content >*:nth-child(2){transform: translateY(40px); transition-delay: 0.5s; }
-.product-content >*:nth-child(3){transform: translateY(60px); transition-delay: 0.75s; }
-
-.active .product-content > *{ transform: translateY(0); opacity: 1; transition: 0.5s ease-in all}
-
-
 .section-procuct .half-width { padding: 0; } 
 .section-procuct .product-slider { display: flex; align-items: center; flex-wrap: wrap; padding: 20px; } 
 .section-procuct .product-content {padding: 50px 32px;background: #FFF;box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.15);margin-right: -78px;position: relative;overflow: hidden;} 
 .section-procuct .product-content ul { column-count: 2; padding: 0; list-style-position: inside; } 
-
 
 @media screen and (max-width: 991px) {
 	.section-procuct .product-content { padding: 20px; margin-right: 0; margin-top: -80px; } 
@@ -186,7 +173,7 @@
 }
 
 .section-doctor {background-color: #f1f5ff;}
-.section-doctor .content-box h3{    font-size: 20px;     font-weight: 700;}
+.section-doctor .content-box h3{ font-size: 20px; font-weight: 700;}
 .section-doctor .content-box ul{ padding: 12px 8px; padding-left:26px;background: #FFF;box-shadow: 0px 10px 30px 0px hsl(227deg 37% 41% / 10%)  }
 
 .best-emr-in-state .section-doctor { position: relative;}
@@ -230,7 +217,6 @@
 	.best-ehr-in-state .section-functionaly .functionaly-wrapper { padding: 36px; border-radius: 32px; }
 }
 
-.section-benefits .icon-box-container {}
 .best-ehr-in-state .section-benefits .icon-box-container .icon-box-wrapper {--hue: 29;--color-hue: calc(var(--hue) - 10);display: flex;padding: 12px;flex-direction: column;align-items: center;gap: 10px;border-radius: 16px;background: hsla(var(--hue), 100%, 93%, 1);box-shadow: 0px 0px 100px 0px rgba(0, 0, 0, 0.05);}
 .best-ehr-in-state .section-benefits .icon-box-container .icon-box-wrapper .icon-box-content { padding: 16px 8px; align-items: center; border-radius: 8px; background: #fff; height: 100%; }
 .best-ehr-in-state .section-benefits .icon-box-container .icon-box-wrapper .icon-box-title {color: hsla(var(--color-hue), 96%, 67%, 1);}
@@ -247,7 +233,6 @@
 .best-ehr-in-state .section-all-india .image img { aspect-ratio: 1.15/0.425; }
 
 .best-ehr-in-state .section-doctor .th-d-flex {background: #fff;box-shadow: 0px 10px 30px 0px hsl(227deg 37% 41% / 10%)}
-.best-ehr-in-state .section-doctor .th-d-flex .image { }
 .best-ehr-in-state .section-doctor .th-d-flex .image img {max-width: 100%;height: 100%;width: 100%;object-fit: cover;}
 .best-ehr-in-state .section-doctor .th-d-flex .content-box { padding: 12px; }
 .best-ehr-in-state .section-doctor .th-d-flex .content-box h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
