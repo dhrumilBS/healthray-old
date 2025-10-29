@@ -1,0 +1,57 @@
+.parallax-container { transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y)); transform-style: preserve-3d; transition: transform 1.5s cubic-bezier(0.05, 0.5, 0, 1); will-change: transform;}
+
+body { font-family: "DM Sans", Arial, sans-serif; line-height: 1.6; }
+h1, h2, h3, h4, h5, h6 { font-family: "Playfair Display", serif; margin-top: 0; }
+input, textarea, button, select, .wpcf7-form-control { font-family: 'DM Sans'; }
+.lead { font-size: 1.25rem; color: #606060; max-width: 650px; margin: 0 auto 2.5rem; }
+.text-lg { font-size: 1.125rem; color: #404040; line-height: 1.8; }
+/* =========================== CONTAINERS & SECTIONS =========================== */
+
+/* Filters */
+.archive .event-filters-group { text-align: center; }
+.archive .event-filters { text-align: center; margin-bottom: 40px; background-color: #f3f4f6; padding: 4px; display: inline-block; border-radius: 12px; }
+.archive .filter-btn { border: none; color: #132d7c90; padding: 4px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; background-color: transparent; transition: all 200ms ease-in-out; }
+.archive .filter-btn.active, .filter-btn:hover { color: #132d7c; background-color: #fff; }
+
+/* Events Grid */
+.archive .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.archive .event-card { background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.archive .event-card .event-image { position: relative; height: 250px; overflow: hidden; }
+.archive .event-card .event-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.archive .event-card:hover { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); }
+.archive .event-card:hover .event-image img { transform: scale(1.1); }
+.archive .event-card .event-status { position: absolute; top: 10px; right: 10px; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; color: #fff; }
+.archive .event-card .event-status.status-upcoming { background-color: #132d7c; }
+.archive .event-card .event-status.status-past { background-color: #6c757d; color: #e2e4e9;}
+.archive .event-card .event-status.status-ongoing { background-color: #adb5bd; color: #090f22; }
+.archive .event-card .event-status.status-upcoming { background-color: #007BFF; }
+.archive .event-card .event-status.status-ongoing { background-color: #28a745; }
+.archive .event-card .event-status.status-past { background-color: #ffc107; }
+.archive .event-card .event-status.status-archived { background-color: #6c757d; }
+.archive .event-card .event-content { padding: 20px; flex: 1; }
+.archive .event-card .event-type { font-size: 12px; font-weight: 500; text-transform: uppercase; color: #132d7c; margin-bottom: 10px; display: inline-block; padding: 4px 12px; border:1px solid #e5e7eb; border-radius: 50px; }
+.archive .event-card .event-title { font-size: 20px; margin: 0 0 10px 0; }
+.archive .event-card .event-description { font-size: 14px; margin-bottom: 15px; line-height: 1.5; }
+.archive .event-card .event-meta { font-size: 13px; margin-bottom: 15px; }
+.archive .event-card .event-meta .meta-name { margin-top: 5px; display: flex; align-items: center; }
+.archive .event-card .event-meta .meta-name svg { width: 1em; height: 1em; }
+.archive .event-card .btn-event { background-color: #132d7c; color: #fff; border: none; padding: 10px 15px; border-radius: 8px; font-weight: 500; cursor: pointer; font-size: 14px; transition: background 0.3s ease; align-items: center; gap: 4px; }
+.archive .event-card .btn-event:hover { background-color: #0f2765; }
+
+/* ========================== DIALOG STYLES =========================== */
+.archive .dialog { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; justify-content: center; align-items: center; z-index: 9999; padding: 1rem; }
+.archive .dialog.open { display: flex; }
+.archive .dialog-content { background-color: #fff; border-radius: 8px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 2rem; position: relative; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); }
+
+/* ========================== CLOSE BUTTON =========================== */
+.archive .dialog-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #132d7c; }
+
+/* ========================== DIALOG CONTENT ELEMENTS =========================== */
+.archive .dialog-image img { width: 100%; height: 16rem; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; }
+.archive .event-tags { margin: 1rem 0; }
+.archive .tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; background-color: #e2e8f0; color: #132d7c; margin-right: 0.5rem; }
+.archive .tag-primary { background-color: #132d7c; color: #fff; }
+.archive .event-info-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1rem 0; }
+@media(min-width: 600px) {
+    .archive .event-info-grid { grid-template-columns: repeat(2, 1fr); }
+}

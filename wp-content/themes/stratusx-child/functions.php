@@ -45,6 +45,39 @@ add_action('init', function () {
 	}
 });
 // =----------------------------------------------------------------------------= //
+// Prevent Multi Submit on all WPCF7 forms
+add_action('wp_footer', 'prevent_cf7_multiple_emails');
+function prevent_cf7_multiple_emails()
+{
+?>
+
+<script type="text/javascript" id="contact-form-submit-js">
+	var disableSubmit = '';
+	jQuery(document).ready(function($) {
+	    const val = $(':input[type="submit"]').val()
+		$('input.wpcf7-submit[type="submit"]').click(function() {
+			$(this).val("Sending...");
+			if (disableSubmit == true) {
+				return false;
+			}
+			disableSubmit = true;
+			return true;
+		});
+
+		$('.wpcf7').on('wpcf7_before_send_mail', function(event) {
+			$(':input[type="submit"]').val("Sent");
+			disableSubmit = false;
+		});
+
+		$('.wpcf7').on('wpcf7invalid', function(event) {
+			$(':input[type="submit"]').val(val);
+			disableSubmit = false;
+		});
+	});
+</script>
+<?php
+}
+// =----------------------------------------------------------------------------= //
 
 add_filter('manage_page_posts_columns', function ($columns) {
 	return array_merge($columns, ['thumb-img' => __('Image', 'textdomain')]);
@@ -103,7 +136,7 @@ function wp_optimize_file()
 	wp_deregister_script('google-recaptcha');
 	// 	-----------------------------------------
 	wp_enqueue_style('bootstrap', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css', array(), '1');
-	wp_enqueue_script('utm', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.min.js', [], '1');
+	wp_enqueue_script('bootstrap', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.min.js', [], '1');
 	// 	----------------------------------------- 
 	wp_enqueue_style('common-theme', get_stylesheet_directory_uri() . '/css/common.css', [], '1');
 	wp_enqueue_style('roots_app',  get_template_directory_uri() . '/assets/css/app.css', array(), '1');
@@ -390,3 +423,14 @@ function custom_generate_toc_collapsible($atts) {
     return $toc;
 }
 add_shortcode('toc', 'custom_generate_toc_collapsible');
+
+add_action( 'template_redirect', function() {
+    if ( is_singular( 'events' ) ) {
+        global $wp_query;
+        $wp_query->set_404();
+        status_header( 404 );
+        nocache_headers();
+        include( get_404_template() );
+        exit;
+    }
+});

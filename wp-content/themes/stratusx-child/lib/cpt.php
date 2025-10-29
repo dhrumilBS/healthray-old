@@ -164,11 +164,11 @@ function register_event_cpt()
         'menu_icon'             => 'dashicons-calendar-alt'
     ];
 
-    register_post_type('event', $args);
+    register_post_type('events', $args);
 
     register_taxonomy(
         'event_category',
-        'event',
+        'events',
         [
             'label' => __('Event Categories', 'stratus'),
             'rewrite' => ['slug' => 'event-category'],
@@ -178,7 +178,7 @@ function register_event_cpt()
     );
     register_taxonomy(
         'event_status',
-        'event',
+        'events',
         [
             'label' => __('Event Status', 'stratus'),
             'rewrite' => ['slug' => 'event-status'],
