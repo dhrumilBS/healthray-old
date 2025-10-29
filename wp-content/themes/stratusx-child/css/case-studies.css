@@ -7,6 +7,8 @@ button,
 /* =========================== CONTAINERS & SECTIONS =========================== */
 .case-study-card{ transition: all 200ms ease-in-out;  }
 .case-study-card:hover{--bs-border-opacity:1; border-color: #132d7c !important; }
+.case-study-card .case-study-image{ height: 100%; width: 100%; }
+.case-study-card .case-study-image img{ object-fit: contain; }
 .case-study-card .case-study-metrics{ border-left: #132d7c 2px solid; color: #132d7c; }
 
 /* =========================== CONTAINERS & SECTIONS =========================== */

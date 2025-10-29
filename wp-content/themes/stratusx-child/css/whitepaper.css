@@ -6,34 +6,29 @@ button,
 
 /* Archive CSS */
 .whitepapers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; } 
-.whitepaper-card { border: 1px solid var(--hr-border); border-radius: 12px; padding: 20px; background: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; transition: transform 0.25s ease, box-shadow 0.25s ease; } 
+.whitepaper-card { border: 1px solid #dfdfdf; border-radius: 12px; padding: 20px; background: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; transition: transform 0.25s ease, box-shadow 0.25s ease; } 
 .whitepaper-card:hover { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); } 
-.whitepaper-image { border-radius: 8px; margin-bottom: 16px; } 
-.whitepaper-image img { width: 100%; }
+.whitepaper-image { margin-bottom: 16px; } 
+.whitepaper-image img { width: 100%; height: 220px; border-radius: 8px; }
+
 
 .whitepaper-tag { position: absolute; top: 10px; left: 10px; background: var(--hr-primary-color); color: #fff; font-size: 12px; padding: 4px 12px; border-radius: 20px; display: inline-block; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); } 
 .whitepaper-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--hr-primary-color); } 
-.whitepaper-desc { font-size: 14px; color: var(--hr-text-muted); margin-bottom: 20px; line-height: 1.5; } 
+.whitepaper-desc { font-size: 14px; margin-bottom: 20px; } 
 .btn-download { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--hr-secondary-color); color: #fff; font-size: 14px; font-weight: 600; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.3s ease; } 
 .btn-download:hover { background: #edf3ff; color: var(--hr-primary-color); border: 1px solid var(--hr-primary-color); } 
 .load-more { display: block; text-align: center; margin: 35px auto 0; padding: 12px 22px; background: #fff; border: 1px solid var(--hr-border); border-radius: 6px; font-size: 14px; color: var(--hr-primary-color); cursor: pointer; transition: all 0.3s ease; } 
 .load-more:hover { background: var(--hr-primary-color); color: #fff; border-color: var(--hr-primary-color); } 
 
-@media (max-width: 991px) {
-	.whitepapers-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
+@media (max-width: 991px) {	.whitepapers-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 575px) {
 	.whitepapers-grid { grid-template-columns: 1fr; } 
 	.whitepaper-card { padding: 16px; } 
 	.whitepaper-title { font-size: 16px; } 
-	.whitepaper-desc { font-size: 13px; }
+	.whitepaper-desc { font-size: 13px; text-align:justify; }
 }
 
-/* =========================
-SECTION SPECIFIC STYLES
-========================= */
-
+/* ========================= SECTION SPECIFIC STYLES ========================= */
 /* Hero */
 .hero { position: relative; background: #f9fafc; }
 .hero-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 40px; align-items: center; }
@@ -52,7 +47,6 @@ SECTION SPECIFIC STYLES
 .features-grid .card-professional { background: #fff; border-radius: 12px; padding: 20px; text-align: center; transition: box-shadow 0.3s; border:1px solid #dcdfe5; box-shadow: 0 1px 8px rgba(0, 0, 0, 0.02); }
 .features-grid .card-professional h3{ margin-bottom: 12px; font-size: 20px; }
 .features-grid .card-professional .icon-circle { width: 64px; height: 64px; border-radius: 50%; background: var(--hr-secondary-color); color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-
 
 @media screen and (max-width: 1120px){
 	.features-grid { grid-template-columns: repeat(2, 1fr); }

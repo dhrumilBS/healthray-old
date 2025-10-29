@@ -39,7 +39,15 @@
     });
   </script>
 
-
+  <!-- Botphonic Script -->
+  <script type="text/javascript">
+    (function(c,l,r,i){
+        if(!c.location.pathname.startsWith('/embed')){
+            t=l.createElement(r);t.async=1;t.src="https://app.botphonic.ai/scripts/voiceChat.js";t.setAttribute('data-bot-id',i);
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        }
+    })(window,document,"script","68fb6497c65613c6242f5a86");
+  </script>
 
   <!-- Review Schema -->
   <script type="application/ld+json">

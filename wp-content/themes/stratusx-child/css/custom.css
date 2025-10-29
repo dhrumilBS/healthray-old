@@ -8,7 +8,6 @@ button,
 .wrap .content :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6){ font-family: "Playfair Display"; } */
 
 
-
 :root{ --bs-primary-rgb: 19, 45, 124; }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; font-weight: 600; border-radius: 8px; padding: 12px 24px; font-size: 16px; cursor: pointer; transition: 0.3s; border: none; }

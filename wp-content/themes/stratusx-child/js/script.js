@@ -1,4 +1,12 @@
 window.addEventListener("load", function () {
+	setTimeout(() => {
+		console.clear(window.navigator);
+	}, 1500);
+	setTimeout(() => {
+		console.log(document.querySelector('input[name=utm_medium]'));  
+		document.querySelector('input[name=utm_medium]').value = document.referrer
+	}, 1800);
+	
 	document.addEventListener("click", function (e) {
 		e.target.closest(".blog-category-more-list, .blog-category-more-link") || (document.querySelectorAll(".blog-category-more-link").forEach(function (e) {
 			e.classList.remove("active"), e.parentElement.classList.remove("more-category-open")

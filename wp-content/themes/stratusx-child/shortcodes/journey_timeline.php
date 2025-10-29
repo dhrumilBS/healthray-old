@@ -5,7 +5,7 @@ function journey_timeline_shortcode()
 ?>
     <style>
         .journey-title { margin-bottom: 1rem; text-align: center; }
-        .journey-subtitle { font-size: 1.125rem; text-align: center; margin-bottom: 1.5rem; }
+        .journey-subtitle { font-size: 1.125rem; text-align: center; margin-bottom: 1.5rem!important; }
         .timeline { position: relative; }
         .timeline-line { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 4px; height: 100%; background: linear-gradient(to bottom, #152ce1, #1b3c74, #ff7e00); border-radius: 2px; z-index: 1; }
         .timeline-item { display: flex; position: relative; flex-wrap: wrap; }

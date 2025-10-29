@@ -15,6 +15,8 @@ h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 { color: var(--hr-primary-color); font-family: 'Nunito', sans-serif;  }
 .elementor-widget-text-editor, .elementor-widget-text-editor h1, .elementor-widget-text-editor h2,  .elementor-widget-text-editor h3, .elementor-widget-text-editor h4, .elementor-widget-text-editor h5, .elementor-widget-text-editor h6, .elementor-widget-text-editor p, .elementor-widget-text-editor ul li, .elementor-widget-text-editor ol li{ line-height: initial; }
 .elementor-widget-image-box .elementor-image-box-img{ text-align: -webkit-center; }
+ ul,p,.wp-singular .content-editor ul, 
+.wp-singular .content-editor p{ margin-bottom: 0; }
 
 #scrollUp:before{ line-height: unset; }
 .overflow-hidden { overflow:hidden; }
@@ -184,7 +186,7 @@ h1, h2, h3, h4, h5, h6,
 .mas-blog .mas-blog-post .mas-blog-post-inner { box-shadow: 0 0 10px 0 rgba(0,0,0,.1); padding: 16px; height: -webkit-fill-available; border-radius: 12px;}
 .mas-blog .mas-blog-post .mas-blog-post-inner .post-feature-img{position: relative;}
 .mas-blog .mas-blog-post .mas-blog-post-inner .show-category{ position:absolute;left: 8px;top: 8px; display: flex;}
-.mas-blog .mas-blog-post .mas-blog-post-inner .show-category a{ color: var(--hr-primary-color);background: #FFFFFF6F;padding: 4px 12px; font-size:14px; line-height:1; border-radius: 8px; transition: 200ms all ease-in-out; border: 1px solid currentcolor}
+.mas-blog .mas-blog-post .mas-blog-post-inner .show-category a{ color: var(--hr-primary-color);background: #FFFFFF6F;padding: 4px 12px; font-size:14px; line-height:1; border-radius: 6px; transition: 200ms all ease-in-out; border: 1px solid currentcolor}
 .mas-blog .mas-blog-post .mas-blog-post-inner .show-category a:hover{ color: var(--hr-primary-color);background: #FFFFFF;}
 .mas-blog .mas-blog-post .post-inner .entry-content{ margin-bottom: 8px; font-size: 14px; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; display: -webkit-box; }
 .mas-blog .mas-blog-post .post-meta { padding-bottom: 10px }
@@ -192,15 +194,8 @@ h1, h2, h3, h4, h5, h6,
 .mas-blog .mas-blog-post .date-meta { border-top: 1px solid #e1e1e1; padding-top: 20px; margin-top: 20px }
 .mas-blog .mas-blog-post .post-inner p:last-child, 
 .mas-blog .mas-blog-post .post-inner .entry-content:last-child { margin:0; } 
-
-@media only screen and (min-width: 575px) {
-	.mas-blog {--col: 2;}
-}
-
-@media only screen and (min-width: 1200px) {
-	.mas-blog {--col: 3;}
-}
-
+@media only screen and (min-width: 575px) {	.mas-blog {--col: 2;} }
+@media only screen and (min-width: 1200px) { .mas-blog {--col: 3;} }
 
 /* ********************************************************************************************************************* */
 /* ******************************* Index.php File ANd comman Template  header CSS ************************************** */
