@@ -26,7 +26,7 @@ class Healthray_tabs extends Widget_Base
 				'label' => __('Healthray tabs', 'healthray'),
 			]
 		);
-	
+
 		$repeater = new Repeater();
 
 		$repeater->add_control(
@@ -55,33 +55,6 @@ class Healthray_tabs extends Widget_Base
 				'label_block' => true,
 			]
 		);
-		$repeater->add_control(
-			'tab_desc',
-			[
-				'label' => __('Description', 'healthray'),
-				'type' => Controls_Manager::TEXTAREA,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => __('This is designation title', 'healthray'),
-				'placeholder' => __('Enter your title', 'healthray'),
-				'label_block' => true,
-			]
-		);
-
-			$repeater->add_control(
-				'tab_side_title',
-				[
-					'label' => __('Side Title', 'healthray'),
-					'type' => Controls_Manager::TEXTAREA,
-					'dynamic' => [
-						'active' => true,
-					],
-					'default' => "Heading",
-					'placeholder' => __('Enter your title', 'healthray'),
-					'label_block' => true,
-				]
-			);
 		$repeater->add_control(
 			'tab_side_desc1',
 			[
@@ -161,6 +134,18 @@ class Healthray_tabs extends Widget_Base
 				],
 			]
 		);
+		$this->add_control(
+			'columnLayout',
+			[
+				'label' => esc_html__('Column Layout', 'healthray'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'two-column',
+				'options' => [
+					'two-column' => esc_html__('Two Column', 'healthray'),
+					'three-column' => esc_html__('Three Column', 'healthray'),
+				],
+			]
+		);
 
 
 		$this->end_controls_section();
@@ -196,7 +181,7 @@ class Healthray_tabs extends Widget_Base
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}}' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .tab-content figure' => 'display: flex;justify-content: {{VALUE}};',
 				],
 			]
 		);
@@ -231,7 +216,7 @@ class Healthray_tabs extends Widget_Base
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .content img' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .tab-content figure img' => 'width: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -266,7 +251,7 @@ class Healthray_tabs extends Widget_Base
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .content img' => 'max-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .tab-content figure img' => 'max-width: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -288,7 +273,7 @@ class Healthray_tabs extends Widget_Base
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .content img' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .tab-content figure img' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -309,7 +294,7 @@ class Healthray_tabs extends Widget_Base
 				],
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .content img' => 'object-fit: {{VALUE}};',
+					'{{WRAPPER}} .tab-content figure img' => 'object-fit: {{VALUE}};',
 				],
 			]
 		);
@@ -332,7 +317,7 @@ class Healthray_tabs extends Widget_Base
 				],
 				'default' => 'center center',
 				'selectors' => [
-					'{{WRAPPER}} .content img' => 'object-position: {{VALUE}};',
+					'{{WRAPPER}} .tab-content figure img' => 'object-position: {{VALUE}};',
 				],
 				'condition' => [
 					'object-fit' => 'cover',
@@ -345,40 +330,51 @@ class Healthray_tabs extends Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings();
+		$columnLayout = $settings['columnLayout'] === 'three-column' ? true : false;
 		$id_int = substr($this->get_id_int(), 0, 3);
 
 ?>
-		<div class="tabs">
-			<?php foreach ($settings['tabs'] as $key => $value) {
-				if ($key == 0) {
-					$class = " active";
-				} else {
-					$class = "";
-				}
-			?>
-				<div class="tab hr-tab">
-					<div class="tab-toggle<?= $class; ?>">
+		<div class="tabs tabs-layout <?= $columnLayout ? 'three-column' : 'two-column' ?>">
+			<div class="tabs-column tabs-left d-none d-lg-block">
+				<?php foreach ($settings['tabs'] as $key => $value) {
+					if ($columnLayout && $key % 2 !== 0) continue; ?>
+					<div class="tab-toggle <?= $key === 0 ? 'active' : '' ?>" data-tab="<?= $key ?>">
+						<span class="tab-dot"></span>
 						<?php if (!empty($value['tab_title'])) { ?> <h3 class="tab-heading"> <?= $value['tab_title']; ?> </h3><?php } ?>
-						<?php if (!empty($value['tab_desc'])) { ?> <div class="tab-desc description"> <?= $value['tab_desc']; ?> </div><?php } ?>
 					</div>
-					<?php if (1 == 2) { ?>
-						<div class="tab-toggle-icon">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-								<path d="M4.29657 14.291L9.47955 9.1705C9.7933 8.8606 9.97438 8.4288 9.97438 7.99049C9.97438 7.55218 9.7933 7.12038 9.47955 6.81048L4.30333 1.69668C3.92487 1.30955 3.93058 0.673708 4.31567 0.293264C4.70168 -0.0880928 5.34368 -0.0934837 5.73621 0.281069L10.9124 5.39087C11.6084 6.07983 11.9993 7.01344 11.9993 7.98682C11.9993 8.9602 11.6084 9.89381 10.9124 10.5828L5.72945 15.7066C5.28999 16.141 4.52059 16.0736 4.16995 15.5549C3.9094 15.1694 3.96462 14.6185 4.29657 14.291Z" fill="#477BFF" />
-							</svg>
+				<?php } ?>
+			</div>
+
+			<div class="tabs-content">
+				<?php foreach ($settings['tabs'] as $key => $value) { ?>
+					<div class="tab-toggle d-lg-none" data-tab="<?= $key ?>">
+						<span class="tab-dot"></span>
+						<?php if (!empty($value['tab_title'])) { ?> <h3 class="tab-heading"> <?= $value['tab_title']; ?> </h3><?php } ?>
+					</div>
+
+					<div class="tab-content content <?= $key === 0 ? 'active' : '' ?>" data-content="<?= $key ?>">
+						<?php if (!empty($value['tab_title'])) { ?> <h3 class="tab-heading"> <?= $value['tab_title']; ?> </h3><?php } ?>
+						<?php if (!empty($value['tab_side_desc1'])) { ?> <p><?= $value['tab_side_desc1']; ?></p><?php } ?>
+						<?php if (!empty($value['image'])) { ?>
+							<figure>
+								<?= wp_get_attachment_image($value['image']['id'], ['auto', 500]); ?>
+							</figure>
+						<?php } ?>
+						<?php if (!empty($value['tab_side_desc2'])) { ?> <p><?= $value['tab_side_desc2']; ?></p><?php } ?>
+					</div>
+				<?php } ?>
+			</div>
+
+			<?php if ($columnLayout) { ?>
+				<div class="tabs-column tabs-right d-none d-lg-block">
+					<?php foreach ($settings['tabs'] as $key => $value) {
+						if ($key % 2 === 0) continue;
+					?>
+						<div class="tab-toggle" data-tab="<?= $key ?>">
+							<span class="tab-dot"></span>
+							<?php if (!empty($value['tab_title'])) { ?> <h3 class="tab-heading"> <?= $value['tab_title']; ?> </h3><?php } ?>
 						</div>
 					<?php } ?>
-				</div>
-
-				<div class="content<?= $class; ?>">
-					<?php if (!empty($value['tab_side_title'])) { ?> <h3> <?= $value['tab_side_title']; ?> </h3><?php } ?>
-					<?php if (!empty($value['tab_side_desc1'])) { ?> <p><?= $value['tab_side_desc1']; ?></p><?php } ?>
-					<?php if (!empty($value['image'])) { ?>
-						<figure>
-							<?= wp_get_attachment_image($value['image']['id'], ['auto', 500]); ?>
-						</figure>
-					<?php } ?>
-					<?php if (!empty($value['tab_side_desc2'])) { ?> <p><?= $value['tab_side_desc2']; ?></p><?php } ?>
 				</div>
 			<?php } ?>
 		</div>
@@ -391,26 +387,20 @@ class Healthray_tabs extends Widget_Base
 	{
 	?>
 		<script>
-			function openTab(e) {
-				jQuery('.tabs').css('min-height', jQuery('.tabs .content.active').outerHeight())
-				jQuery('.content.active').outerHeight()
-				e.find(".tab-toggle").on('click', function() {
-					var content = jQuery(this).parent().next(".content"),
-						activeItems = e.find(".active");
+			document.querySelectorAll('.tabs').forEach(function(tabsGroup) {
+				const toggles = tabsGroup.querySelectorAll('.tab-toggle');
+				const contents = tabsGroup.querySelectorAll('.tab-content');
 
-					if (!jQuery(this).hasClass('active')) {
-						jQuery(this).add(content).add(activeItems).toggleClass('active');
-						e.css('min-height', content.outerHeight());
-					}
+				toggles.forEach(function(toggle) {
+					toggle.addEventListener('click', function() {
+						const id = this.dataset.tab;
+						toggles.forEach(el => el.classList.remove('active'));
+						contents.forEach(el => el.classList.remove('active'));
+						tabsGroup.querySelector('.tab-toggle[data-tab="' + id + '"]')?.classList.add('active');
+						tabsGroup.querySelector('.tab-content[data-content="' + id + '"]')?.classList.add('active');
+					});
 				});
-
-				jQuery(window).on('load', function() {
-					e.find(".tab-toggle").first().trigger('click');
-				});
-			}
-			jQuery(".tabs").each(function() {
-				openTab(jQuery(this));
-			})
+			});
 		</script>
 <?php
 	}

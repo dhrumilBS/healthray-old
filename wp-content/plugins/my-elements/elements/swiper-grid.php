@@ -42,19 +42,31 @@ class Ml_Swiper_Widget extends Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
+		$gallery = $settings['gallery'];
+		$total   = count($gallery);
+
+		// Split into exactly 2 rows
+		$half = (int) ceil($total / 2);
+		$rows = array_chunk($gallery, $half, true);
 ?>
-		<div style="display: block;">
-			<?php foreach ((array_chunk($settings['gallery'], count($settings['gallery']) / 2)) as $i => $row) { ?>
-				<div class="organization-logos item-row row-<?= $i; ?>">
-					<?php foreach ($row as $item) { ?>
-						<div class="logo-box item">
-							<?= wp_get_attachment_image($item['id'], 'full'); ?>
-							<p class='image-title'><?= wp_get_attachment_caption($item['id']); ?> </p>
-						</div>
-					<?php } ?>
-				</div>
+
+<div style="display: block;">
+	<?php foreach ($rows as $i => $row) { ?>
+	<div class="organization-logos">
+		<div class="item-row row-<?= $i; ?>">
+			<?php for ($j = 0; $j < 2; $j++) {  ?>
+			<?php foreach ($row as $item) { ?>
+			<div class="logo-box item">
+				<?= wp_get_attachment_image($item['id'], 'full'); ?>
+				<p class="image-title"><?= wp_get_attachment_caption($item['id']); ?></p>
+			</div>
+			<?php } ?>
 			<?php } ?>
 		</div>
+	</div>
+	<?php } ?>
+</div>
+
 <?php
 	}
 }

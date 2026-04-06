@@ -68,12 +68,8 @@ add_filter('elementor/widgets/register', 'ML_init');
 
 function ML_init()
 {
-	wp_enqueue_style('owl.carousal', ML_URL . 'css/owl.carousel.min.css', [], '1');
-	wp_enqueue_script('owl.carousal', ML_URL . 'js/owl.carousel.min.js', array('jquery'), '1');
-
-
-	wp_enqueue_style('my-elements', ML_URL . 'css/my-elements.css', [], '1');
-	wp_enqueue_script('my-element', ML_URL . 'js/script.js', array('jquery'), '1');
+	wp_enqueue_style('my-elements', ML_URL . 'css/my-elements.css', []);
+	wp_enqueue_script('my-element', ML_URL . 'js/script.js', array('jquery'));
 
 	// Register style
 	wp_register_style('ml-swiper-widget', ML_URL . 'css/swiper-widget.css', [], '1.0');
@@ -91,7 +87,7 @@ function my_elements()
 	require_once ML_PATH . 'elements/product-slider-2.php';
 	require_once ML_PATH . 'elements/ehr-product-slider-3.php';
 	require_once ML_PATH . 'elements/pms-product-slider.php';
-	
+
 	require_once ML_PATH . 'elements/swiper-grid.php';
 	require_once ML_PATH . 'elements/trusted-standars.php';
 	require_once ML_PATH . 'elements/slider-logo.php';
@@ -100,6 +96,7 @@ function my_elements()
 	require_once ML_PATH . 'elements/slider-set/controls.php';
 
 	require_once ML_PATH . 'elements/testimonial/controls.php';
+	require_once ML_PATH . 'elements/workflow-widget.php';
 
 	require_once ML_PATH . 'elements/healthray-tabs.php';
 	require_once ML_PATH . 'elements/healthray-tabs-2.php';
@@ -115,9 +112,7 @@ function my_elements()
 	require_once ML_PATH . 'elements/custom-toggle.php';
 	require_once ML_PATH . 'elements/alternativ.php';
 	require_once ML_PATH . 'elements/service-card.php';
-	
+
 	require_once ML_PATH . 'elements/trust-content.php';
-	require_once ML_PATH . 'elements/before-after-slider.php';	
-	
-	
+	require_once ML_PATH . 'elements/before-after-slider.php';
 }

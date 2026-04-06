@@ -89,14 +89,9 @@ $table_prefix = 'wp_';
 
 /* Add any custom values between this line and the "stop editing" line. */
 
-// Turn off PHP errors from displaying on the front end
-ini_set('display_errors', 'Off');
-ini_set('error_reporting', E_ALL);
-
 // Turn off WordPress debug display
 define('WP_DEBUG', false);
-define('WP_DEBUG_LOG', true);
-define('WP_DEBUG_DISPLAY', false);
+define('WPCF7_AUTOP', false);
 
 /* That's all, stop editing! Happy publishing. */
 

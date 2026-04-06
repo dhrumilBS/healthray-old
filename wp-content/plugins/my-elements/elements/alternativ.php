@@ -75,6 +75,7 @@ class Ml_Widget_Alternative extends Widget_Base
 
 
         <input id="jsonFiles" type="hidden" value="<?= $pdf_url; ?>">
+
         <div class="choose_hr_data_list">
             <div class="all_data">
                 <table id="jsonData" class="healthray_goal" width="100">
@@ -98,13 +99,39 @@ class Ml_Widget_Alternative extends Widget_Base
                 </table>
             </div>
         </div>
+        
+        <div class="healthray_compare">
+            <div class="compare_col compare_features">
+                <div class="compare_header">
+                    <h3><?= $settings['feature_title']; ?></h3>
+                    <p><?= $settings['feature_desc']; ?></p>
+                </div>
+
+                <div id="featureList"></div>
+            </div>
+            <div class="compare_col our">
+                <div class="compare_header compare_logo">
+                    <img src="<?= site_url(); ?>/wp-content/uploads/2024/02/Healthray-Logo.svg" alt="Healthray Logo">
+                    <span class="badge">Best Choice</span>
+                </div>
+
+                <div id="ourList"></div>
+            </div>
+            <div class="compare_col">
+                <div class="compare_header compare_logo">
+                    <?= wp_get_attachment_image($settings['logo']['id'], 'full'); ?>
+                </div>
+
+                <div id="otherList"></div>
+            </div>
+        </div>
     <?php
     }
     protected function content_template()
     { ?>
         <# const pdf_url=settings.pdf.url;
-		   const feature_title=settings.feature_title;
-		   const feature_desc=settings.feature_desc; #>
+            const feature_title=settings.feature_title;
+            const feature_desc=settings.feature_desc; #>
             <label for="jsonFiles"> <input id="jsonFiles" type="hidden" value="{{ pdf_url }}"> </label>
             <div class="choose_hr_data_list">
                 <div class="all_data">
@@ -116,10 +143,10 @@ class Ml_Widget_Alternative extends Widget_Base
                                     <p class="feature_desc"> {{ feature_desc }}</p>
                                 </td>
                                 <td class="healthray_right_image our">
-                                      <img width="150" height="83" src="<?= site_url(); ?>/wp-content/uploads/2024/02/Healthray-Logo.svg" class="attachment-full size-full" alt="Healthray Logo" loading="lazy">
+                                    <img width="150" height="83" src="<?= site_url(); ?>/wp-content/uploads/2024/02/Healthray-Logo.svg" class="attachment-full size-full" alt="Healthray Logo" loading="lazy">
                                 </td>
                                 <td class="healthray_right_image other">
-									 <img width="150" height="83" src="{{ settings.logo.url }}" >
+                                    <img width="150" height="83" src="{{ settings.logo.url }}">
                                 </td>
                             </tr>
                         </thead>

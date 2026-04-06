@@ -83,17 +83,22 @@ function owl_carousel(e) {
 }
 
 // ============================= Healthray Tab  ->   healthray-tabs/controls.php =====================================
-function healthrayTabs(e) {
-	jQuery('.tabs').css('min-height', jQuery('.tabs .content.active').outerHeight());
-	jQuery('.content.active').outerHeight();
-	e.find(".tab-toggle").on('click', function () {
-		var content = jQuery(this).parent().next(".content"),
-			activeItems = e.find(".active");
-		if (!jQuery(this).hasClass('active')) { jQuery(this).add(content).add(activeItems).toggleClass('active'); e.css('min-height', content.outerHeight()); }
+function healthrayTabs(e) {	
+	document.querySelectorAll('.tabs').forEach(function (tabsGroup) {
+		const toggles = tabsGroup.querySelectorAll('.tab-toggle');
+		const contents = tabsGroup.querySelectorAll('.tab-content');
+
+		toggles.forEach(function (toggle) {
+			toggle.addEventListener('click', function () {
+				const id = this.dataset.tab;
+				toggles.forEach(el => el.classList.remove('active'));
+				contents.forEach(el => el.classList.remove('active'));
+				tabsGroup.querySelector('.tab-toggle[data-tab="' + id + '"]')?.classList.add('active');
+				tabsGroup.querySelector('.tab-content[data-content="' + id + '"]')?.classList.add('active');
+			});
+		});
 	});
-	jQuery(window).on('load', function () { e.find(".tab-toggle").first().trigger('click'); });
 }
-jQuery(".tabs").each(function () { healthrayTabs(jQuery(this)); })
 
 // ============================= TOGGLE LINK custom_toggle  ->  custom-toggle.php =====================================
 function customToggle() {
@@ -111,29 +116,90 @@ function customToggle() {
 	});
 }
 
-function alternative(e) {
-	var selectedFile = e.find('#jsonFiles').val()
-	tableContent(selectedFile);
-	var yesImage = '<img width="26" height="26" decoding="async" style="width: 26px; height: 26px;" src="https://healthray.com/wp-content/themes/stratusx-child/assets/right.webp" alt="true" class="entered lazyloaded">';
-	var noImage = '<img width="26" height="26" decoding="async" style="width: 26px; height: 26px;" src="https://healthray.com/wp-content/themes/stratusx-child/assets/cross.webp" alt="cross" class="entered lazyloaded">';
+// function alternative(e) {
+// 	var selectedFile = e.find('#jsonFiles').val()
+// 	tableContent(selectedFile);
+// 	var yesImage = '<img width="26" height="26" decoding="async" style="width: 26px; height: 26px;" src="https://healthray.com/wp-content/themes/stratusx-child/assets/right.webp" alt="true" class="entered lazyloaded">';
+// 	var noImage = '<img width="26" height="26" decoding="async" style="width: 26px; height: 26px;" src="https://healthray.com/wp-content/themes/stratusx-child/assets/cross.webp" alt="cross" class="entered lazyloaded">';
 
-	// ml-alternative
-	function tableContent(fileName) {
-		jQuery.ajax({
-			url: fileName,
-			type: 'GET',
-			dataType: 'json',
-			success: function (jsonData) {
-				if (jsonData.img) {
-					jQuery('#jsonData tbody').html('')
-					jQuery.each(jsonData.content, function (key, value) {
-						const mapYesNo = val => val.trim().toLowerCase() === "yes" ? yesImage : val.trim().toLowerCase() === "no" ? noImage : val;						
-						jQuery('#jsonData tbody').append('<tr> <td class="feature">' + value.key + '</td> <td class="our"> ' + mapYesNo(value.our) + '</td> <td class="other"> ' + mapYesNo(value.other) + '</td> </tr>');
-					});
-				}
-			}
-		});
-	}
+// 	// ml-alternative
+// 	function tableContent(fileName) {
+// 		jQuery.ajax({
+// 			url: fileName,
+// 			type: 'GET',
+// 			dataType: 'json',
+// 			success: function (jsonData) {
+// 				if (jsonData.img) {
+// 					jQuery('#jsonData tbody').html('')
+// 					jQuery.each(jsonData.content, function (key, value) {
+// 						const mapYesNo = val => val.trim().toLowerCase() === "yes" ? yesImage : val.trim().toLowerCase() === "no" ? noImage : val;
+// 						jQuery('#jsonData tbody').append('<tr> <td class="feature">' + value.key + '</td> <td class="our"> ' + mapYesNo(value.our) + '</td> <td class="other"> ' + mapYesNo(value.other) + '</td> </tr>');
+// 					});
+// 				}
+// 			}
+// 		});
+// 	}
+// }
+
+function alternative(e) {
+    var selectedFile = e.find('#jsonFiles').val();
+    loadComparison(selectedFile);
+
+    function loadComparison(fileName) {
+        jQuery.ajax({
+            url: fileName,
+            type: 'GET',
+            dataType: 'json',
+            success: function (jsonData) {
+
+                if (jsonData.content) {
+
+                    let featureHTML = '';
+                    let ourHTML = '';
+                    let otherHTML = '';
+
+                    const iconMap = (val) => {
+                        if (!val) return '';
+                        val = val.toString().trim().toLowerCase();
+
+                        if (val === "yes") return '<span class="check"></span>';
+                        if (val === "no") return '<span class="cross"></span>';
+
+                        return `<span>${val}</span>`; // fallback (text)
+                    };
+
+                    jQuery.each(jsonData.content, function (key, value) {
+
+                        // FEATURES COLUMN
+                        featureHTML += `
+                            <div class="compare_item">
+                                <div class="feature_text">${value.key}</div>
+                            </div>
+                        `;
+
+                        // OUR COLUMN
+                        ourHTML += `
+                            <div class="compare_item compare_value">
+                                ${iconMap(value.our)}
+                            </div>
+                        `;
+
+                        // OTHER COLUMN
+                        otherHTML += `
+                            <div class="compare_item compare_value">
+                                ${iconMap(value.other)}
+                            </div>
+                        `;
+                    });
+
+                    // Inject into new layout
+                    jQuery('#featureList').html(featureHTML);
+                    jQuery('#ourList').html(ourHTML);
+                    jQuery('#otherList').html(otherHTML);
+                }
+            }
+        });
+    }
 }
 
 function new_slider() {
