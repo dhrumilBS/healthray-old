@@ -15,6 +15,8 @@ $cf7anyapi_object = new Cf7_To_Any_Api();
 $cf7anyapi_options = $cf7anyapi_object->setting_get_options();
 if(isset($_GET['tab']) && $_GET['tab'] == 'status'){?>
     <div class="wrap cf-settings-wrap cf-sys-status">
+        <h1 class="wp-heading-inline"><?php esc_html_e( 'CF7 to Any API Settings', 'contact-form-to-any-api' ); ?></h1> 
+        <h2 class="screen-reader-text"><?php esc_html_e( 'CF7 to Any API Settings ', 'contact-form-to-any-api' ); ?></h2>
         <nav class="nav-tab-wrapper cf-tab-wrapper">
             <a href="<?php echo esc_url(admin_url('edit.php?post_type=cf7_to_any_api&page=cf7anyapi_setting')); ?>" class="nav-tab"><?php esc_html_e( 'Settings', 'contact-form-to-any-api' ); ?></a>
             <a href="<?php echo esc_url(admin_url('edit.php?post_type=cf7_to_any_api&page=cf7anyapi_setting&tab=status')); ?>" class="nav-tab nav-tab-active"><?php esc_html_e( 'System Status', 'contact-form-to-any-api' ); ?></a>
@@ -41,11 +43,11 @@ if(isset($_GET['tab']) && $_GET['tab'] == 'status'){?>
                         </tr> 
                         <tr>
                             <td><?php esc_html_e( 'Version', 'contact-form-to-any-api' ); ?></td>
-                            <td><?php echo CF7_TO_ANY_API_VERSION; ?></td>
+                            <td><?php echo esc_html( CF7_TO_ANY_API_VERSION ); ?></td>
                         </tr> 
                         <tr>
                             <td><?php esc_html_e( 'WP version', 'contact-form-to-any-api' ); ?></td>
-                            <td><?php echo get_bloginfo('version'); ?></td>
+                            <td><?php echo esc_html(get_bloginfo('version') ); ?></td>
                         </tr> 
                         <tr>
                             <td><?php esc_html_e( 'REST API', 'contact-form-to-any-api' ); ?></td>
@@ -59,6 +61,8 @@ if(isset($_GET['tab']) && $_GET['tab'] == 'status'){?>
     <?php 
 }else{?>
     <div class="wrap cf-settings-wrap cf-settings">
+        <h1 class="wp-heading-inline"><?php esc_html_e( 'CF7 to Any API Settings', 'contact-form-to-any-api' ); ?></h1> 
+        <h2 class="screen-reader-text"><?php esc_html_e( 'CF7 to Any API Settings ', 'contact-form-to-any-api' ); ?></h2>
         <nav class="nav-tab-wrapper cf-tab-wrapper">
             <a href="<?php echo esc_url(admin_url('edit.php?post_type=cf7_to_any_api&page=cf7anyapi_setting')); ?>" class="nav-tab nav-tab-active"><?php esc_html_e( 'Settings', 'contact-form-to-any-api' ); ?></a>
             <a href="<?php echo esc_url(admin_url('edit.php?post_type=cf7_to_any_api&page=cf7anyapi_setting&tab=status')); ?>" class="nav-tab"><?php esc_html_e( 'System Status', 'contact-form-to-any-api' ); ?></a>     
@@ -77,7 +81,7 @@ if(isset($_GET['tab']) && $_GET['tab'] == 'status'){?>
             </div>        
             <div class="cf-settings">
                 <hr>
-                <form method="post" action="<?php echo admin_url( 'admin-post.php' ); ?>" enctype="multipart/form-data">
+                <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="save_cf7_to_any_api_update_settings" />
                     <?php wp_nonce_field(-1,'save_cf7_to_any_api_update_settings' ); ?>
                     <div class="cf7_to_any_api_setting_form">
@@ -106,7 +110,7 @@ if(isset($_GET['tab']) && $_GET['tab'] == 'status'){?>
                             </tr>
                         </table>
                         <div class="submit">
-                            <input type="submit" name="Submit" class="button-primary" value="<?php echo esc_html( 'Save Changes', 'contact-form-to-any-api'); ?>" />
+                            <input type="submit" name="Submit" class="button button-primary" value="<?php echo esc_html( 'Save Changes', 'contact-form-to-any-api'); ?>" />
                         </div>
                     </div>
                 </form>

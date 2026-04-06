@@ -76,7 +76,6 @@ class Cf7_To_Any_Api {
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
-		$this->define_public_hooks();
 
 	}
 
@@ -125,7 +124,7 @@ class Cf7_To_Any_Api {
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-cf7-to-any-api-public.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-cf7-to-any-api-public.php';
 
 		$this->loader = new Cf7_To_Any_Api_Loader();
 
@@ -160,18 +159,17 @@ class Cf7_To_Any_Api {
 		$plugin_admin = new Cf7_To_Any_Api_Admin($this->get_plugin_name(), $this->get_version());
 		$api_mail_hook = $this->setting_get_options();
 
-		$this->loader->add_action('admin_notices', $plugin_admin, 'cf7_to_any_api_verify_dependencies');
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+		$this->loader->add_action('admin_notices', $plugin_admin, 'cf7_to_any_api_verify_dependencies');
 		$this->loader->add_action('init', $plugin_admin,'cf7anyapi_custom_post_type', 10);
+		$this->loader->add_action('admin_menu', $plugin_admin, 'cf7anyapi_register_submenu', 90);
 		$this->loader->add_action('add_meta_boxes', $plugin_admin,'cf7anyapi_metabox');
-		$this->loader->add_action('save_post',$plugin_admin,'cf7anyapi_update_settings',10,2);
+		$this->loader->add_action('save_post_cf7_to_any_api',$plugin_admin,'cf7anyapi_update_settings',10,2);
 		$this->loader->add_action('wp_ajax_cf7_to_any_api_get_form_field',$plugin_admin,'cf7_to_any_api_get_form_field_function');
 		$this->loader->add_action('wp_ajax_cf7_to_any_api_bulk_log_delete',$plugin_admin,'cf7_to_any_api_bulk_log_delete_function');
-		$this->loader->add_action('admin_menu', $plugin_admin, 'cf7anyapi_register_submenu', 90);
 		$this->loader->add_filter('plugin_action_links',$plugin_admin,'cf7anyapi_add_settings_link',10,2);
 		$this->loader->add_filter('manage_cf7_to_any_api_posts_columns',$plugin_admin,'cf7_to_any_api_filter_posts_columns');
-		$this->loader->add_action('manage_cf7_to_any_api_posts_custom_column',$plugin_admin,'cf7_to_any_api_table_content',10,2);
 		$this->loader->add_filter('manage_edit-cf7_to_any_api_sortable_columns',$plugin_admin,'cf7_to_any_api_sortable_columns');
 		$this->loader->add_action('plugins_loaded',$plugin_admin,'cf7toanyapi_add_new_table',10, 2);
 		$this->loader->add_action('wp_ajax_delete_records',$plugin_admin,'delete_cf7_records',10, 2);
@@ -192,21 +190,6 @@ class Cf7_To_Any_Api {
 		// Plugin links
 		$this->loader->add_filter('plugin_row_meta', $plugin_admin, 'cf7anyapi_add_plugin_links', 10, 2);	
 
-	}
-
-	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_public_hooks() {
-
-		//$plugin_public = new Cf7_To_Any_Api_Public( $this->get_plugin_name(), $this->get_version() );
-
-		//$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		//$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 	}
 
 	/**
@@ -267,6 +250,10 @@ class Cf7_To_Any_Api {
 		$options['cf7anyapi_method'] = get_post_meta($post->ID,'cf7anyapi_method',true);
 		$options['cf7anyapi_form_field'] = get_post_meta($post->ID,'cf7anyapi_form_field',true);
 		$options['cf7anyapi_header_request'] = get_post_meta($post->ID,'cf7anyapi_header_request',true);
+		$options['cf7anyapi_enable_condition'] = get_post_meta($post->ID,'cf7anyapi_enable_condition',true);
+		$options['cf7anyapi_conditions'] = get_post_meta($post->ID,'cf7anyapi_conditions',true);
+
+		// Add Contact Form 7 fields
 		if(!empty($options['cf7anyapi_selected_form'])){
 			$ContactForm = WPCF7_ContactForm::get_instance($options['cf7anyapi_selected_form']);
 			$form_fields = $ContactForm->scan_form_tags();
@@ -275,8 +262,18 @@ class Cf7_To_Any_Api {
 					$field_array[$form_fields_value->raw_name] = (isset($options['cf7anyapi_form_field'][$form_fields_value->raw_name]) ? $options['cf7anyapi_form_field'][$form_fields_value->raw_name] : '');
 				}
 			}
-			$options['cf7anyapi_form_field'] = $field_array;
+			
 		}
+		// Add Predefined Tags (if available)
+	    if ( method_exists( $this, 'get_predefined_tags' ) ) {
+	    	$predefined_tags = array_keys( $this->get_predefined_tags() );
+			foreach ( $predefined_tags as $tag_key ) {
+	            if ( isset( $options['cf7anyapi_form_field'][ $tag_key ] ) ) {
+	                $field_array[ $tag_key ] = $options['cf7anyapi_form_field'][ $tag_key ];
+	            }
+	        }
+	    }
+	    $options['cf7anyapi_form_field'] = $field_array;
 		return $options;
 	}
 
@@ -320,9 +317,8 @@ class Cf7_To_Any_Api {
 
 	    global $wpdb;
 		$fid = (int)$fid;
-		$data_entry_table_name = sanitize_text_field($wpdb->prefix.'cf7anyapi_entries');
-	    $sql = $wpdb->prepare("SELECT `field_name` FROM `{$data_entry_table_name}` WHERE form_id = %d GROUP BY `field_name` ORDER BY `id`", $fid);
-	    $data = $wpdb->get_results($sql);
+		$data_entry_table_name = esc_sql($wpdb->prefix.'cf7anyapi_entries');	  
+	    $data = $wpdb->get_results( $wpdb->prepare("SELECT `field_name` FROM `{$data_entry_table_name}` WHERE form_id = %d GROUP BY `field_name` ORDER BY `id`", $fid));
 	    $fields = array();
 		if(!empty($data)){
 			foreach ($data as $k => $v) {
@@ -413,4 +409,28 @@ class Cf7_To_Any_Api {
 		$setting_options['cf7_to_api_entry_hide'] = get_option('cf7_to_api_entry_hide');
 		return $setting_options;
 	}
+
+	/**
+     * Get all predefined tags with labels.
+     * @since     2.0.1
+     * @return array
+     */
+    public static function get_predefined_tags() {
+        return array(
+            '_user_ip'                => __( 'User IP', 'contact-form-to-any-api' ),
+            '_date'                   => __( 'Date', 'contact-form-to-any-api' ),
+            '_time'                   => __( 'Time', 'contact-form-to-any-api' ),
+            '_submitted_date_time'    => __( 'Submitted Date & Time', 'contact-form-to-any-api' ),
+            '_site_url'               => __( 'Site URL', 'contact-form-to-any-api' ),
+            '_submission_source_url'  => __( 'Submission Source URL', 'contact-form-to-any-api' ),
+            '_post_id'                => __( 'Post ID', 'contact-form-to-any-api' ),
+            '_post_slug'              => __( 'Post Slug', 'contact-form-to-any-api' ),
+            '_post_title'             => __( 'Post Title', 'contact-form-to-any-api' ),
+            '_form_id'                => __( 'Form ID', 'contact-form-to-any-api' ),
+            '_form_name'              => __( 'Form Name', 'contact-form-to-any-api' ),
+            '_http_referer'           => __( 'HTTP Referer', 'contact-form-to-any-api' ),
+            '_browser_info'           => __( 'Browser Info', 'contact-form-to-any-api' ),
+            '_server_name'            => __( 'Server Name', 'contact-form-to-any-api' ),
+        );
+    }
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The plugin bootstrap file
  *
@@ -15,8 +14,8 @@
  * @wordpress-plugin
  * Plugin Name:       Contact Form to Any API
  * Plugin URI:        https://wordpress.org/plugins/contact-form-to-any-api/ 
- * Description:       Send CF7 Lead/Data to CRM or Any REST API.
- * Version:           2.0.0
+ * Description:       Send Contact Form 7 leads and data to any CRM, Webhook or REST API with flexible payloads, endpoints, and authentication.
+ * Version:           3.0.3
  * Author:            IT Path Solutions
  * Author URI:        https://www.itpathsolutions.com/
  * Requires Plugins:  contact-form-7
@@ -37,9 +36,11 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'CF7_TO_ANY_API_VERSION', '2.0.0' );
+define( 'CF7_TO_ANY_API_VERSION', '3.0.3' );
 
 define( 'CF7_CURL_DOMAIN', 'https://www.contactformtoapi.com' );
+
+define( 'CF7_TO_ANY_API_PLUGIN_BASENAME', basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ) );
 
 /**
  * The code that runs during plugin activation.

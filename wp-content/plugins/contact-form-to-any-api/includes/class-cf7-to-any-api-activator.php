@@ -67,6 +67,7 @@ class Cf7_To_Any_Api_Activator {
             post_id int(11) NOT NULL,
             form_data LONGTEXT NOT NULL,
             log LONGTEXT NOT NULL,
+            status VARCHAR(50) NULL,
             created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY  (id)
         ) $charset_collate;";
