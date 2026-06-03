@@ -44,7 +44,7 @@ button,
 .fade-in { animation: fadeInUp 0.8s ease forwards; }  
 
 .two-col .row-wrap { display: flex; align-items: center; gap: 40px; }
-.two-col .img-col, .two-col .content-col { flex: 1; }
+.two-col .img-col, two-col .content-col { flex: 1; }
 .image-left .row-wrap { flex-direction: row; }
 .image-right .row-wrap { flex-direction: row-reverse; }
 

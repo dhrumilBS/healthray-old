@@ -78,6 +78,10 @@ add_action('wp_enqueue_scripts', function () {
         wp_enqueue_style('single-post', get_stylesheet_directory_uri() . '/css/single.css', array(), '');
         wp_enqueue_style('custom', get_stylesheet_directory_uri() . '/css/custom.css', array(), '1');
     }
+    
+    if (is_author()) {
+        wp_enqueue_style('author', get_stylesheet_directory_uri() . '/css/author.css', array(), '1');
+    }
 
     // 	-----------------------------------------
     if (in_array('archive', get_body_class()) || is_page(23517) || is_page(32399) || is_search() || is_page(61837) || is_home() || is_page(65487)) {
@@ -278,37 +282,6 @@ add_action('wp_head', function () {
 // popup
 // =----------------------------------------------------------------------------= //
 
-add_action('wp_footer', function () { ?>
-    <div id="popupBackground"></div>
-    <div id="myPopup">
-        <a id="closePopup">
-            <svg class="x" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M19.1723 6.4219C19.6129 5.98127 19.6129 5.26877 19.1723 4.83284C18.7316 4.3969 18.0191 4.39221 17.5832 4.83284L12.0051 10.411L6.42227 4.82815C5.98164 4.38752 5.26914 4.38752 4.8332 4.82815C4.39727 5.26877 4.39258 5.98127 4.8332 6.41721L10.4113 11.9953L4.82852 17.5781C4.38789 18.0188 4.38789 18.7313 4.82852 19.1672C5.26914 19.6031 5.98164 19.6078 6.41758 19.1672L11.9957 13.5891L17.5785 19.1719C18.0191 19.6125 18.7316 19.6125 19.1676 19.1719C19.6035 18.7313 19.6082 18.0188 19.1676 17.5828L13.5895 12.0047L19.1723 6.4219Z"
-                    fill="white" />
-            </svg>
-        </a>
-        <div class="footer-popup-wrap">
-            <div class="footer-popup">
-                <div class="widget-heading">
-                    <div class="widget-container">
-                        <h2 class="heading-title">Secure Your Hospital’s Future <span
-                                style="font-size: 85%;font-weight: 500">Start With Healthray Today!</span></h2>
-                        <p class="description-text">Get in touch with us today for a personalized consultation and review
-                            designed specifically for doctors</p>
-                    </div>
-                </div>
-
-                <?php
-                if (!empty(get_field('popupFormShortcode', 'option'))) {
-                    $form = get_field('popupFormShortcode', 'option');
-                    echo do_shortcode($form);
-                }
-                ?>
-            </div>
-        </div>
-    </div>
-<?php });
 
 
 // =----------------------------------------------------------------------------= //
@@ -360,7 +333,7 @@ add_action('add_attachment', function ($post_ID) {
 
 
 // =----------------------------------------------------------------------------= //
-// toc & blog single progress bar
+// blog single progress bar
 // =----------------------------------------------------------------------------= //
 
 add_action('wp_body_open', function () {
@@ -368,41 +341,6 @@ add_action('wp_body_open', function () {
         echo '<div id="hr-progress-bar" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100"></div>';
     }
 });
-
-add_shortcode('toc', function ($atts) {
-    global $post;
-    $atts = shortcode_atts(array(
-        'title' => 'On this Page',
-        'depth' => 3,
-    ), $atts, 'toc');
-    $content = $post->post_content;
-    preg_match_all('/<h([2-' . intval($atts['depth']) . '])[^>]*>(.*?)<\/h[2-' . intval($atts['depth']) . ']>/i', $content, $matches, PREG_SET_ORDER);
-    if (empty($matches))
-        return '';
-    $toc = '<div class="custom-toc toc-collapsible">';
-    $toc .= '<div class="custom-toc-header">' . esc_html($atts['title']) . ' <span class="toc-toggle-icon">&#9650;</span></div>';
-    $toc .= '<div class="custom-toc-content">';
-    $prev_level = 1;
-    foreach ($matches as $match) {
-        $level = intval($match[1]);
-        $heading_text = strip_tags($match[2]);
-        $id = sanitize_title($heading_text);
-        $heading_tag = $match[0];
-        $heading_with_id = preg_replace('/<h([1-3])/', '<h$1 id="' . $id . '"', $heading_tag, 1);
-        $content = str_replace($heading_tag, $heading_with_id, $content);
-        if ($level > $prev_level) {
-            $toc .= str_repeat('<ul>', $level - $prev_level);
-        } elseif ($level < $prev_level) {
-            $toc .= str_repeat('</ul>', $prev_level - $level);
-        }
-        $toc .= "<li><a href='#$id'>$heading_text</a></li>";
-        $prev_level = $level;
-    }
-    $toc .= str_repeat('</ul>', $prev_level - 1);
-    $toc .= '</div></div>';
-    return $toc;
-});
-
 
 // =----------------------------------------------------------------------------= //
 function pagination_bar()

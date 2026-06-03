@@ -1,4 +1,32 @@
-<div class="prefooter"></div>
+<div id="popupBackground"></div>
+    <div id="myPopup">
+        <a id="closePopup">
+            <svg class="x" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M19.1723 6.4219C19.6129 5.98127 19.6129 5.26877 19.1723 4.83284C18.7316 4.3969 18.0191 4.39221 17.5832 4.83284L12.0051 10.411L6.42227 4.82815C5.98164 4.38752 5.26914 4.38752 4.8332 4.82815C4.39727 5.26877 4.39258 5.98127 4.8332 6.41721L10.4113 11.9953L4.82852 17.5781C4.38789 18.0188 4.38789 18.7313 4.82852 19.1672C5.26914 19.6031 5.98164 19.6078 6.41758 19.1672L11.9957 13.5891L17.5785 19.1719C18.0191 19.6125 18.7316 19.6125 19.1676 19.1719C19.6035 18.7313 19.6082 18.0188 19.1676 17.5828L13.5895 12.0047L19.1723 6.4219Z"
+                    fill="white" />
+            </svg>
+        </a>
+        <div class="footer-popup-wrap">
+            <div class="footer-popup">
+                <div class="widget-heading">
+                    <div class="widget-container">
+                        <h2 class="heading-title">Secure Your Hospital’s Future <span
+                                style="font-size: 85%;font-weight: 500">Start With Healthray Today!</span></h2>
+                        <p class="description-text">Get in touch with us today for a personalized consultation and review
+                            designed specifically for doctors</p>
+                    </div>
+                </div>
+
+                <?php
+                if (!empty(get_field('popupFormShortcode', 'option'))) {
+                    $form = get_field('popupFormShortcode', 'option');
+                    echo do_shortcode($form);
+                }
+                ?>
+            </div>
+        </div>
+    </div>
 
 <footer class="footer-section">
 
@@ -212,265 +240,3 @@
 	</div>
 </div>
 </footer>
-
-<script type="text/javascript" id="contact-form-submit-js" defer>
-
-
-
-// (function () {
-//   document.addEventListener("DOMContentLoaded", function () {
-
-//     const forms = document.querySelectorAll(".wpcf7 form");
-
-//     forms.forEach(function (form) {
-
-//       const phoneInput = form.querySelector(".wpcf7-intl-tel");
-//       if (!phoneInput) return;
-
-//       phoneInput.addEventListener("input", function (e) {
-//         e.target.value = e.target.value.replace(/\D/g, "");
-//         clearError();
-//       });
-
-//       form.addEventListener("submit", function (e) {
-//         const value = phoneInput.value.trim();
-//         if (value === "") {
-//           showError("Phone number is required.");
-//           e.preventDefault();
-//           return;
-//         }
-//         if (value.length < 10) {
-//           showError("Please enter a valid phone number (minimum 10 digits).");
-//           e.preventDefault();
-//           return;
-//         }
-//         clearError();
-//       });
-
-//       function showError(message) {
-//         let error = form.querySelector(".wpcf7-not-valid-tip");
-//         // If already exists → update text
-//         if (error) {
-//           error.textContent = message;
-//         } else {
-//           // Create new error element
-//           error = document.createElement("span");
-//           error.className = "wpcf7-not-valid-tip";
-//           error.textContent = message;
-//           phoneInput.closest(".wpcf7-form-control-wrap").appendChild(error);
-//         }
-//         phoneInput.classList.add("wpcf7-not-valid");
-//       }
-//       function clearError() {
-//         const error = form.querySelector(".wpcf7-not-valid-tip");
-//         if (error) error.remove();
-//         phoneInput.classList.remove("wpcf7-not-valid");
-//       }
-//     });
-//   });
-// })();
-
-
-(function () {
-
-  document.addEventListener("DOMContentLoaded", function () {
-
-    const forms = document.querySelectorAll(".wpcf7 form");
-
-    forms.forEach(function (form) {
-
-      const phoneInput = form.querySelector(".wpcf7-intl-tel");
-      if (!phoneInput) return;
-
-      function validatePhone() {
-
-        let value = phoneInput.value.trim();
-
-        // Allow only digits
-        value = value.replace(/\D/g, "");
-        phoneInput.value = value;
-
-        if (value === "") {
-          showError("Phone number is required.");
-          return false;
-        }
-
-        if (value.length < 10 || value.length > 15) {
-          showError("Please enter a valid phone number (10–15 digits).");
-          return false;
-        }
-
-        clearError();
-        return true;
-      }
-
-      phoneInput.addEventListener("input", validatePhone);
-      phoneInput.addEventListener("change", validatePhone);
-
-      form.addEventListener("submit", function (e) {
-        if (!validatePhone()) {
-          e.preventDefault();
-        }
-      });
-      
-    form.querySelector(".wpcf7-submit").addEventListener("click", function (e) {
-
-        if (!validatePhone()) {
-
-          e.preventDefault();
-          e.stopImmediatePropagation();
-
-          phoneInput.focus();
-          return false;
-        }
-
-      });
-
-
-      function showError(message) {
-
-        let wrapper = phoneInput.closest(".wpcf7-form-control-wrap");
-        let error = wrapper.querySelector(".wpcf7-not-valid-tip");
-
-        if (error) {
-          error.textContent = message; // Update existing
-        } else {
-          error = document.createElement("span");
-          error.className = "wpcf7-not-valid-tip";
-          error.textContent = message;
-          wrapper.appendChild(error);
-        }
-
-        phoneInput.classList.add("wpcf7-not-valid");
-      }
-
-      function clearError() {
-
-        let wrapper = phoneInput.closest(".wpcf7-form-control-wrap");
-        let error = wrapper.querySelector(".wpcf7-not-valid-tip");
-
-        if (error) error.remove();
-
-        phoneInput.classList.remove("wpcf7-not-valid");
-      }
-
-    });
-
-  });
-
-})();
-
-
-//  document.addEventListener("DOMContentLoaded", function () {
-
-//     const forms = document.querySelectorAll(".wpcf7 form");
-
-//     forms.forEach(function (form) {
-
-//       const phoneInput = form.querySelector(".wpcf7-intl-tel");
-//       if (!phoneInput) return;
-//       function validatePhone() {
-
-//         let value = phoneInput.value.trim();
-
-//         value = value.replace(/\D/g, "");
-//         phoneInput.value = value;
-
-//         if (value === "") {
-//           showError("Phone number is required.");
-//           return false;
-//         }
-
-//         if (value.length < 10 || value.length > 15) {
-//           showError("Please enter a valid phone number (10–15 digits).");
-//           return false;
-//         }
-
-//         clearError();
-//         return true;
-//       }
-
-//       phoneInput.addEventListener("input", validatePhone);
-//       phoneInput.addEventListener("change", validatePhone);
-
-//       /* -----------------------
-//          CF7 Submit Validation
-//       ----------------------- */
-
-//       form.addEventListener("submit", function (e) {
-
-//         if (!validatePhone()) {
-
-//           e.preventDefault();
-//           e.stopPropagation();
-
-//           phoneInput.focus();
-
-//           return false;
-//         }
-
-//       }, true);
-      
-
-//       function showError(message) {
-
-//         const wrapper = phoneInput.closest(".wpcf7-form-control-wrap");
-//         let error = wrapper.querySelector(".wpcf7-not-valid-tip");
-
-//         if (!error) {
-//           error = document.createElement("span");
-//           error.className = "wpcf7-not-valid-tip";
-//           wrapper.appendChild(error);
-//         }
-
-//         error.textContent = message;
-//         phoneInput.classList.add("wpcf7-not-valid");
-//       }
-
-//       function clearError() {
-
-//         const wrapper = phoneInput.closest(".wpcf7-form-control-wrap");
-//         const error = wrapper.querySelector(".wpcf7-not-valid-tip");
-
-//         if (error) error.remove();
-
-//         phoneInput.classList.remove("wpcf7-not-valid");
-//       }
-
-//     });
-
-//   });
-
-// })();
-
-
-
-
-
-var disableSubmit = '';
-jQuery(document).ready(function($) {
-	const val = $(':input[type="submit"]').val()
-	$('input.wpcf7-submit[type="submit"]').click(function() {
-		$(this).val("Sending...");
-		if (disableSubmit == true) {
-			return false;
-		}
-		disableSubmit = true;
-		return true;
-	});
-
-	$('.wpcf7').on('wpcf7_before_send_mail', function(event) {
-		$(':input[type="submit"]').val("Sent");
-		disableSubmit = false;
-	});
-
-	$('.wpcf7').on('wpcf7invalid', function(event) {
-		$(':input[type="submit"]').val(val);
-		disableSubmit = false;
-	});
-});
-
-
-		
-
-</script>

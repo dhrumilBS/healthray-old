@@ -24,7 +24,8 @@ if (function_exists('acf_add_local_field_group')) {
         'label_placement' => 'left',
     ));
 }
-
+// get_field('name')
+// update_field('popupFormShortcode', 'New Value', $post_id);
 if (function_exists('acf_add_options_page')) {
     acf_add_options_page(array(
         'page_title' => 'Theme Options',

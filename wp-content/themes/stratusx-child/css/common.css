@@ -11,7 +11,7 @@
 .content-editor .main-desc h1 { margin-bottom: 16px; }
 
 .content-editor ol, .content-editor ul{ padding-left: 20px; }
-.content-editor ol.main-list{padding:0; }
+.content-editor ol.main-list { padding:0; }
 .content-editor ol.main-list>li { list-style: none; counter-increment: h2Number; margin: 12px 0;}
 .content-editor ol.main-list>li>h2 { font-size: 24px; font-weight: 700; position: relative; }
 .content-editor ol.main-list>li>h2::before { content: counter(h2Number) "). "; position: relative; }

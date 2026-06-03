@@ -15,9 +15,13 @@ function healthray_generate_toc($content)
             $attrs = $matches[2];
             $inner = $matches[3];
 
+            // Clean heading text
             $text = wp_strip_all_tags(html_entity_decode($inner, ENT_QUOTES, 'UTF-8'));
 
+            // Remove special chars
             $clean_text = preg_replace('/[^a-zA-Z0-9\s-]/', '', $text);
+
+            // Skip empty headings
             if (empty(trim($clean_text))) {
                 return $matches[0];
             }
@@ -25,7 +29,7 @@ function healthray_generate_toc($content)
             $attrs = preg_replace('/\sid=("|\')(.*?)\1/i', '', $attrs);
 
             // Save TOC item
-            $toc_items[] = ['tag' => $tag, 'text' => $text, 'anchor' => $anchor,];
+            $toc_items[] = ['tag' => $tag,'text' => $text,'anchor' => $anchor,];
 
             // Add same ID as TOC anchor
             return sprintf(
@@ -38,11 +42,17 @@ function healthray_generate_toc($content)
         },
         $content
     );
+
+    /*
+     * Remove IDs from headings not used in TOC
+     * (like h3/h4 existing ids)
+     */
     $content = preg_replace(
         '/<(h[3-6])([^>]*)\sid=("|\')(.*?)\3([^>]*)>/i',
-        '<$1$2$4$5>',
+        '<$1$2 $5>',
         $content
     );
+
     return [$content, $toc_items];
 }
 
@@ -50,6 +60,8 @@ function healthray_generate_toc($content)
 function healthray_get_related_posts($post_id, $limit = 3)
 {
     $categories = wp_get_post_categories($post_id);
+    $tags = wp_get_post_tags($post_id, ['fields' => 'ids']);
+
     $args = [
         'post_type' => 'post',
         'post_status' => 'publish',
@@ -62,8 +74,13 @@ function healthray_get_related_posts($post_id, $limit = 3)
     if (!empty($categories)) {
         $args['category__in'] = $categories;
     }
+    if (!empty($tags)) {
+        $args['tag__in'] = $tags;
+    }
 
     $related = new WP_Query($args);
+
+    // Fallback: if not enough posts, fill with recent from same category
     if ($related->post_count < $limit && !empty($categories)) {
         $args2 = [
             'post_type' => 'post',
@@ -73,7 +90,7 @@ function healthray_get_related_posts($post_id, $limit = 3)
             'category__in' => $categories,
             'ignore_sticky_posts' => 1,
         ];
-
+        unset($args2['tag__in']);
         $fallback = new WP_Query($args2);
         $related->posts = array_slice(array_merge($related->posts, $fallback->posts), 0, $limit);
         $related->post_count = count($related->posts);
@@ -91,6 +108,7 @@ function healthray_reading_time($content)
     return $reading_time . ' Min Read';
 }
 ?>
+
 <?php while (have_posts()):
     the_post();
 
@@ -127,7 +145,6 @@ function healthray_reading_time($content)
 
     <!-- HERO / ARTICLE HEADER -->
     <div class="hr-single-wrapper" id="hr-single-wrapper">
-
         <!-- HERO SECTION -->
         <header class="hr-hero-section" role="banner">
             <div class="container">
@@ -139,7 +156,8 @@ function healthray_reading_time($content)
                         <?php if ($primary_cat): ?>
                             <span class="hr-sep" aria-hidden="true">›</span>
                             <a href="<?= esc_url(get_category_link($primary_cat->term_id)); ?>">
-                                <?= esc_html($primary_cat->name); ?></a>
+                                <?= esc_html($primary_cat->name); ?>
+                            </a>
                         <?php endif; ?>
                         <span class="hr-sep" aria-hidden="true">›</span>
                         <span class="hr-breadcrumb-current" aria-current="page">
@@ -154,12 +172,11 @@ function healthray_reading_time($content)
                             </a>
                         <?php endif; ?>
                         <div class="hr-date-reading">
-                            <time datetime="<?= esc_attr($published_iso); ?>">
-                                <?= esc_html($published_date); ?>
-                            </time>
+                            <time datetime="<?= esc_attr($published_iso); ?>"><?= esc_html($published_date); ?></time>
                             <span aria-hidden="true">·</span>
                             <span><?= esc_html($reading_time); ?></span>
-                            <?php if ($published_date !== $modified_date): ?>
+                            
+                            <?php if (is_user_logged_in() && ($published_date !== $modified_date)): ?>
                                 <span aria-hidden="true">·</span>
                                 <span>Updated <?= esc_html($modified_date); ?></span>
                             <?php endif; ?>
@@ -168,21 +185,21 @@ function healthray_reading_time($content)
 
                     <h1 class="hr-blog-title"> <?php the_title(); ?> </h1>
 
+                    <!-- Author + Share Row -->
                     <div class="hr-author-row">
-                        <div class="hr-author-info-wrap" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <div class="hr-author-info-wrap">
                             <div class="hr-author-avatar" aria-hidden="true">
                                 <?php if ($author_avatar): ?>
-                                    <img src="<?= esc_url($author_avatar); ?>" alt="<?= esc_attr($author_name); ?>" width="40"
-                                        height="40" loading="lazy">
+                                    <img src="<?= esc_url($author_avatar); ?>" alt="<?= esc_attr($author_name); ?>" width="40" height="40" loading="lazy">
                                 <?php else: ?>
                                     <span class="hr-author-initials"><?= esc_html($author_initials); ?></span>
                                 <?php endif; ?>
                             </div>
                             <div class="hr-author-details">
-                                <a href="<?= esc_url($author_url); ?>" class="hr-author-name" itemprop="url" rel="author"> 
-                                    <span itemprop="name"><?= esc_html($author_name); ?></span>
-                                </a>
-                                <?php $author_job = get_the_author_meta('job_title') ?: get_bloginfo('name'); ?>
+                                <a href="<?= esc_url($author_url); ?>" class="hr-author-name" rel="author"><span><?= esc_html($author_name); ?></span> </a>
+                                <?php
+                                $author_job = get_the_author_meta('job_title') ?: get_bloginfo('name');
+                                ?>
                                 <span class="hr-author-role"><?= esc_html($author_job); ?></span>
                             </div>
                         </div>
@@ -192,30 +209,19 @@ function healthray_reading_time($content)
             </div>
         </header>
 
-        <!-- CONTENT AREA -->
         <div id="hr-content" tabindex="-1">
             <div class="container">
                 <div class="hr-blog-row">
 
-                    <!-- MAIN CONTENT -->
-                    <main class="hr-content-area" id="hr-main" role="main" itemprop="articleBody">
+                    <main class="hr-content-area" id="hr-main" role="main">
 
-                        <!-- Featured Image -->
                         <?php if (has_post_thumbnail()): ?>
-                            <div class="hr-featured-image">
-                                <?php the_post_thumbnail('full', [
-                                    'class' => 'hr-hero-img',
-                                    'loading' => 'lazy',
-                                    'alt' => get_the_title(),
-                                ]); ?>
-                            </div>
+                            <div class="hr-featured-image"> <?php the_post_thumbnail('full', ['class' => 'hr-hero-img','loading' => 'lazy']); ?></div>
                         <?php endif; ?>
 
-                        <!-- TOC (Mobile — above content) -->
                         <?php if (!empty($toc_items)): ?>
                             <div class="hr-toc-mobile">
-                                <button class="hr-toc-toggle" type="button" aria-expanded="false"
-                                    aria-controls="hr-toc-mobile-list">
+                                <button class="hr-toc-toggle" type="button" aria-expanded="false" aria-controls="hr-toc-mobile-list">
                                     <span class="hr-toc-icon">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"
                                             height="18" aria-hidden="true">
@@ -247,12 +253,12 @@ function healthray_reading_time($content)
                             </div>
                         <?php endif; ?>
 
-                        <!-- Post Content -->
                         <div class="hr-post-content entry-content">
                             <?= $post_content_with_ids; // already filtered above ?>
                         </div>
-
-                        <!-- FAQs (ACF Repeater: blog_faqs) -->
+                        
+                        <div class="hr-post-cta"><?= do_shortcode('[blog_cta_end]'); ?></div>
+                        
                         <?php if (have_rows('blog_faqs')): ?>
                             <div class="hr-post-faqs">
                                 <h2 class="hr-faqs-heading">Frequently Asked Questions</h2>
@@ -266,17 +272,13 @@ function healthray_reading_time($content)
 
                                                 <span class="elementor-toggle-icon elementor-toggle-icon-left" aria-hidden="true">
                                                     <span class="elementor-toggle-icon-closed">
-                                                        <svg class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z" />
+                                                        <svg class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                                                            <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z" />
                                                         </svg>
                                                     </span>
                                                     <span class="elementor-toggle-icon-opened">
-                                                        <svg class="elementor-toggle-icon-opened e-font-icon-svg e-fas-caret-up"
-                                                            viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z" />
+                                                        <svg class="elementor-toggle-icon-opened e-font-icon-svg e-fas-caret-up" viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                                                            <pathd="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z" />
                                                         </svg>
                                                     </span>
                                                 </span>
@@ -316,15 +318,14 @@ function healthray_reading_time($content)
                                         }
                                         ?>
                                         <script type="application/ld+json">
-                                                                                                                <?= wp_json_encode($faq_json, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>
-                                                                                                            </script>
+                                                    <?= wp_json_encode($faq_json, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>
+                                                </script>
                                     <?php endif; ?>
 
                                 </div><!-- /.elementor-toggle.accordion-list -->
-                            </div><!-- /.single-post-faqs -->
+                            </div>
                         <?php endif; ?>
 
-                        <!-- Prev / Next Navigation -->
                         <nav class="hr-post-navigation" aria-label="Post navigation">
                             <?php
                             $prev_post = get_previous_post();
@@ -356,9 +357,7 @@ function healthray_reading_time($content)
                             <?php endif; ?>
                         </nav>
 
-                        <!-- Author Bio -->
-                        <div class="hr-author-bio-box" itemscope itemtype="https://schema.org/Person" role="complementary"
-                            aria-label="About the author">
+                        <div class="hr-author-bio-box" aria-label="About the author">
                             <div class="hr-bio-avatar">
                                 <?php if ($author_avatar): ?>
                                     <img src="<?= esc_url($author_avatar); ?>" alt="<?= esc_attr($author_name); ?>" width="80"
@@ -381,17 +380,8 @@ function healthray_reading_time($content)
                                 </a>
                             </div>
                         </div>
-
-                        <!-- Comments -->
-                        <?php if (comments_open() || get_comments_number()): ?>
-                            <div class="hr-comments-section">
-                                <?php comments_template(); ?>
-                            </div>
-                        <?php endif; ?>
-
                     </main>
 
-                    <!-- RIGHT SIDEBAR -->
                     <aside class="hr-sidebar" id="hr-sidebar" aria-label="Article sidebar">
 
                         <!-- CTA Box -->
@@ -403,38 +393,9 @@ function healthray_reading_time($content)
                                 <li>Prescription management</li>
                                 <li>24/7 support</li>
                             </ul>
-                            <a href="http://192.168.0.223/healthray-old/register" class="hr-cta-btn"> Try it Now! </a>
+                            <button class="hr-cta-btn"> Try it Now! </button>
                         </div>
-
-                        <!-- Sticky TOC (Desktop) -->
-                        <?php if (!empty($toc_items)): ?>
-                            <div class="hr-sidebar-toc hr-sidebar-card hr-toc-sticky" id="hr-toc-sidebar">
-                                <p class="hr-toc-heading">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
-                                        height="16" aria-hidden="true">
-                                        <line x1="3" y1="6" x2="21" y2="6" />
-                                        <line x1="3" y1="12" x2="15" y2="12" />
-                                        <line x1="3" y1="18" x2="18" y2="18" />
-                                    </svg>
-                                    Table of Contents
-                                </p>
-                                <nav aria-label="Table of Contents (sidebar)">
-                                    <ol class="hr-toc-list">
-                                        <?php foreach ($toc_items as $i => $item): ?>
-                                            <li class="hr-toc-item hr-toc-<?= esc_attr($item['tag']); ?>">
-                                                <a href="#<?= esc_attr($item['anchor']); ?>" class="hr-toc-link"
-                                                    data-anchor="<?= esc_attr($item['anchor']); ?>">
-                                                    <span class="hr-toc-num"><?= esc_html($i + 1); ?>.</span>
-                                                    <?= esc_html($item['text']); ?>
-                                                </a>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ol>
-                                </nav>
-                            </div>
-                        <?php endif; ?>
-
-                        <!-- Popular / Recent Posts Widget -->
+                        
                         <div class="hr-sidebar-card hr-sidebar-recent">
                             <p class="hr-sidebar-widget-title">Recent Posts</p>
                             <?php
@@ -469,8 +430,34 @@ function healthray_reading_time($content)
                             ?>
                         </div>
 
-                    </aside>
 
+                        <?php if (!empty($toc_items)): ?>
+                            <div class="hr-sidebar-toc hr-sidebar-card hr-toc-sticky" id="hr-toc-sidebar">
+                                <p class="hr-toc-heading">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                                        height="16" aria-hidden="true">
+                                        <line x1="3" y1="6" x2="21" y2="6" />
+                                        <line x1="3" y1="12" x2="15" y2="12" />
+                                        <line x1="3" y1="18" x2="18" y2="18" />
+                                    </svg>
+                                    Table of Contents
+                                </p>
+                                <nav aria-label="Table of Contents (sidebar)">
+                                    <ol class="hr-toc-list">
+                                        <?php foreach ($toc_items as $i => $item): ?>
+                                            <li class="hr-toc-item hr-toc-<?= esc_attr($item['tag']); ?>">
+                                                <a href="#<?= esc_attr($item['anchor']); ?>" class="hr-toc-link"
+                                                    data-anchor="<?= esc_attr($item['anchor']); ?>">
+                                                    <span class="hr-toc-num"><?= esc_html($i + 1); ?>.</span>
+                                                    <?= esc_html($item['text']); ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ol>
+                                </nav>
+                            </div>
+                        <?php endif; ?>
+                    </aside>
                 </div>
             </div>
         </div>
@@ -559,15 +546,6 @@ function healthray_reading_time($content)
     <script>
         (function () {
             'use strict';
-
-            /* ── Button Click Trigger ── */
-            var ctaBtn = document.querySelector('.hr-cta-btn');
-            if (ctaBtn) {
-                ctaBtn.addEventListener('click', function (e) {
-                    e.preventDefault(); // stop redirect
-                    openPopup();
-                });
-            }
 
             /* ── Mobile TOC Toggle ── */
             const mobileToggle = document.querySelector('.hr-toc-toggle');
