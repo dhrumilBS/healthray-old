@@ -1,4 +1,3 @@
-<?php  ?>
 
 <?php
 $testimonials = [];
@@ -22,7 +21,11 @@ endwhile;
     <div class="container">
         <div class="heading">
             <h1>What Our Doctors Say </h1>
+             <?php if(get_the_content()){ ?>
+		    <?php the_content(); ?>
+		    <?php } else { ?>
             <p> Discover how our platform has transformed businesses and helped professionals achieve their goals. These authentic testimonials showcase the real impact we deliver. </p>
+            <?php } ?>
         </div>
 
         <div class="customer-proof-container">

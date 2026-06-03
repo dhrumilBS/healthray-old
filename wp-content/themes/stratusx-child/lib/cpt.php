@@ -188,3 +188,32 @@ function register_event_cpt()
     );
 }
 add_action('init', 'register_event_cpt');
+
+function register_faq_cpt() {
+
+    $labels = [
+        'name'               => 'FAQs',
+        'singular_name'      => 'FAQ',
+        'menu_name'          => 'FAQs',
+        'add_new_item'       => 'Add New FAQ',
+        'edit_item'          => 'Edit FAQ',
+        'all_items'          => 'All FAQs',
+        'search_items'       => 'Search FAQs',
+        'not_found'          => 'No FAQs found',
+    ];
+
+    $args = [
+        'labels'        => $labels,
+        'public'        => true,
+        'menu_icon'     => 'dashicons-editor-help',
+        'menu_position' => 20,
+        'supports'      => ['title','editor','thumbnail','revisions','custom-fields'],
+        'has_archive'   => true,
+        'rewrite'       => ['slug' => 'faqs'],
+        'show_in_rest'  => true
+    ];
+
+    register_post_type('faq', $args);
+}
+
+add_action('init', 'register_faq_cpt', 0);

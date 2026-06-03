@@ -1,79 +1,118 @@
-/* Optimized User Tracking Code */
 document.addEventListener("DOMContentLoaded", () => {
-	const originUrl = window.location.origin;
-	const curUrl = window.location.href;
-	const thisPage = encodeURIComponent(window.location.protocol + "//" + window.location.hostname + window.location.pathname);
 
-	const getRefererUrl = () => {
-		let refererUrl = document.referrer;
-		if (refererUrl.includes("?")) {
-			refererUrl = refererUrl.split("?")[0];
-		}
-		return refererUrl || "Direct";
-	};
+    function isCrawler() {
+        const ua = navigator.userAgent.toLowerCase();
 
-	const isUrlValid = (url) => {
-		try {
-			new URL(url);
-			return true;
-		} catch (_) {
-			return false;
-		}
-	};
+        const crawlers = [
+            "googlebot",
+            "AhrefsSiteAudit",
+            "facebookexternalhit",
+            "linkedinbot"
+        ];
 
-	const isMainLink = (url) => {
-		try {
-			const host = new URL(url).hostname.toLowerCase();
-			return host.includes("healthray.com");
-		} catch (_) {
-			return false;
-		}
-	};
+        return crawlers.some(bot => ua.includes(bot));
+    }
 
-	const changeParametersForDirect = (encodedParams) => {
-		const selectors = [".elementor-567", ".wrap", ".footer-section"];
-		selectors.forEach((selector) => {
-			document.querySelectorAll(selector + " a").forEach((a) => {
-				const link = a.getAttribute("href");
-				if (isUrlValid(link) && isMainLink(link)) {
-					const separator = link.includes("?") ? "&" : "?";
-					a.setAttribute("href", link + separator + encodedParams);
+    const thisDomain = window.location.hostname.replace(/^www\./, '');
+    console.log(thisDomain);
+    
+
+    const getReferer = () => {
+        if (!document.referrer) return "direct"; // FIX 1: Use "direct" instead of thisDomain
+
+        try {
+            return new URL(document.referrer).hostname.replace(/^www\./, '');
+        } catch (_) {
+            return "direct";
+        }
+    };
+
+    const isValidUrl = (url) => {
+        try {
+            new URL(url);
+            return true;
+        } catch (_) {
+            return false;
+        }
+    };
+
+    const isSameDomain = (url) => {
+        try {
+            // FIX 2: Strict equality check instead of .includes() to prevent spoofing
+            return new URL(url).hostname.replace(/^www\./, '') === thisDomain;
+        } catch (_) {
+            return false;
+        }
+    };
+
+	const appendUTMParams = (encodedParams) => {
+		const links = document.querySelectorAll('.elementor-567 a, .wrap a, .footer-section a');
+		links.forEach((a) => {
+			const href = a.getAttribute("href");
+			if (isValidUrl(href) && isSameDomain(href)) {
+				const url = new URL(href, window.location.origin);
+				const currentParams = new URLSearchParams(url.search);
+
+				if (![...currentParams.keys()].some(key => key.startsWith("utm_"))) {
+					const sep = currentParams.toString() ? "&" : "?";
+					a.setAttribute("href", href + sep + encodedParams);
 				}
-			});
-		});
-	};
-
-	const getUTMParams = () => {
-		const params = new URLSearchParams(window.location.search);
-		const allowedUTMs = ["utm_source", "utm_medium", "utm_campaign", "utm_term"];
-		const utmParams = new URLSearchParams();
-
-		allowedUTMs.forEach((key) => {
-			if (params.has(key)) {
-				utmParams.set(key, params.get(key));
 			}
 		});
-
-		return utmParams.toString();
 	};
 
-	const referer = getRefererUrl();
-	const utmString = getUTMParams();
+	const getExistingUTMs = () => {
+        const params = new URLSearchParams(window.location.search);
+        const allowed = ["utm_source", "utm_medium", "utm_campaign"];
+        const collected = new URLSearchParams();
+        allowed.forEach((key) => {
+            if (params.has(key)) collected.set(key, params.get(key));
+        });
+        return collected.toString();
+    };
 
-	if (utmString) {
-		changeParametersForDirect(utmString);
-	} else {
-		// No UTM found → add default tracking (without referer & origin_referer)
-		const queryString =
-			referer === "Direct"
-				? `utm_source=Direct&utm_medium=${thisPage}`
-				: !referer.includes(window.location.hostname)
-				? `utm_source=website_organic&utm_medium=${encodeURIComponent(referer)}`
-				: "";
+    // FIX 3: Populate form fields from UTM params (works for both URL UTMs and default UTMs)
+    const populateFormFields = (utm_source, utm_medium, utm_campaign) => {
+        const formUTMs = {
+            utm_source: utm_source,
+            utm_medium: utm_medium,
+            utm_campaign: utm_campaign
+        };
 
-		if (queryString) {
-			changeParametersForDirect(queryString);
-		}
-	}
+        setTimeout(() => {
+            Object.keys(formUTMs).forEach((key) => {
+                document.querySelectorAll(`input[name="${key}"]`).forEach((field) => {
+                    field.value = formUTMs[key];
+                });
+            });
+        }, 500);
+    };
+
+    const referer = getReferer();
+    const utmFromUrl = getExistingUTMs();
+
+    if (!isCrawler()) {
+        console.log("Human visitor");
+
+        if (utmFromUrl) {
+            appendUTMParams(utmFromUrl);
+            const params = new URLSearchParams(utmFromUrl);
+            populateFormFields(
+                params.get("utm_source") || "",
+                params.get("utm_medium") || "",
+                params.get("utm_campaign") || ""
+            );
+        } else {
+            const utm_source = referer;
+            const utm_medium = "organic";
+            const utm_campaign = "seo";
+            const defaultUTMs = new URLSearchParams({ utm_source, utm_medium, utm_campaign }).toString();
+
+            populateFormFields(utm_source, utm_medium, utm_campaign);
+            appendUTMParams(defaultUTMs);
+        }
+    } else {
+        console.log("Crawler detected");
+    }
 });
 /* End Optimized User Tracking Code */

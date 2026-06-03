@@ -192,6 +192,13 @@ Template name: DPA
 					</ol>
 				</li>
 				<li>
+                    <h2>Sub-Processor</h2>
+                    <div class="sub-processor-card">
+                        <div>AWS, IN (Amazon Web Services)</div>
+                        <p class="description"> <strong>Description:</strong> Cloud Service Provider </p>
+                    </div>
+                </li>
+				<li>
 					<h2>Severability</h2>
 					<ol role="list">
 						<li>The Parties agree that, if any section or sub-section of this Addendum is held by any court or competent authority to be unlawful or unenforceable, it shall not invalidate or render unenforceable any other section of this Addendum.</li>

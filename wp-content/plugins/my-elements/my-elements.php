@@ -112,6 +112,7 @@ function my_elements()
 	require_once ML_PATH . 'elements/custom-toggle.php';
 	require_once ML_PATH . 'elements/alternativ.php';
 	require_once ML_PATH . 'elements/service-card.php';
+	require_once(ML_PATH . 'elements/flip-card.php');
 
 	require_once ML_PATH . 'elements/trust-content.php';
 	require_once ML_PATH . 'elements/before-after-slider.php';

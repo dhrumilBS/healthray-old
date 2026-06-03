@@ -1,0 +1,92 @@
+body { color: #65758B; font-family: "DM Sans"; }
+input[type=submit],input[type=button],
+button, 
+.wrap .content :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) { font-family: "Playfair Display"; }
+
+/* =========================== CONTAINERS & SECTIONS =========================== */
+.case-study-card{ margin-bottom: 32px; transition: all 200ms ease-in-out;  }
+.case-study-card:hover{--bs-border-opacity:1; border-color: #132d7c !important; }
+.case-study-card .case-study-image{ height: 100%; width: 100%; }
+.case-study-card .case-study-image img{ object-fit: contain; }
+.case-study-card .case-study-title { font-size: 32px; }
+.case-study-card .case-study-metrics{ border-left: #132d7c 2px solid; color: #132d7c; }
+
+/* =========================== CONTAINERS & SECTIONS =========================== */
+.container.narrow { max-width: 900px; }
+.solution-section { background-color: #f9fafb; }
+.results-section { background-color: #EFF0F1; }
+.border-bottom { border-color: #e2e8f0; }
+
+/* =========================== HERO IMAGE =========================== */
+.hero-section .badge { display: inline-block; background-color: #dde6fd1a; color: #fff; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.4rem 0.75rem; border-radius: 4px; margin-bottom: 1.5rem; line-height: 1; }
+.hero-image-section { background-color: #fff; }
+.hero-image-section .image-wrapper { border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; aspect-ratio: 2 / 1; }
+.hero-image-section .image-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* =========================== METRICS SECTION =========================== */
+.metrics-section { background-color: rgba(19, 45, 124, 0.05); }
+.metrics-section .grid-3 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+.metrics-section .card-metric { border: 2px solid #132d7c; background-color: #fff; padding: 1rem; text-align: center; border-radius: 8px; transition: all 0.3s ease; }
+.metrics-section .card-metric:hover { box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08); }
+.metrics-section .card-metric .icon-wrapper { width: 50px; height: 50px; margin: 0 auto 1rem; color: #132d7c; }
+.metrics-section .card-metric .icon-wrapper svg { width: 100%; height: 100%; }
+.metrics-section .card-metric .metric-value { font-size: 2.5rem; font-weight: 700; color: #132d7c; margin-bottom: 0.25rem; }
+.metrics-section .card-metric .metric-label { font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+/* =========================== Main Sec =========================== */
+
+.solution-card { background: #fff; border: none; border-radius: 12px; padding: 30px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s ease; }
+.solution-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.icon-box { width: 50px; height: 50px; border-radius: 10px; background-color: #e8f0fe; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.icon-box svg { width: 24px; height: 24px; stroke: #0d6efd; }
+.solution-card h5 { font-weight: 600; margin-bottom: 8px; }
+.solution-image { border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); width: 100%; height: auto; margin-top: 40px; }
+@keyframes fadeInUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeInUp 0.8s ease forwards; }  
+
+.two-col .row-wrap { display: flex; align-items: center; gap: 40px; }
+.two-col .img-col, .two-col .content-col { flex: 1; }
+.image-left .row-wrap { flex-direction: row; }
+.image-right .row-wrap { flex-direction: row-reverse; }
+
+@media (max-width: 767px) {
+	.two-col .row-wrap { flex-direction: column !important; }
+}
+
+
+
+/* =========================== Main Sec =========================== */
+.main-sec .container{ max-width: 1440px; }
+.main-sec .sec-padded:nth-child(even){ background-color: #f9fafb; }
+.main-sec .text-lg h2 { font-size: 30px; }
+.main-sec .text-lg p+h2 { margin-top: 20px; }
+.main-sec .text-lg p { font-size: 16px; }
+.main-sec .img-wrap{ border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; aspact-ratio: 2 / 1; box-shadow: 0 0 0 2px #fff, 8px 8px 20px rgba(0,0,0,0.15), inset -4px -8px 12px rgba(0,0,0, 0.25); }
+
+.text-lg p { font-size: 18px; text-align: justify; }
+.text-lg p+p { margin-top: 8px; }
+
+@media only screen and (max-width: 768px) {
+	.case-study-card .case-study-title { font-size: 22px; }
+	.hero-section .heading h1 { font-size: 28px; }
+	.text-lg p { font-size: 16px!important; }
+}
+/* =========================== TESTIMONIAL SECTION =========================== */
+.quote-section { background-color: rgba(19, 45, 124, 0.05); }
+.quote-section .quote-box { background-color: #fff; border-left: 4px solid #132d7c; padding: 1rem; border-radius: 8px; }
+.quote-section .quote-text { font-size: 1.25rem; font-style: italic; color: #222; line-height: 1.6; margin-bottom: 1.5rem; }
+.quote-section .author-name { font-weight: 600; color: #111; margin-bottom: 0.25rem; }
+.quote-section .author-title { font-size: 0.9rem; font-weight: 500; color: #132d7c; }
+@media only screen and (min-width: 768px) {
+	.metrics-section .grid-3 { grid-template-columns: repeat(3, 1fr); }
+	.metrics-section .card-metric { padding: 2rem; } 
+	.quote-section .quote-text { font-size: 2rem; }
+	.quote-section .quote-box { padding: 2.5rem; }
+}
+/* =========================== Grid Layout SECTION =========================== */
+.outcome-section .container{ max-width: 1440px; }
+.outcome-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; margin-top: 30px; }
+.outcome-item { padding: 20px; border: 1px solid #eaeaea; border-radius: 12px; background: #fff; transition: all 0.3s ease; }
+.outcome-item:hover { box-shadow: 0 10px 25px rgba(0,0,0,0.08); transform: translateY(-4px); }
+.outcome-icon svg { width: 50px; height: 50px; padding: 12px; border-radius:12px; background-color: #007aff20; color: #007aff; margin-bottom: 12px; }
+.outcome-content strong { font-size: 18px; color: #111; display: block; margin-bottom: 8px; }
+.outcome-content p { margin: 0; color: #555; line-height: 1.5; }

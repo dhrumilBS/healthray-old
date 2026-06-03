@@ -52,7 +52,7 @@ Template Name: Book a Demo
 			<script>
 				jQuery('#demo_bookings_form').hide(); 
 				Calendly.initInlineWidget({
-					url: 'https://calendly.com/healthray/30min?hide_landing_page_details=1&hide_gdpr_banner=1',
+					url: 'https://calendly.com/healthray/healthray-technologies-lead-meeting?hide_landing_page_details=1&hide_gdpr_banner=1',
 					parentElement: document.querySelector('.calendly-inline-widget'),
 				});
 

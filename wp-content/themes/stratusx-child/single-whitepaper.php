@@ -5,7 +5,7 @@
                     <div class="hero-text heading">
                         <h1><?= get_field('hero_title'); ?></h1>
                         <p><?= get_the_content(); ?></p>
-                        <a href="#downloadForm" class="btn btn-primary">Download Free Whitepaper</a>
+                        <a href="#downloadForm" class="btn btn-primary"><?= get_field('hero_btn_text') ? get_field('hero_btn_text') : 'Get Free Whitepaper'; ?> </a>
 
                     </div>
                     <div class="hero-image text-center">
@@ -85,7 +85,7 @@
                         <?php } ?>
 
                         <div class="trusted">
-                            <?= get_field('text_image_note_icon'); ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">                             <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>                             <path d="m9 11 3 3L22 4"></path>                         </svg>
                             <span><?= get_field('text_image_note'); ?></span>
                         </div>
                     </div>

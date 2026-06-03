@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="heading text-center">
 			<h1> <span>Whitepaper Library</span> </h1>
-			<p style="margin-bottom: 0;">Explore our collection of in-depth industry research and insights</p>
+			<p style="margin-bottom: 0;">Want to explore advanced healthcare technologies? And, eager to know how it evolves the dynamics of the hospital environment? If yes, you will keep reading our analytical whitepaper information.</p>
 		</div>
 	</div>
 </section>
@@ -32,7 +32,7 @@
 					}
 
 					$term_name = '';
-					$tax_list = ['whitepaper_topic', 'whitepaper_category' ];
+					$tax_list = ['whitepaper_topic', 'whitepaper_category'];
 
 					foreach ($tax_list as $tax) {
 						$terms = get_the_terms($post_id, $tax);
@@ -42,7 +42,7 @@
 						}
 					}
 
-					$thumb = get_the_post_thumbnail($post_id, 'medium');
+					$thumb = get_the_post_thumbnail($post_id, 'full');
 					$href = get_permalink($post_id);
 
 					$term_out = '';
@@ -51,19 +51,22 @@
 					}
 				?>
 					<div class="whitepaper-card">
-						<div class="whitepaper-image" aria-hidden="true">
+						<a href="<?= $href; ?>" class="whitepaper-image" aria-hidden="true">
 							<?= $thumb; ?>
 							<?= $term_out; ?>
-						</div>
+						</a>
+						<?php show_admin_edit_button(); ?>
 						<a href="<?= $href; ?>">
 							<h3 class="whitepaper-title"><?= $title; ?></h3>
 						</a>
 						<p class="whitepaper-desc"><?= $excerpt; ?></p>
-						<a href="<?= $href; ?>" class="btn btn-primary" > View Whitepaper </a>
+						<a href="<?= $href; ?>" class="btn btn-primary"> View Whitepaper </a>
 					</div>
 				<?php } ?>
+
 				<?php wp_reset_postdata(); ?>
 			</div>
+			<?= pagination_bar() ?>			
 		</div>
 	<?php } ?>
 </section>

@@ -1,5 +1,16 @@
-<?php get_template_part('template-parts/section', 'archive-hero'); ?>
-
+<section class="blog-hero hero-section">
+	<div class="container">
+		<div class="heading text-center">
+		    <h1><?php post_type_archive_title(); ?></h1>
+		    <p>Browse through our collection of <strong><?php post_type_archive_title(); ?></strong> posts.</p>
+		</div>
+		<?php
+		if (get_categories() && is_home()) {
+			get_template_part('templates/category-list');
+		}
+		?>
+	</div>
+</section>
 <?php $class = (!have_posts()) ? "no-results-section" : ''; ?>
 <section class="inner-container blog-container sec-padded <?= $class; ?>">
 	<?php if (! have_posts()) { ?>
@@ -16,29 +27,30 @@
 				<article <?php post_class('case-study-card border border-opacity-25 border-primary bg-white position-relative'); ?>>
 					<div class="row g-0">
 						<div class="col-md-6">
-							<div class="case-study-image overflow-hidden">
-								<?php
-								if (has_post_thumbnail()) {
-									echo get_the_post_thumbnail(get_the_ID(), 'large', [
-										'class' => 'img-fluid w-100 h-100 object-fit-cover',
-										'alt'   => get_the_title(),
-									]);
-								} else {
-									// Fallback image (ID = 62392)
-									echo wp_get_attachment_image(62392, 'large', false, [
-										'class' => 'img-fluid w-100 h-100 object-fit-cover',
-										'alt'   => 'Default case study image',
-									]);
-								}
-								?>
-
-							</div>
+						    <a href="<?= get_permalink(); ?>">
+    							<div class="case-study-image overflow-hidden">
+    								<?php
+    								if (has_post_thumbnail()) {
+    									echo get_the_post_thumbnail(get_the_ID(), 'full', [
+    										'class' => 'img-fluid w-100 h-100 object-fit-cover',
+    										'alt'   => get_the_title(),
+    									]);
+    								} else {
+    									// Fallback image (ID = 62392)
+    									echo wp_get_attachment_image(62392, 'large', false, [
+    										'class' => 'img-fluid w-100 h-100 object-fit-cover',
+    										'alt'   => 'Default case study image',
+    									]);
+    								}
+    								?>
+    							</div>
+							</a>
 						</div>
 
 						<!-- Content Section -->
 						<div class="col-md-6">
 							<div class="case-study-content p-3 p-md-4">
-								<div class="case-study-category d-inline-block rounded-pill text-sm mb-3 bg-primary bg-opacity-10 px-3 py-1">Orthopedics</div>
+								<?php show_admin_edit_button(); ?>
 								<h2 class="case-study-title fw-bold mb-3"> <?= get_the_title(); ?> </h2>
 								<div class="case-study-description text-lg mb-3 lead"> <?= get_the_content(); ?> </div>
 
