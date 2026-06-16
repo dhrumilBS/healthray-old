@@ -4,57 +4,6 @@
  * Dynamic TOC + Related Posts + Author Bio + Share Buttons
  */
 // Helper: Generate TOC from post content
-function healthray_generate_toc($content)
-{
-    $toc_items = [];
-
-    $content = preg_replace_callback(
-        '/<(h2)([^>]*)>(.*?)<\/h2>/is',
-        function ($matches) use (&$toc_items) {
-            $tag = $matches[1];
-            $attrs = $matches[2];
-            $inner = $matches[3];
-
-            // Clean heading text
-            $text = wp_strip_all_tags(html_entity_decode($inner, ENT_QUOTES, 'UTF-8'));
-
-            // Remove special chars
-            $clean_text = preg_replace('/[^a-zA-Z0-9\s-]/', '', $text);
-
-            // Skip empty headings
-            if (empty(trim($clean_text))) {
-                return $matches[0];
-            }
-            $anchor = 'h-' . substr(md5($clean_text), 0, 8);
-            $attrs = preg_replace('/\sid=("|\')(.*?)\1/i', '', $attrs);
-
-            // Save TOC item
-            $toc_items[] = ['tag' => $tag,'text' => $text,'anchor' => $anchor,];
-
-            // Add same ID as TOC anchor
-            return sprintf(
-                '<%1$s%2$s id="%3$s">%4$s</%1$s>',
-                $tag,
-                $attrs,
-                esc_attr($anchor),
-                $inner
-            );
-        },
-        $content
-    );
-
-    /*
-     * Remove IDs from headings not used in TOC
-     * (like h3/h4 existing ids)
-     */
-    $content = preg_replace(
-        '/<(h[3-6])([^>]*)\sid=("|\')(.*?)\3([^>]*)>/i',
-        '<$1$2 $5>',
-        $content
-    );
-
-    return [$content, $toc_items];
-}
 
 // Related Posts Logic
 function healthray_get_related_posts($post_id, $limit = 3)

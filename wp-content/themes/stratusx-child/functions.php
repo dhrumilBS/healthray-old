@@ -1,4 +1,5 @@
 <?php
+echo date_i18n(get_option('time_format'));
 
 include(get_stylesheet_directory() . '/lib/widgets.php');
 include(get_stylesheet_directory() . '/lib/customField.php');
@@ -57,7 +58,7 @@ add_action('wp_enqueue_scripts', function () {
 
     wp_dequeue_script('font-awesome-4-shim');
 
-    $defer_scripts = ['owl.carousal', 'child-script',];
+    $defer_scripts = ['owl.carousal', 'child-script', 'utm-tracking',];
     foreach ($defer_scripts as $handle) {
         wp_script_add_data($handle, 'defer', true);
     }
@@ -78,15 +79,25 @@ add_action('wp_enqueue_scripts', function () {
         wp_enqueue_style('single-post', get_stylesheet_directory_uri() . '/css/single.css', array(), '');
         wp_enqueue_style('custom', get_stylesheet_directory_uri() . '/css/custom.css', array(), '1');
     }
-    
+
     if (is_author()) {
         wp_enqueue_style('author', get_stylesheet_directory_uri() . '/css/author.css', array(), '1');
+    }
+
+    if (is_page_template('temp-pricing.php')) {
+        wp_enqueue_style('pricing', get_stylesheet_directory_uri() . '/css/pricing.css', array(), '1');
     }
 
     // 	-----------------------------------------
     if (in_array('archive', get_body_class()) || is_page(23517) || is_page(32399) || is_search() || is_page(61837) || is_home() || is_page(65487)) {
         wp_enqueue_style('custom', get_stylesheet_directory_uri() . '/css/custom.css', array(), '1');
     }
+
+    wp_enqueue_script('healthray-phone-validation', get_stylesheet_directory_uri() . '/js/healthray-phone-validation.js', ['jquery'], '1.0', true);
+
+    // // First-touch UTM attribution (replaces the handl-utm-grabber plugin).
+    // wp_enqueue_script('utm-tracking', get_stylesheet_directory_uri() . '/js/utm-tracking.js', [], '1.0', true);
+
 
 
     wp_enqueue_script('child-script', get_stylesheet_directory_uri() . '/js/script.js', ['jquery', 'contact-form-7'], true);
@@ -189,13 +200,6 @@ add_action('manage_page_posts_custom_column', function ($column_key, $post_id) {
     }
 }, 10, 2);
 
-add_action('init', function () {
-    if (isset($_GET['h']) && $_GET['h'] == 'true') {
-        add_filter('show_admin_bar', '__return_true');
-    } else {
-        add_filter('show_admin_bar', '__return_false');
-    }
-});
 
 // =----------------------------------------------------------------------------= //
 // ajax
@@ -402,4 +406,56 @@ function show_admin_edit_button()
             echo '<a href="' . esc_url($edit_link) . '" class="edit-post-btn" style="display:inline-block;color:#0073aa;text-decoration:underline;">Edit Post</a>';
         }
     }
+}
+
+function healthray_generate_toc($content)
+{
+    $toc_items = [];
+
+    $content = preg_replace_callback(
+        '/<(h2)([^>]*)>(.*?)<\/h2>/is',
+        function ($matches) use (&$toc_items) {
+            $tag = $matches[1];
+            $attrs = $matches[2];
+            $inner = $matches[3];
+
+            // Clean heading text
+            $text = wp_strip_all_tags(html_entity_decode($inner, ENT_QUOTES, 'UTF-8'));
+
+            // Remove special chars
+            $clean_text = preg_replace('/[^a-zA-Z0-9\s-]/', '', $text);
+
+            // Skip empty headings
+            if (empty(trim($clean_text))) {
+                return $matches[0];
+            }
+            $anchor = 'h-' . substr(md5($clean_text), 0, 8);
+            $attrs = preg_replace('/\sid=("|\')(.*?)\1/i', '', $attrs);
+
+            // Save TOC item
+            $toc_items[] = ['tag' => $tag, 'text' => $text, 'anchor' => $anchor,];
+
+            // Add same ID as TOC anchor
+            return sprintf(
+                '<%1$s%2$s id="%3$s">%4$s</%1$s>',
+                $tag,
+                $attrs,
+                esc_attr($anchor),
+                $inner
+            );
+        },
+        $content
+    );
+
+    /*
+     * Remove IDs from headings not used in TOC
+     * (like h3/h4 existing ids)
+     */
+    $content = preg_replace(
+        '/<(h[3-6])([^>]*)\sid=("|\')(.*?)\3([^>]*)>/i',
+        '<$1$2 $5>',
+        $content
+    );
+
+    return [$content, $toc_items];
 }

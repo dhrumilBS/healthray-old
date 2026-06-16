@@ -115,38 +115,49 @@ document.addEventListener('DOMContentLoaded', function () {
 			btn.innerHTML = btn.dataset.original || 'Submit';
 		}
 	}
+	
+	document.addEventListener('wpcf7submit', function (e) {
+		const form = e.target;                    // the <form> element
+		const detail = e.detail || {};
 
-	document.querySelectorAll('.wpcf7 form').forEach(form => {
-		form.addEventListener('submit', function (e) {
-			const btn = getBtn(this);
-			if (!btn) return;
+		if (detail.apiResponse && detail.apiResponse.status !== 'init') return;
 
-			// Prevent double submission
-			if (btn.classList.contains('sending') || btn.disabled) {
-				e.preventDefault();
-				e.stopImmediatePropagation();
-				return false;
-			}
-			lockBtn(btn);
-		});
+		const btn = getBtn(form);
+		if (!btn) return;
+
+		if (form.dataset.cf7Submitting === '1') {
+			e.preventDefault?.();
+			return;
+		}
+
+		form.dataset.cf7Submitting = '1';
+		lockBtn(btn);
 	});
 
-	document.addEventListener('wpcf7invalid',    e => resetBtn(getBtn(e.target)));
-	document.addEventListener('wpcf7mailfailed', e => resetBtn(getBtn(e.target)));
-	document.addEventListener('wpcf7spam',       e => resetBtn(getBtn(e.target)));
-	document.addEventListener('wpcf7aborted',    e => resetBtn(getBtn(e.target)));
+	function releaseForm(e) {
+		const form = e.target;
+		delete form.dataset.cf7Submitting;
+		resetBtn(getBtn(form));
+	}
+
+	document.addEventListener('wpcf7invalid', releaseForm);
+	document.addEventListener('wpcf7mailfailed', releaseForm);
+	document.addEventListener('wpcf7spam', releaseForm);
+	document.addEventListener('wpcf7aborted', releaseForm);
 
 	document.addEventListener('wpcf7mailsent', function (e) {
-		const btn = getBtn(e.target);
+		const form = e.target;
+		delete form.dataset.cf7Submitting;        // clean up flag even though we won't reuse it
+		const btn = getBtn(form);
 		if (!btn) return;
 		btn.disabled = true;
+		btn.classList.remove('sending');
+		btn.classList.add('sent');
 		if (btn.tagName === 'INPUT') {
 			btn.value = '✓ Sent';
 		} else {
 			btn.innerHTML = '✓ Sent';
 		}
-		btn.classList.remove('sending');
-		btn.classList.add('sent');
 	});
 });
 
@@ -179,14 +190,14 @@ document.addEventListener('wpcf7mailsent', function (event) {
 			})
 		}).then(res => res.ok ? res.json() : Promise.reject('Network error'))
 			.then(data => {
-			if (data.success && data.data.url) {
-				window.open(data.data.url, '_blank');
-				const msg = document.createElement('div');
-				msg.classList.add('pdf-download-message');
-				msg.innerHTML = `<a href="${data.data.url}" target="_blank" class="pdf-btn">Download again</a>`;
-				wrapper.appendChild(msg);
-			}
-		})
+				if (data.success && data.data.url) {
+					window.open(data.data.url, '_blank');
+					const msg = document.createElement('div');
+					msg.classList.add('pdf-download-message');
+					msg.innerHTML = `<a href="${data.data.url}" target="_blank" class="pdf-btn">Download again</a>`;
+					wrapper.appendChild(msg);
+				}
+			})
 			.catch(err => console.error('Fetch error:', err));
 	} else {
 		setTimeout(() => {
