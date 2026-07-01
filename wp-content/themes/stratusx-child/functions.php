@@ -1,9 +1,15 @@
 <?php
-echo date_i18n(get_option('time_format'));
+
+if (isset($_GET['time'])) {
+    echo wp_date('Y-m-d H:i:s');
+    echo "---";
+    echo date('Y-m-d H:i:s');
+}
 
 include(get_stylesheet_directory() . '/lib/widgets.php');
 include(get_stylesheet_directory() . '/lib/customField.php');
 include(get_stylesheet_directory() . '/lib/cpt.php');
+
 
 add_action('after_setup_theme', function () {
     if (!current_user_can('administrator') && !is_admin()) {
@@ -44,9 +50,6 @@ add_action('wp_enqueue_scripts', function () {
     wp_dequeue_style('wp-block-library');
     wp_deregister_style('wp-block-library');
 
-    wp_dequeue_style('contact-form-7');
-    wp_dequeue_script('contact-form-7');
-
     wp_dequeue_style('font-awesome-5-all');
     wp_dequeue_style('font-awesome-4-shim');
     wp_dequeue_style('megamenu-fontawesome');
@@ -58,7 +61,7 @@ add_action('wp_enqueue_scripts', function () {
 
     wp_dequeue_script('font-awesome-4-shim');
 
-    $defer_scripts = ['owl.carousal', 'child-script', 'utm-tracking',];
+    $defer_scripts = ['owl.carousal',];
     foreach ($defer_scripts as $handle) {
         wp_script_add_data($handle, 'defer', true);
     }
@@ -75,7 +78,6 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script('owl.carousal', get_stylesheet_directory_uri() . '/js/owl.carousel.min.js', array('jquery'), '1', true);
 
     if (is_single()) {
-        wp_enqueue_style('healthray-fonts', 'https://fonts.googleapis.com/css2?family=Sora:wght@600;700&display=swap', array(), null);
         wp_enqueue_style('single-post', get_stylesheet_directory_uri() . '/css/single.css', array(), '');
         wp_enqueue_style('custom', get_stylesheet_directory_uri() . '/css/custom.css', array(), '1');
     }
@@ -84,20 +86,14 @@ add_action('wp_enqueue_scripts', function () {
         wp_enqueue_style('author', get_stylesheet_directory_uri() . '/css/author.css', array(), '1');
     }
 
-    if (is_page_template('temp-pricing.php')) {
-        wp_enqueue_style('pricing', get_stylesheet_directory_uri() . '/css/pricing.css', array(), '1');
-    }
-
     // 	-----------------------------------------
     if (in_array('archive', get_body_class()) || is_page(23517) || is_page(32399) || is_search() || is_page(61837) || is_home() || is_page(65487)) {
         wp_enqueue_style('custom', get_stylesheet_directory_uri() . '/css/custom.css', array(), '1');
     }
 
-    wp_enqueue_script('healthray-phone-validation', get_stylesheet_directory_uri() . '/js/healthray-phone-validation.js', ['jquery'], '1.0', true);
-
-    // // First-touch UTM attribution (replaces the handl-utm-grabber plugin).
-    // wp_enqueue_script('utm-tracking', get_stylesheet_directory_uri() . '/js/utm-tracking.js', [], '1.0', true);
-
+    if (is_page_template('temp-pricing.php')) {
+        wp_enqueue_style('pricing', get_stylesheet_directory_uri() . '/css/pricing.css', array(), '1');
+    }
 
 
     wp_enqueue_script('child-script', get_stylesheet_directory_uri() . '/js/script.js', ['jquery', 'contact-form-7'], true);
@@ -106,32 +102,25 @@ add_action('wp_enqueue_scripts', function () {
         'pageId' => get_the_ID(),
         'pageTitle' => get_the_title(get_queried_object_id()),
         'isLoggedIn' => is_user_logged_in(),
-        'pageIds' => [28110],
+        'pageIds' => [28110, 60060, 60090],
         'homeUrl' => home_url()
     ]);
 });
 
-function _version()
+function apply_global_asset_version($src, $handle)
 {
-    if (isset($_GET['ver']) && !empty($_GET['ver'])) {
-        return sanitize_text_field($_GET['ver']);
-    }
-    return '1';
+    if (empty($_GET['ver']))
+        return $src;
+
+    $version = sanitize_text_field(wp_unslash($_GET['ver']));
+    $src = remove_query_arg('ver', $src);
+    $src = add_query_arg('ver', $version, $src);
+    return $src;
 }
 
-add_filter('style_loader_src', function ($src, $handle) {
-    $version = _version();
-    $src = remove_query_arg('ver', $src);
-    $src = add_query_arg('ver', $version, $src);
-    return $src;
-}, 9999, 2);
+add_filter('style_loader_src', 'apply_global_asset_version', 9999, 2);
+add_filter('script_loader_src', 'apply_global_asset_version', 9999, 2);
 
-add_filter('script_loader_src', function ($src, $handle) {
-    $version = _version();
-    $src = remove_query_arg('ver', $src);
-    $src = add_query_arg('ver', $version, $src);
-    return $src;
-}, 9999, 2);
 
 // =----------------------------------------------------------------------------= //
 // optimization
@@ -146,19 +135,22 @@ add_filter('wpseo_enable_xml_sitemap_transient_caching', '__return_true');
 add_filter('wp_lazy_loading_enabled', '__return_false');
 add_filter('wpcf7_ajax_loader', '__return_false');
 
-add_filter('style_loader_tag', function ($html, $handle) {
-    return str_replace("rel='stylesheet'", "rel='preload' as='style' onload=\"this.onload=null;this.rel='stylesheet'\"", $html);
-}, 10, 2);
+// add_filter('style_loader_tag', function ($html, $handle) {
 
-add_filter('script_loader_tag', function ($url) {
-    if (is_user_logged_in())
-        return $url; //don't break WP Admin
-    if (FALSE === strpos($url, '.js'))
-        return $url;
-    if (strpos($url, 'jquery.min.js') !== false)
-        return $url;
-    return str_replace(' src', ' defer src', $url);
-}, 10);
+//     return str_replace("rel='stylesheet'", "rel='preload' as='style' onload=\"this.onload=null;this.rel='stylesheet'\"", $html);
+
+
+// }, 10, 2);
+
+// add_filter('script_loader_tag', function ($url) {
+//     if (is_user_logged_in())
+//         return $url; //don't break WP Admin
+//     if (FALSE === strpos($url, '.js'))
+//         return $url;
+//     if (strpos($url, 'jquery.min.js') !== false)
+//         return $url;
+//     return str_replace(' src', ' defer src', $url);
+// }, 10);
 
 add_action('wp_head', function () {
     if (has_post_thumbnail()) {
@@ -184,6 +176,13 @@ add_filter('wpseo_sitemap_entries_per_page', function ($entries) {
 // =----------------------------------------------------------------------------= //
 // admin
 // =----------------------------------------------------------------------------= //
+
+function load_custom_admin_stylesheet()
+{
+    wp_enqueue_style( 'custom-admin-css', get_stylesheet_directory_uri() . '/css/admin.css', array(), '1.0.0');
+}
+add_action('admin_enqueue_scripts', 'load_custom_admin_stylesheet');
+
 
 add_filter('manage_page_posts_columns', function ($columns) {
     return array_merge($columns, ['thumb-img' => __('Image', 'textdomain')]);
@@ -408,54 +407,78 @@ function show_admin_edit_button()
     }
 }
 
-function healthray_generate_toc($content)
+/* ── AJAX handler – assign featured image ──────────────────────────── */
+add_action('wp_ajax_cpt_assign_thumb', function () {
+    check_ajax_referer('cpt_assign_thumb_nonce', 'nonce');
+
+    if (!current_user_can('edit_posts')) {
+        wp_send_json_error(['message' => 'Permission denied.'], 403);
+    }
+
+    $post_id  = intval($_POST['post_id']  ?? 0);
+    $image_id = intval($_POST['image_id'] ?? 0);
+
+    if (!$post_id || !$image_id) {
+        wp_send_json_error(['message' => 'Invalid post or image ID.']);
+    }
+
+    if (has_post_thumbnail($post_id)) {
+        wp_send_json_error(['message' => 'Already has a featured image.', 'skipped' => true]);
+    }
+
+    $result = set_post_thumbnail($post_id, $image_id);
+
+    if ($result) {
+        $thumb_url = get_the_post_thumbnail_url($post_id, 'medium');
+        wp_send_json_success(['message' => 'Featured image assigned.', 'thumb_url' => $thumb_url]);
+    } else {
+        wp_send_json_error(['message' => 'Failed to set thumbnail.']);
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+// add_filter('wpcf7_validate_intl_tel*', 'cf7_duplicate_mobile_validation', 20, 2);
+// add_filter('wpcf7_validate_intl_tel', 'cf7_duplicate_mobile_validation', 20, 2);
+
+function cf7_duplicate_mobile_validation($result, $tag)
 {
-    $toc_items = [];
+    if ($tag->name !== 'your-number') {
+        return $result;
+    }
 
-    $content = preg_replace_callback(
-        '/<(h2)([^>]*)>(.*?)<\/h2>/is',
-        function ($matches) use (&$toc_items) {
-            $tag = $matches[1];
-            $attrs = $matches[2];
-            $inner = $matches[3];
+    $mobile = isset($_POST['your-number']) ? sanitize_text_field($_POST['your-number']) : '';
 
-            // Clean heading text
-            $text = wp_strip_all_tags(html_entity_decode($inner, ENT_QUOTES, 'UTF-8'));
+    // Normalize the phone number
+    $mobile = preg_replace('/\D/', '', $mobile);
 
-            // Remove special chars
-            $clean_text = preg_replace('/[^a-zA-Z0-9\s-]/', '', $text);
+    // Remove India country code
+    if (strpos($mobile, '91') === 0 && strlen($mobile) == 12) {
+        $mobile = substr($mobile, 2);
+    }
 
-            // Skip empty headings
-            if (empty(trim($clean_text))) {
-                return $matches[0];
-            }
-            $anchor = 'h-' . substr(md5($clean_text), 0, 8);
-            $attrs = preg_replace('/\sid=("|\')(.*?)\1/i', '', $attrs);
+    // Remove leading zero
+    if (strpos($mobile, '0') === 0 && strlen($mobile) == 11) {
+        $mobile = substr($mobile, 1);
+    }
 
-            // Save TOC item
-            $toc_items[] = ['tag' => $tag, 'text' => $text, 'anchor' => $anchor,];
+    // Now $mobile will always be like: 9876598765
 
-            // Add same ID as TOC anchor
-            return sprintf(
-                '<%1$s%2$s id="%3$s">%4$s</%1$s>',
-                $tag,
-                $attrs,
-                esc_attr($anchor),
-                $inner
-            );
-        },
-        $content
-    );
+    if (mobile_submitted_within_24_hours($mobile)) {
+        $result->invalidate(
+            $tag,
+            'You have already submitted this form. Our team will contact you soon.'
+        );
+    }
 
-    /*
-     * Remove IDs from headings not used in TOC
-     * (like h3/h4 existing ids)
-     */
-    $content = preg_replace(
-        '/<(h[3-6])([^>]*)\sid=("|\')(.*?)\3([^>]*)>/i',
-        '<$1$2 $5>',
-        $content
-    );
-
-    return [$content, $toc_items];
+    return $result;
 }

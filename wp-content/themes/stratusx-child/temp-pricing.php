@@ -1,5 +1,5 @@
 <?php
-/* Template Name: Pricing */
+/* Template Name: Policy */
 ?>
 
 <!-- HERO -->
@@ -14,9 +14,10 @@
 </section>
 
 <!-- PRICING -->
-<section class="sec sec-pricing">
+<section class="sec">
   <div class="container">
     <div class="sec-head">
+      <div class="sec-label">Care Center Wise · INR</div>
       <h2 class="sec-title">Healthray Plans &amp; Pricing</h2>
       <p class="sec-sub">Pick the product that fits your practice. All plans billed annually per care center.</p>
     </div>
@@ -261,14 +262,14 @@
 </section>
 
 <!-- FREE FOR ALL -->
-<section class="sec sec-free-band sec-alt">
+<section class="sec sec-alt">
   <div class="container">
     <div class="sec-head">
       <div class="sec-label">Included with every plan</div>
       <h2 class="sec-title">Free For All Above Plans</h2>
     </div>
     <div class="free-band">
-      <div class="free-title">What's Included at No Extra Cost</div>
+      <div class="free-title">✨ What's Included at No Extra Cost</div>
       <div class="free-grid">
         <div class="free-item">
           <div class="free-check">📱</div>
@@ -296,7 +297,7 @@
 </section>
 
 <!-- COMPARE FEATURES -->
-<section class="sec sec-cmp">
+<section class="sec">
   <div class="container">
     <div class="sec-head">
       <div class="sec-label">Full breakdown</div>
@@ -306,7 +307,7 @@
 
     <div class="cmp-block">
       <button class="cmp-head" onclick="cmpToggle(this)">
-        <div class="cmp-left"> Compare All Feature Of Telehealth</div>
+        <div class="cmp-left"><div class="cmp-icon">📡</div> Compare All Feature Of Telehealth</div>
         <span class="cmp-arrow">▼</span>
       </button>
       <div class="cmp-body">
@@ -374,7 +375,7 @@
 
     <div class="cmp-block">
       <button class="cmp-head" onclick="cmpToggle(this)">
-        <div class="cmp-left"> Compare All Feature Of Clinical Management</div>
+        <div class="cmp-left"><div class="cmp-icon">🏥</div> Compare All Feature Of Clinical Management</div>
         <span class="cmp-arrow">▼</span>
       </button>
       <div class="cmp-body">
@@ -420,7 +421,7 @@
 
     <div class="cmp-block">
       <button class="cmp-head" onclick="cmpToggle(this)">
-        <div class="cmp-left"> Compare All Feature Of Practice Management</div>
+        <div class="cmp-left"><div class="cmp-icon">⚕️</div> Compare All Feature Of Practice Management</div>
         <span class="cmp-arrow">▼</span>
       </button>
       <div class="cmp-body">
@@ -478,7 +479,7 @@
 
     <div class="cmp-block">
       <button class="cmp-head" onclick="cmpToggle(this)">
-        <div class="cmp-left"> Compare All Feature Of HCRM</div>
+        <div class="cmp-left"><div class="cmp-icon">📊</div> Compare All Feature Of HCRM</div>
         <span class="cmp-arrow">▼</span>
       </button>
       <div class="cmp-body">
@@ -530,7 +531,7 @@
 
     <div class="cmp-block">
       <button class="cmp-head" onclick="cmpToggle(this)">
-        <div class="cmp-left"> Compare All Feature Of Home-Healthcare</div>
+        <div class="cmp-left"><div class="cmp-icon">🏠</div> Compare All Feature Of Home-Healthcare</div>
         <span class="cmp-arrow">▼</span>
       </button>
       <div class="cmp-body">
@@ -603,7 +604,7 @@
 
     <div class="cmp-block">
       <button class="cmp-head" onclick="cmpToggle(this)">
-        <div class="cmp-left"> Compare All Feature Of Hospital Management System</div>
+        <div class="cmp-left"><div class="cmp-icon">🏨</div> Compare All Feature Of Hospital Management System</div>
         <span class="cmp-arrow">▼</span>
       </button>
       <div class="cmp-body">
@@ -663,7 +664,7 @@
 </section>
 
 <!-- PROFESSIONAL SERVICES -->
-<section class="sec sec-services sec-alt">
+<section class="sec sec-alt">
   <div class="container">
     <div class="sec-head">
       <div class="sec-label">Add-ons</div>
@@ -671,31 +672,31 @@
       <p class="sec-sub">Consulting, training, and development services to maximise your investment</p>
     </div>
     <div class="services-grid">
-      <div class="svc-card"><div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg></div><div class="svc-name">Offline Training</div><div class="svc-inr"><strong>INR</strong>15k per day<br>Travel &amp; Accommodation Extra</div></div>
-      <div class="svc-card"><div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="m9 14 2 2 4-4"></path></svg></div><div class="svc-name">Digitise your Assessment &amp; Consent Forms</div><div class="svc-inr"><strong>INR</strong>₹ 1500 Per Form (2 Pages Max)</div></div>
-      <div class="svc-card"><div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg></div><div class="svc-name">Developer Charges</div><div class="svc-inr"><strong>INR</strong>₹ 2000 per hour</div></div>
-      <div class="svc-card"><div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg></div><div class="svc-name">Dedicated Consultant</div><div class="svc-inr"><strong>INR</strong>2L per month<br>1 FTE, 8 hrs/day</div></div>
-      <div class="svc-card"><div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="8" x="3" y="3" rx="2"></rect><path d="M7 11v4a2 2 0 0 0 2 2h4"></path><rect width="8" height="8" x="13" y="13" rx="2"></rect></svg></div><div class="svc-name">Business Process Management Consultant</div><div class="svc-inr"><strong>INR</strong>3L per month<br>1 FTE, 8 hrs/day</div></div>
-      <div class="svc-card"><div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 17H5"></path><path d="M19 7h-9"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg></div><div class="svc-name">Customisation Packages</div><div class="svc-inr"><strong>INR</strong>5.25L (350 hrs)<br>9.00L (600 hrs)<br>16.50L (1100 hrs)<br>34.50L (2300 hrs)</div></div>
-      <div class="svc-card"><div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"></path><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"></path><path d="m21 3 1 11h-2"></path><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"></path><path d="M3 4h8"></path></svg></div><div class="svc-name">Shared Implementation Consultant/Engagement Cost</div><div class="svc-inr"><strong>INR</strong>1L per month</div></div>
-      <div class="svc-card"><div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-5"></path><path d="M15 8V2"></path><path d="M17 8a1 1 0 0 1 1 1v4a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1z"></path><path d="M9 8V2"></path></svg></div><div class="svc-name">Integration Packages (Software | Wearables | Devices)</div><div class="svc-inr"><strong>INR</strong>One time build cost<br>AMC</div></div>
+      <div class="svc-card"><div class="svc-name">Offline Training</div><div class="svc-inr"><strong>INR</strong>15k per day<br>Travel &amp; Accommodation Extra</div></div>
+      <div class="svc-card"><div class="svc-name">Digitise your Assessment &amp; Consent Forms</div><div class="svc-inr"><strong>INR</strong>₹ 1500 Per Form (2 Pages Max)</div></div>
+      <div class="svc-card"><div class="svc-name">Developer Charges</div><div class="svc-inr"><strong>INR</strong>₹ 2000 per hour</div></div>
+      <div class="svc-card"><div class="svc-name">Dedicated Consultant</div><div class="svc-inr"><strong>INR</strong>2L per month<br>1 FTE, 8 hrs/day</div></div>
+      <div class="svc-card"><div class="svc-name">Business Process Management Consultant</div><div class="svc-inr"><strong>INR</strong>3L per month<br>1 FTE, 8 hrs/day</div></div>
+      <div class="svc-card"><div class="svc-name">Customisation Packages</div><div class="svc-inr"><strong>INR</strong>5.25L (350 hrs)<br>9.00L (600 hrs)<br>16.50L (1100 hrs)<br>34.50L (2300 hrs)</div></div>
+      <div class="svc-card"><div class="svc-name">Shared Implementation Consultant/Engagement Cost</div><div class="svc-inr"><strong>INR</strong>1L per month</div></div>
+      <div class="svc-card"><div class="svc-name">Integration Packages (Software | Wearables | Devices)</div><div class="svc-inr"><strong>INR</strong>One time build cost<br>AMC</div></div>
     </div>
     <div class="exec-card">
       <div class="exec-text">
         <h3>Executive Consulting</h3>
-        <p>CEO Consulting — Hospital IT Architecture &amp; Solution</p>
+        <p>CEO Consulting - Hospital IT Architecture &amp; Solution</p>
       </div>
       <div class="exec-price">Starting ₹10L</div>
     </div>
     <div class="cta-row">
       <a href="https://healthray.com/contact/" class="btn-cta">Contact Us For Quote</a>
-      <a href="https://healthray.com/contact/" class="btn-cta ghost">Talk To Us</a>
+      <a href="https://calendly.com/healthray/healthray-technologies-lead-meeting" class="btn-cta ghost">Talk To Us</a>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="sec sec-faq">
+<section class="sec">
   <div class="container">
     <div class="sec-head">
       <div class="sec-label">Got questions?</div>
@@ -721,109 +722,439 @@
     </div>
   </div>
 </section>
+<script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@graph": [
 
-<!-- HEALTHRAY PRICING POPUP -->
-<div id="hr-popup-overlay">
-  <div id="hr-popup-card">
+    {
+      "@type": "WebPage",
+      "@id": "https://healthray.com/pricing",
+      "url": "https://healthray.com/pricing",
+      "name": "Healthray Plans & Pricing — Best Healthcare Software in India",
+      "description": "Healthray gives best HealthCare Softwares (EHR, CRM, Home Health & Patient Experience) for Hospitals and Clinics with best pricing & advanced solutions. No hidden charges.",
+      "inLanguage": "en-IN",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://healthray.com",
+        "url": "https://healthray.com",
+        "name": "Healthray",
+        "description": "Best Healthcare Software for Hospitals, Clinics, Diagnostics and Homecare in India"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://healthray.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Pricing",
+            "item": "https://healthray.com/pricing"
+          }
+        ]
+      }
+    },
 
-    <div id="hr-popup-header">
-      <button id="hr-popup-close">✕</button>
-      <h3>Get Started with Healthray</h3>
-      <p>Fill in your details and our team will reach out within 24 hours with a personalised demo.</p>
-      <div id="hr-popup-badge">
-        <span id="hr-popup-plan-label"></span>
-      </div>
-    </div>
+    {
+      "@type": "Organization",
+      "@id": "https://healthray.com/#organization",
+      "name": "Healthray",
+      "url": "https://healthray.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://healthray.com/wp-content/themes/stratusx-child/images/logo.png"
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+91-8553378787",
+          "contactType": "Sales and Support",
+          "areaServed": "IN",
+          "availableLanguage": ["English", "Hindi"]
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/healthray",
+        "https://www.linkedin.com/company/healthray",
+        "https://twitter.com/healthray"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN"
+      }
+    },
 
-    <div id="hr-popup-body">
-      <!-- Replace 123 with your actual CF7 form ID -->
-       <?php echo do_shortcode('[contact-form-7 id="9cb6ddd" title="Pricing Inquiry"]'); ?>
-       <p class="hr-popup-privacy">
-        🔒 Your data is safe. We never share your information.
-      </p>
-    </div>
+    {
+      "@type": "SoftwareApplication",
+      "name": "Healthray — Clinical Management Software",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web, Android, iOS",
+      "url": "https://healthray.com",
+      "provider": {
+        "@id": "https://healthray.com/#organization"
+      },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Clinical Management — Basic Plan",
+          "description": "Clinic Software to manage appointments, advance billing, patient timely reminders etc",
+          "price": "30000",
+          "priceCurrency": "INR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "30000",
+            "priceCurrency": "INR",
+            "unitText": "Year",
+            "billingIncrement": 1
+          },
+          "eligibleRegion": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "url": "https://healthray.com/pricing"
+        },
+        {
+          "@type": "Offer",
+          "name": "Clinical Management — Advanced Plan",
+          "description": "Complete Clinic Management: Appt, Billing, EMR, Notes, Prescription & Pharmacy",
+          "price": "36000",
+          "priceCurrency": "INR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "36000",
+            "priceCurrency": "INR",
+            "unitText": "Year",
+            "billingIncrement": 1
+          },
+          "eligibleRegion": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "url": "https://healthray.com/pricing"
+        }
+      ]
+    },
 
-  </div>
-</div>
+    {
+      "@type": "SoftwareApplication",
+      "name": "Healthray — Practice Management Software (Clinic Management + EHR)",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web, Android, iOS",
+      "url": "https://healthray.com",
+      "provider": {
+        "@id": "https://healthray.com/#organization"
+      },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Practice Management — Basic Plan",
+          "description": "Patient Management for OPD including Billing, EMR, Pharmacy for Clinics",
+          "price": "36000",
+          "priceCurrency": "INR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "36000",
+            "priceCurrency": "INR",
+            "unitText": "Year",
+            "billingIncrement": 1
+          },
+          "eligibleRegion": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "url": "https://healthray.com/pricing"
+        },
+        {
+          "@type": "Offer",
+          "name": "Practice Management — Advanced Plan",
+          "description": "Manage All Functions of Hospital with OPD, IPD, Laboratory, Rooms & Beds, Pharmacy",
+          "price": "54000",
+          "priceCurrency": "INR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "54000",
+            "priceCurrency": "INR",
+            "unitText": "Year",
+            "billingIncrement": 1
+          },
+          "eligibleRegion": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "url": "https://healthray.com/pricing"
+        }
+      ]
+    },
 
+    {
+      "@type": "SoftwareApplication",
+      "name": "Healthray — Healthcare CRM (HCRM)",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web, Android, iOS",
+      "url": "https://healthray.com",
+      "provider": {
+        "@id": "https://healthray.com/#organization"
+      },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Healthcare CRM — Basic Plan",
+          "description": "Sales Pipeline, Sale team Monitoring, MultiChannel Engagement Calls, Chat, Email, and SMS",
+          "price": "96000",
+          "priceCurrency": "INR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "96000",
+            "priceCurrency": "INR",
+            "unitText": "Year",
+            "billingIncrement": 1
+          },
+          "eligibleRegion": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "url": "https://healthray.com/pricing"
+        },
+        {
+          "@type": "Offer",
+          "name": "Healthcare CRM — Advanced Plan",
+          "description": "Powerful CRM Automation to help Growing sales teams and Optimize your Sales Cycle",
+          "price": "180000",
+          "priceCurrency": "INR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "180000",
+            "priceCurrency": "INR",
+            "unitText": "Year",
+            "billingIncrement": 1
+          },
+          "eligibleRegion": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "url": "https://healthray.com/pricing"
+        }
+      ]
+    },
 
-<script defer>
-(function () {
-  var currentProduct = '';
-  var currentPlan    = '';
+    {
+      "@type": "SoftwareApplication",
+      "name": "Healthray — Home Healthcare Software",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web, Android, iOS",
+      "url": "https://healthray.com",
+      "provider": {
+        "@id": "https://healthray.com/#organization"
+      },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Home Healthcare — Basic Plan",
+          "description": "Care Plan based Patient care with portable equipment for monitoring at home",
+          "price": "72000",
+          "priceCurrency": "INR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "72000",
+            "priceCurrency": "INR",
+            "unitText": "Year",
+            "billingIncrement": 1
+          },
+          "eligibleRegion": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "url": "https://healthray.com/pricing"
+        },
+        {
+          "@type": "Offer",
+          "name": "Home Healthcare — Advanced Plan",
+          "description": "Home IPD/ICU with short and long term custom care plan, sales life cycle and lead management",
+          "price": "108000",
+          "priceCurrency": "INR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "108000",
+            "priceCurrency": "INR",
+            "unitText": "Year",
+            "billingIncrement": 1
+          },
+          "eligibleRegion": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "url": "https://healthray.com/pricing"
+        }
+      ]
+    },
 
-  var overlay   = document.getElementById('hr-popup-overlay');
-  var closeBtn  = document.getElementById('hr-popup-close');
-  var planLabel = document.getElementById('hr-popup-plan-label');
-  if (!overlay) return;
+    {
+      "@type": "SoftwareApplication",
+      "name": "Healthray — Hospital Management System",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web, Android, iOS",
+      "url": "https://healthray.com",
+      "provider": {
+        "@id": "https://healthray.com/#organization"
+      },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Hospital Management System — Basic Plan",
+          "description": "Helps providers to manage end to end workflows in hospital for OPD, IPD with bed management and many more",
+          "price": "54000",
+          "priceCurrency": "INR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "54000",
+            "priceCurrency": "INR",
+            "unitText": "Year",
+            "billingIncrement": 1
+          },
+          "eligibleRegion": {
+            "@type": "Country",
+            "name": "India"
+          },
+          "url": "https://healthray.com/pricing"
+        }
+      ]
+    },
 
-  function openPopup(product, plan) {
-    currentProduct = product;
-    currentPlan    = plan;
-
-    planLabel.textContent = product + '  ·  ' + plan;
-
-    fillHidden();
-
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-
-    setTimeout(function() {
-      var first = overlay.querySelector('input:not([type="hidden"])');
-      if (first) first.focus();
-    }, 350);
-  }
-
-  function closePopup() {
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function fillHidden() {
-    _fill();
-    setTimeout(_fill, 200); // retry after CF7 AJAX re-render
-    function _fill() {
-      var p = document.getElementById('product-plan');
-      if (p) p.value = currentProduct +' - '+ currentPlan;
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are you worried about your Patient's Data Security & Privacy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Healthray is the first HIPAA compliant healthcare software with 8 levels of data security. We have strong access controls to make sure that no one in your hospital will able to do unauthorized activity. Data is stored in highly secure geographically dispersed data centers certified ISO 27001, ISO 27017 & ISO 27018."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "I have a Chain of Hospitals/Clinics! Will I be able to manage centrally?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Healthray is perfectly designed to run your Multi-Chains. So, you can manage, operate and monitor your Practice Management, EHR & CRM functions centrally from main center."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "I have my custom workflow which is unique to my Hospital/Clinic? Do you support that?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Healthray assist all your clinical and practice workflows with automated by SOP's."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you want to have instant access to your appointments, patient records, and business activities?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Using, Healthray Mobile App, you can find all your appointments and patient records and business activities and patient interaction instantly on the move."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you want to design your own SOP or customized care plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Healthray allows your specialized care to design Specific SOP and Customized Care Plan for condition oriented treatment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Have you faced difficulty in managing chain of distributed Inventory?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Healthray has multi-chain distributed inventory which makes your inventory management seamless in different locations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Don't you want to be connected with your patient or give an enhanced experience to them of being special?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Healthray has features with which help you to stay Connected with your patients by instant messaging along with standards reminders on medication, follow up etc."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Healthray EHR includes Lab & Radiology Management?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Healthray EHR has specific apps for automating your pathology and radiology departments. And also it can be integrated to external labs in case if you are using other labs to perform the tests."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "My staff are not Computer Friendly? How Healthray can help?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our amazing UX and UI will makes the learning and usage seamless for your staff. Our training team does local language training and Support team does hand holding when they have questions. We create a sense of relationship with each of your staff so they can reach to us for learning with ease."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How Customer Support works in Healthray?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Healthray Customer Support is available in multiple platforms. We Excel in our support. We co-created Healthray from our Customers and their Experiences. We love to listen to you, learn from you and support you."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you want to switch from your existing software as it is not solving your purpose?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Healthray will solve your all problem, as this system is intuitive and complement your clinical as well as business needs and we will take care of your migration, transition & learning needs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Healthray integrate with devices & other software systems?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Healthray integrates with devices and other systems. Healthray already integrated with number of systems so just need to select your vendor in list of integrations available. We are also open for integrating with new devices and software systems."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "I need some Special features for my Hospital, Do you Customise Healthray for our needs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we do support customisation with the proper process of Product Engineering Team Approval. Charges applicable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I opt for Healthray Trial Version?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Healthray Trial Version will be activated for 1 week."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What about software upgrades? Will I have to purchase the software again?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Upgrades are FREE for the subscribed product."
+          }
+        }
+      ]
     }
-  }
 
-  closeBtn.addEventListener('click', closePopup);
-
-  overlay.addEventListener('click', function(e) {
-    if (e.target === overlay) closePopup();
-  });
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && overlay.classList.contains('active')) closePopup();
-  });
-
-  document.addEventListener('click', function(e) {
-    var btn = e.target.closest('.btn-trial, .btn-talk');
-    if (!btn) return;
-    if (btn.closest('nav')) return; // skip nav CTA
-
-    e.preventDefault();
-
-    var activeTab = document.querySelector('.tab-pill.on');
-    var product   = activeTab ? activeTab.textContent.trim() : 'Healthray Software';
-    var card     = btn.closest('.card');
-    var cardName = card ? (card.querySelector('.card-name') || {}).textContent || '' : '';
-
-    var planType = btn.classList.contains('btn-talk') ? 'Enterprise Enquiry' : 'Free Trial';
-    var plan = cardName ? cardName + ' - ' + planType : planType;
-
-    openPopup(product, plan);
-  });
-
-  document.addEventListener('wpcf7mailsent', function() {
-    setTimeout(closePopup, 2500);
-  });
-
-  document.addEventListener('wpcf7invalid', fillHidden);
-  document.addEventListener('wpcf7spam', fillHidden);  
-})();
-
+  ]
+}
+</script>
+<script defer>
 function showProd(id, el) {
   document.querySelectorAll('.prod-pane').forEach(p => p.classList.remove('on'));
   document.querySelectorAll('.tab-pill').forEach(t => t.classList.remove('on'));

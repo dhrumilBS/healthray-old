@@ -46,7 +46,7 @@ function blog_cta_end_styles()
     <style>
         .custom-blog-cta-end { display: flex; align-items: center; justify-content: space-between; background: #EEF9FF; padding: 30px 10px 0px 30px; gap: 20px; }
         .custom-blog-cta-end .cta-left { max-width: 55%; }
-        .custom-blog-cta-end h2 { font-size: 30px; }
+        .custom-blog-cta-end h2 { font-size: 30px; text-align: left; }
         .custom-blog-cta-end h2 span { color: var(--hr-secondary-color); }
         .custom-blog-cta-end p { margin: 15px 0 25px !important; }
         .custom-blog-cta-end .cta-btn { display: inline-flex; align-items: center; gap: 10px; background: #2f6fed; color: #fff; padding: 8px 16px; border-radius: 8px; transition: 0.3s ease; }

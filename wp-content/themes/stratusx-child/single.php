@@ -4,6 +4,57 @@
  * Dynamic TOC + Related Posts + Author Bio + Share Buttons
  */
 // Helper: Generate TOC from post content
+function healthray_generate_toc($content)
+{
+    $toc_items = [];
+
+    $content = preg_replace_callback(
+        '/<(h2)([^>]*)>(.*?)<\/h2>/is',
+        function ($matches) use (&$toc_items) {
+            $tag = $matches[1];
+            $attrs = $matches[2];
+            $inner = $matches[3];
+
+            // Clean heading text
+            $text = wp_strip_all_tags(html_entity_decode($inner, ENT_QUOTES, 'UTF-8'));
+
+            // Remove special chars
+            $clean_text = preg_replace('/[^a-zA-Z0-9\s-]/', '', $text);
+
+            // Skip empty headings
+            if (empty(trim($clean_text))) {
+                return $matches[0];
+            }
+            $anchor = 'h-' . substr(md5($clean_text), 0, 8);
+            $attrs = preg_replace('/\sid=("|\')(.*?)\1/i', '', $attrs);
+
+            // Save TOC item
+            $toc_items[] = ['tag' => $tag,'text' => $text,'anchor' => $anchor,];
+
+            // Add same ID as TOC anchor
+            return sprintf(
+                '<%1$s%2$s id="%3$s">%4$s</%1$s>',
+                $tag,
+                $attrs,
+                esc_attr($anchor),
+                $inner
+            );
+        },
+        $content
+    );
+
+    /*
+     * Remove IDs from headings not used in TOC
+     * (like h3/h4 existing ids)
+     */
+    $content = preg_replace(
+        '/<(h[3-6])([^>]*)\sid=("|\')(.*?)\3([^>]*)>/i',
+        '<$1$2 $5>',
+        $content
+    );
+
+    return [$content, $toc_items];
+}
 
 // Related Posts Logic
 function healthray_get_related_posts($post_id, $limit = 3)
@@ -97,23 +148,27 @@ function healthray_reading_time($content)
         <!-- HERO SECTION -->
         <header class="hr-hero-section" role="banner">
             <div class="container">
-                <div class="hr-hero-inner">
-                    <nav class="hr-breadcrumb" aria-label="Breadcrumb">
-                        <a href="<?= esc_url(home_url('/')); ?>">Home</a>
-                        <span class="hr-sep" aria-hidden="true">›</span>
-                        <a href="<?= esc_url(get_permalink(get_option('page_for_posts'))); ?>">Blog</a>
-                        <?php if ($primary_cat): ?>
-                            <span class="hr-sep" aria-hidden="true">›</span>
-                            <a href="<?= esc_url(get_category_link($primary_cat->term_id)); ?>">
-                                <?= esc_html($primary_cat->name); ?>
-                            </a>
-                        <?php endif; ?>
-                        <span class="hr-sep" aria-hidden="true">›</span>
-                        <span class="hr-breadcrumb-current" aria-current="page">
-                            <?= esc_html(wp_trim_words($post_title, 6, '...')); ?>
-                        </span>
-                    </nav>
+                <div class="hr-hero-inner single-content-inner">
+                                  <?php
+                    // Build breadcrumb items array for JSON-LD
+                    $breadcrumb_items = [
+                        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => esc_url(home_url('/')),],
+                        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog', 'item' => esc_url(get_permalink(get_option('page_for_posts'))),],
+                    ];
+                    $position = 3;
+                    if ($primary_cat) {
+                        $breadcrumb_items[] = ['@type' => 'ListItem', 'position' => $position, 'name' => esc_html($primary_cat->name), 'item' => esc_url(get_category_link($primary_cat->term_id)),];
+                        $position++;
+                    }
+                    $breadcrumb_items[] = ['@type' => 'ListItem', 'position' => $position, 'name' => esc_html($post_title),];
 
+                    $json_ld = [
+                        '@context' => 'https://schema.org',
+                        '@type' => 'BreadcrumbList',
+                        'itemListElement' => $breadcrumb_items,
+                    ];
+                    ?>
+                    <script type="application/ld+json"><?= wp_json_encode($json_ld, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT); ?> </script>
                     <div class="hr-meta-pills">
                         <?php if ($primary_cat): ?>
                             <a href="<?= esc_url(get_category_link($primary_cat->term_id)); ?>" class="hr-tag-pill">
@@ -161,7 +216,6 @@ function healthray_reading_time($content)
         <div id="hr-content" tabindex="-1">
             <div class="container">
                 <div class="hr-blog-row">
-
                     <main class="hr-content-area" id="hr-main" role="main">
 
                         <?php if (has_post_thumbnail()): ?>

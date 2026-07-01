@@ -210,20 +210,7 @@
 <div class="copyright-area <?= has_nav_menu('footer_navigation') ? "footer-navigation" : 'simple-footer'; ?>">
 	<div class="container">
 		<div class="th-d-flex">
-			<div class="copyright footer-menu">
-				<nav class="nav-main " role="navigation">
-					<div class="menu-footer-links-container">
-						<ul id="menu-footer-links" class="menu">
-							<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-31404">
-								<a rel="privacy-policy" href="https://healthray.com/privacy-policy/">Privacy Policy</a>
-							</li>
-							<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31405">
-								<a href="https://healthray.com/terms-condition/">Terms &amp; Condition</a>
-							</li>
-						</ul>
-					</div>
-				</nav>
-			</div>
+			<div class="copyright footer-menu"> <?php wp_nav_menu( ['theme_location' => 'footer_navigation',]); ?> </div>
 
 
 

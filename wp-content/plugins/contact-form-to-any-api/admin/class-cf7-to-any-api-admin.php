@@ -586,8 +586,8 @@ class Cf7_To_Any_Api_Admin {
 			}
 		}
 		$post_id = $submission->get_meta('container_post_id');
-		$posted_data['submitted_from'] = $post_id;
-		$posted_data['submit_time'] = date('Y-m-d H:i:s');
+		$posted_data['submitted_from'] = get_the_title($post_id);
+		$posted_data['submit_time'] = wp_date('Y-m-d g:i:s A');
 		if(isset($_SERVER['REMOTE_ADDR'])){
 			$posted_data['User_IP'] = sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR']));
 		}

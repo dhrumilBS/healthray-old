@@ -129,7 +129,6 @@ $recent_posts_query = new WP_Query([
 		<section class="hr-author-section" aria-labelledby="hr-author-bio-heading">
 			<div class="hr-author-container">
 				<span class="hr-author-section-label">Professional Background</span>
-				<h2 class="hr-author-section-title" id="hr-author-bio-heading">About <?php echo $display_name; ?></h2>
 				<div class="hr-author-bio-card">
 					<div class="hr-author-bio-body">
 						<?php echo wp_kses_post($description); ?>

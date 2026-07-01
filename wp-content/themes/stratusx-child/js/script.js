@@ -1,4 +1,38 @@
+
 document.addEventListener('DOMContentLoaded', function () {
+	const base = '.content-editor ol.main-list>li';
+
+	// Level 1
+	document.querySelectorAll('.content-editor ol.main-list>li ol, .content-editor ol.main-list>li ul').forEach(el => {
+		el.classList.add('level-1');
+		el.setAttribute('role', 'list-1');
+	});
+
+	// Level 2
+	document.querySelectorAll(
+		'.content-editor ol.main-list>li ol.level-1>li ol,\
+         .content-editor ol.main-list>li ol.level-1>li ul,\
+         .content-editor ol.main-list>li ul.level-1>li ol,\
+         .content-editor ol.main-list>li ul.level-1>li ul'
+	).forEach(el => {
+		el.classList.add('level-2');
+		el.setAttribute('role', 'list-2');
+	});
+
+	// Level 3
+	document.querySelectorAll(
+		'.content-editor ol.main-list>li ol.level-1>li ol.level-2>li>ol,\
+         .content-editor ol.main-list>li ol.level-1>li ol.level-2>li>ul,\
+         .content-editor ol.main-list>li ol.level-1>li ul.level-2>li>ol,\
+         .content-editor ol.main-list>li ol.level-1>li ul.level-2>li>ul,\
+         .content-editor ol.main-list>li ul.level-1>li ol.level-2>li>ol,\
+         .content-editor ol.main-list>li ul.level-1>li ol.level-2>li>ul,\
+         .content-editor ol.main-list>li ul.level-1>li ul.level-2>li>ol,\
+         .content-editor ol.main-list>li ul.level-1>li ul.level-2>li>ul'
+	).forEach(el => {
+		el.classList.add('level-3');
+		el.setAttribute('role', 'list-3');
+	});
 
 	document.addEventListener("click", function (e) {
 		if (!e.target.closest(".blog-category-more-list, .blog-category-more-link")) {
@@ -115,49 +149,38 @@ document.addEventListener('DOMContentLoaded', function () {
 			btn.innerHTML = btn.dataset.original || 'Submit';
 		}
 	}
-	
-	document.addEventListener('wpcf7submit', function (e) {
-		const form = e.target;                    // the <form> element
-		const detail = e.detail || {};
 
-		if (detail.apiResponse && detail.apiResponse.status !== 'init') return;
+	document.querySelectorAll('.wpcf7 form').forEach(form => {
+		form.addEventListener('submit', function (e) {
+			const btn = getBtn(this);
+			if (!btn) return;
 
-		const btn = getBtn(form);
-		if (!btn) return;
-
-		if (form.dataset.cf7Submitting === '1') {
-			e.preventDefault?.();
-			return;
-		}
-
-		form.dataset.cf7Submitting = '1';
-		lockBtn(btn);
+			// Prevent double submission
+			if (btn.classList.contains('sending') || btn.disabled) {
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				return false;
+			}
+			lockBtn(btn);
+		});
 	});
 
-	function releaseForm(e) {
-		const form = e.target;
-		delete form.dataset.cf7Submitting;
-		resetBtn(getBtn(form));
-	}
-
-	document.addEventListener('wpcf7invalid', releaseForm);
-	document.addEventListener('wpcf7mailfailed', releaseForm);
-	document.addEventListener('wpcf7spam', releaseForm);
-	document.addEventListener('wpcf7aborted', releaseForm);
+	document.addEventListener('wpcf7invalid',    e => resetBtn(getBtn(e.target)));
+	document.addEventListener('wpcf7mailfailed', e => resetBtn(getBtn(e.target)));
+	document.addEventListener('wpcf7spam',       e => resetBtn(getBtn(e.target)));
+	document.addEventListener('wpcf7aborted',    e => resetBtn(getBtn(e.target)));
 
 	document.addEventListener('wpcf7mailsent', function (e) {
-		const form = e.target;
-		delete form.dataset.cf7Submitting;        // clean up flag even though we won't reuse it
-		const btn = getBtn(form);
+		const btn = getBtn(e.target);
 		if (!btn) return;
 		btn.disabled = true;
-		btn.classList.remove('sending');
-		btn.classList.add('sent');
 		if (btn.tagName === 'INPUT') {
 			btn.value = '✓ Sent';
 		} else {
 			btn.innerHTML = '✓ Sent';
 		}
+		btn.classList.remove('sending');
+		btn.classList.add('sent');
 	});
 });
 
@@ -190,14 +213,14 @@ document.addEventListener('wpcf7mailsent', function (event) {
 			})
 		}).then(res => res.ok ? res.json() : Promise.reject('Network error'))
 			.then(data => {
-				if (data.success && data.data.url) {
-					window.open(data.data.url, '_blank');
-					const msg = document.createElement('div');
-					msg.classList.add('pdf-download-message');
-					msg.innerHTML = `<a href="${data.data.url}" target="_blank" class="pdf-btn">Download again</a>`;
-					wrapper.appendChild(msg);
-				}
-			})
+			if (data.success && data.data.url) {
+				window.open(data.data.url, '_blank');
+				const msg = document.createElement('div');
+				msg.classList.add('pdf-download-message');
+				msg.innerHTML = `<a href="${data.data.url}" target="_blank" class="pdf-btn">Download again</a>`;
+				wrapper.appendChild(msg);
+			}
+		})
 			.catch(err => console.error('Fetch error:', err));
 	} else {
 		setTimeout(() => {
